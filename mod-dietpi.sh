@@ -31,9 +31,9 @@ echo "**************************************************"
 echo ""
 sleep 10
 
-if [ -d "${HERE}/${MACHINE}" ]; then
+if [ -d "${HERE}/machines/${MACHINE}" ]; then
   echo "Preparing configuration...-"
-  cp -v "${HERE}/${MACHINE}/dietpi.txt" /tmp/
+  cp -v "${HERE}/machines/${MACHINE}/dietpi.txt" /tmp/
 fi
 
 cd /tmp
