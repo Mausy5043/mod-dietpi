@@ -5,18 +5,35 @@ if [ "$(id -u)" -ne 0 ]; then
   exit 1
 fi
 
+BRANCH="dev"
+MACHINE="$(hostname | awk -F. '{print $1}')"
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 PREP_SCRIPT=/tmp/prep_dietpi.sh
-if [ "$#" -eq 1 ]; then
-  BRANCH=$1
-else
-  BRANCH="dev"
+
+echo ""
+echo "**************************************************"
+echo "Arguments passed to mod-ua.sh: ${CLOPT[@]}"
+echo ""
+
+while true; do
+  case "$1" in
+    -b | --branch ) BRANCH=$2; shift; shift ;;
+    -m | --machine ) MACHINE="$2"; shift; shift ;;
+    -- ) shift; break ;;
+    * ) echo "Ignoring unknown option: $1"; shift ;;
+  esac
+done
+
+echo "Installing on ${MACHINE} using the ${BRANCH} script."
+
+if [ -d "${HERE}/${MACHINE}" ]; then
+  echo "Preparing configuration...-"
+  cp -v "${HERE}/${MACHINE}/dietpi.txt" /tmp/
 fi
-echo "Using the ${BRANCH} script"
 
 pushd /tmp || exit 1
   if [ -f "${PREP_SCRIPT}" ]; then
-    echo "Script already exists"
+    echo "Script already exists."
   else
     echo "Downloading script..."
     curl -sSfL "https://raw.githubusercontent.com/MichaIng/DietPi/${BRANCH}/PREP_SYSTEM_FOR_DIETPI.sh" > "${PREP_SCRIPT}"
@@ -34,7 +51,7 @@ pushd /tmp || exit 1
 
   export GITBRANCH='master'
   export IMAGE_CREATOR='Mausy5043'
-  export PREIMAGE_INFO='fresh_install'
+  export PREIMAGE_INFO='re_install'
   export HW_MODEL=0
   export WIFI_REQUIRED=0
   export DISTRO_TARGET=6
@@ -46,7 +63,7 @@ pushd /tmp || exit 1
   echo ""
   echo "Post-script actions..."
   if [ -f /tmp/dietpi.txt ]; then
-    echo "Injecting custom dietpi.txt"
+    echo "Injecting custom dietpi.txt."
     cp -v /tmp/dietpi.txt /boot/
   fi
 popd || exit 1
