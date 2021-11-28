@@ -38,7 +38,7 @@ fi
 
 pushd /tmp || exit 1
   if [ -f "${PREP_SCRIPT}" ]; then
-    echo "Script already exists."
+    echo "Not downloading script as it already exists."
   else
     echo "Downloading script..."
     curl -sSfL "https://raw.githubusercontent.com/MichaIng/DietPi/${BRANCH}/PREP_SYSTEM_FOR_DIETPI.sh" > "${PREP_SCRIPT}"
