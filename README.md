@@ -1,3 +1,3 @@
 # mod-dietpi
 
-Re-install MischaIng/DietPi with custom modifications
+Re-install [MichaIng/DietPi](https://github.com/MichaIng/DietPi) with custom modifications
