@@ -20,11 +20,15 @@ while true; do
     -b | --branch ) BRANCH=$2; shift; shift ;;
     -m | --machine ) MACHINE="$2"; shift; shift ;;
     -- ) shift; break ;;
+    "" ) break ;;
     * ) echo "Ignoring unknown option: $1"; shift ;;
   esac
 done
 
-echo "Installing on ${MACHINE} using the ${BRANCH} script."
+echo "Installing on ${MACHINE} using the ${BRANCH} branch."
+echo "**************************************************"
+echo ""
+sleep 10
 
 if [ -d "${HERE}/${MACHINE}" ]; then
   echo "Preparing configuration...-"
