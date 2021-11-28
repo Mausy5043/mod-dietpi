@@ -50,7 +50,7 @@ else
   else
     echo ""
     echo "Modifying script..."
-
+    # no modifications needed (yet).
   fi
 fi
 
