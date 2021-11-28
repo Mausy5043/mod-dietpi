@@ -36,39 +36,40 @@ if [ -d "${HERE}/${MACHINE}" ]; then
   cp -v "${HERE}/${MACHINE}/dietpi.txt" /tmp/
 fi
 
-pushd /tmp || exit 1
-  if [ -f "${PREP_SCRIPT}" ]; then
-    echo "Not downloading script as it already exists."
+cd /tmp
+if [ -f "${PREP_SCRIPT}" ]; then
+  echo "Not downloading script as it already exists."
+else
+  echo "Downloading script..."
+  curl -sSfL "https://raw.githubusercontent.com/MichaIng/DietPi/${BRANCH}/PREP_SYSTEM_FOR_DIETPI.sh" > "${PREP_SCRIPT}"
+  echo
+  # modify the newly downloaded script
+  if [ ! -f "${PREP_SCRIPT}" ]; then
+    echo "Script not found..."
+    exit 1
   else
-    echo "Downloading script..."
-    curl -sSfL "https://raw.githubusercontent.com/MichaIng/DietPi/${BRANCH}/PREP_SYSTEM_FOR_DIETPI.sh" > "${PREP_SCRIPT}"
-    echo
-    # modify the newly downloaded script
-    if [ ! -f "${PREP_SCRIPT}" ]; then
-      echo "Script not found..."
-      exit 1
-    else
-      echo ""
-      echo "Modifying script..."
+    echo ""
+    echo "Modifying script..."
 
-    fi
   fi
+fi
 
-  export GITBRANCH='master'
-  export IMAGE_CREATOR='Mausy5043'
-  export PREIMAGE_INFO='re_install'
-  export HW_MODEL=0
-  export WIFI_REQUIRED=0
-  export DISTRO_TARGET=6
+export GITBRANCH='master'
+export IMAGE_CREATOR='Mausy5043'
+export PREIMAGE_INFO='re_install'
+export HW_MODEL=0
+export WIFI_REQUIRED=0
+export DISTRO_TARGET=6
 
-  echo ""
-  echo "Running script..."
-  bash "${PREP_SCRIPT}"
+echo ""
+echo "Running script..."
+bash "${PREP_SCRIPT}"
 
-  echo ""
-  echo "Post-script actions..."
-  if [ -f /tmp/dietpi.txt ]; then
-    echo "Injecting custom dietpi.txt."
-    cp -v /tmp/dietpi.txt /boot/
-  fi
-popd || exit 1
+echo ""
+echo "Post-script actions..."
+if [ -f /tmp/dietpi.txt ]; then
+  echo "Injecting custom dietpi.txt."
+  cp -v /tmp/dietpi.txt /boot/
+fi
+
+
