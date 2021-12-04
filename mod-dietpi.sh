@@ -72,4 +72,4 @@ if [ -f /tmp/dietpi.txt ]; then
   cp -v /tmp/dietpi.txt /boot/
 fi
 
-
+# reboot
