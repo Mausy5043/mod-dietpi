@@ -74,8 +74,8 @@ mkdir -p /boot/.bin
 
   echo ""
   echo "Post-script actions..."
-  if [ -f /tmp/dietpi.txt ]; then
-    echo "Injecting custom dietpi.txt."
+  if [ -f /boot/.bin/dietpi.txt ]; then
+    echo "Injecting custom configuration."
     # recover files from persistent storage
     cp -v /boot/.bin/* /boot/
   fi
