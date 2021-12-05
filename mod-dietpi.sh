@@ -37,7 +37,7 @@ mkdir -p /boot/.bin
   sleep 10
 
   if [ -d "${HERE}/machines/${MACHINE}" ]; then
-    echo "Preparing configuration...-"
+    echo "Preparing configuration..."
     # the repo may not have been cloned in a safe location
     # copy the scripts to the persistent storage
     cp -v "${HERE}/machines/${MACHINE}/*" /boot/.bin/

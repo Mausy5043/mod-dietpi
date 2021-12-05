@@ -1,1 +1,1 @@
-root=PARTUUID=8b0ac6f5-02 rootfstype=ext4 rootwait fsck.repair=yes net.ifnames=0 logo.nologo quiet console=serial0,115200 console=tty1
+root=PARTUUID=0140a7f0-02 rootfstype=ext4 rootwait fsck.repair=yes net.ifnames=0 logo.nologo quiet console=tty1 loglevel=8
