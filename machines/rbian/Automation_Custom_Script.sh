@@ -22,7 +22,12 @@
   # pytz
   # skyfield
 
+  # DEBUG: find out more about the state of the machine at this point
   pstree -a
+  echo
+  systemctl --no-pager --plain list-units-files
+  echo
+  systemctl status
   # network up?
   ip address
 

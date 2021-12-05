@@ -76,5 +76,5 @@
     mv -v /tmp/Automation_Custom_Script.sh /boot/
   fi
 
-  # reboot
+  shutdown -r +1
 } | tee /boot/mod-dietpi.log
