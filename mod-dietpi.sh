@@ -41,6 +41,7 @@ mkdir -p /boot/.bin
     # the repo may not have been cloned in a safe location
     # copy the scripts to the persistent storage
     cp -v "${HERE}/machines/${MACHINE}"/* /boot/.bin/
+    echo ""
   fi
 
   cd /tmp
