@@ -40,7 +40,7 @@ mkdir -p /boot/.bin
     echo "Preparing configuration..."
     # the repo may not have been cloned in a safe location
     # copy the scripts to the persistent storage
-    cp -v "${HERE}/machines/${MACHINE}/*" /boot/.bin/
+    cp -v "${HERE}/machines/${MACHINE}"/* /boot/.bin/
   fi
 
   cd /tmp
