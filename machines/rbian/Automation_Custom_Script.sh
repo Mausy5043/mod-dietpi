@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# create a persistent directory for storing logs
+mkdir -p /boot/.log
+
 {
   echo ""
   echo "****************************************"
@@ -36,4 +40,4 @@
   echo "*   AUTOMATION CUSTOM POSTSCRIPT END   *"
   echo "****************************************"
   echo ""
-} | tee /boot/postscript.log
+} | tee /boot/.log/postscript.log

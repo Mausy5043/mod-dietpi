@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# create a persistent directory for storing logs
+mkdir -p /boot/.log
+
 {
   echo ""
   echo "***************************************"
@@ -23,4 +27,4 @@
   echo "***************************************"
   echo ""
   echo
-} | tee /boot/prescript.log
+} | tee /boot/.log/prescript.log

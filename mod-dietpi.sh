@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# create a persistent directory for storing logs
+mkdir -p /boot/.log
+
 {
   if [ "$(id -u)" -ne 0 ]; then
     echo "Please run as root"
@@ -77,4 +81,4 @@
   fi
 
   shutdown -r +1
-} | tee /boot/mod-dietpi.log
+} | tee /boot/.log/mod-dietpi.log
