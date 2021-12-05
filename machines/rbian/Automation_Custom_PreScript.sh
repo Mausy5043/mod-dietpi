@@ -2,6 +2,7 @@
 
 # create a persistent directory for storing logs
 mkdir -p /boot/.log
+mkdir -p /boot/.bin
 
 {
   echo ""

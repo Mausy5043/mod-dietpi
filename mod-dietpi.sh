@@ -2,6 +2,7 @@
 
 # create a persistent directory for storing logs
 mkdir -p /boot/.log
+mkdir -p /boot/.bin
 
 {
   if [ "$(id -u)" -ne 0 ]; then
@@ -37,9 +38,9 @@ mkdir -p /boot/.log
 
   if [ -d "${HERE}/machines/${MACHINE}" ]; then
     echo "Preparing configuration...-"
-    cp -v "${HERE}/machines/${MACHINE}/dietpi.txt" /tmp/
-    cp -v "${HERE}/machines/${MACHINE}/Automation_Custom_PreScript.sh" /tmp/
-    cp -v "${HERE}/machines/${MACHINE}/Automation_Custom_Script.sh" /tmp/
+    # the repo may not have been cloned in a safe location
+    # copy the scripts to the persistent storage
+    cp -v "${HERE}/machines/${MACHINE}/*" /boot/.bin/
   fi
 
   cd /tmp
@@ -75,10 +76,12 @@ mkdir -p /boot/.log
   echo "Post-script actions..."
   if [ -f /tmp/dietpi.txt ]; then
     echo "Injecting custom dietpi.txt."
-    mv -v /tmp/dietpi.txt /boot/
-    mv -v /tmp/Automation_Custom_PreScript.sh /boot/
-    mv -v /tmp/Automation_Custom_Script.sh /boot/
+    # recover files from persistent storage
+    cp -v /boot/.bin/* /boot/
   fi
 
-  shutdown -r +1
+  echo "Rebooting in 60 seconds."
+  sleep 60
 } | tee /boot/.log/mod-dietpi.log
+
+reboot
