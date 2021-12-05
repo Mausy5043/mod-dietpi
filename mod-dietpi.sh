@@ -81,7 +81,8 @@ mkdir -p /boot/.bin
   fi
 
   echo "Rebooting in 60 seconds."
-  sleep 60
 } | tee /boot/.log/mod-dietpi.log
 
+sync; sync
+sleep 60
 reboot
