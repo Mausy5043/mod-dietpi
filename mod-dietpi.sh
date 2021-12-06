@@ -82,10 +82,10 @@ mkdir -p /boot/.bin
   fi
 
   echo "Rebooting in 60 seconds."
+  # prevent booting into a coma
+  systemctl disable dietpi-fs_partition_resize
 } | tee /boot/.log/mod-dietpi.log
 
-# prevent booting into a coma
-systemctl disable dietpi-fs_partition_resize
 sync; sync
 sleep 60
 reboot
