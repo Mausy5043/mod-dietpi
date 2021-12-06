@@ -1,1 +1,0 @@
-root=PARTUUID=0140a7f0-02 rootfstype=ext4 rootwait fsck.repair=yes net.ifnames=0 logo.nologo quiet console=tty1 loglevel=8
