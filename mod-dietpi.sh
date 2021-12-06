@@ -1,26 +1,29 @@
 #!/usr/bin/env bash
 
-# create a persistent directory for storing logs
-mkdir -p /boot/.log
+if [ "$(id -u)" -ne 0 ]; then
+  echo "Please run as root"
+  exit 1
+fi
+
+# create persistent directories for storing stuff while the prep-script wipes stuff
 mkdir -p /boot/.bin
+rm /boot/.bin/*
+mkdir -p /boot/.log
+rm /boot/.log/*
 
 {
-  if [ "$(id -u)" -ne 0 ]; then
-    echo "Please run as root"
-    exit 1
-  fi
-
-  CLOPT=("$@")
+  # set defaults
   BRANCH="dev"
-  MACHINE="$(hostname | awk -F. '{print $1}')"
   HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
+  MACHINE="$(hostname | awk -F. '{print $1}')"
   PREP_SCRIPT=/tmp/prep_dietpi.sh
 
   echo ""
   echo "**************************************************"
   echo "Arguments passed to mod-ua.sh: ${CLOPT[@]}"
   echo ""
-
+  # parse CLI parameters
+  CLOPT=("$@")
   while true; do
     case "$1" in
       -b | --branch ) BRANCH=$2; shift; shift ;;
@@ -39,7 +42,7 @@ mkdir -p /boot/.bin
   if [ -d "${HERE}/machines/${MACHINE}" ]; then
     echo "Preparing configuration..."
     # the repo may not have been cloned in a safe location
-    # copy the scripts to the persistent storage
+    # we copy the scripts to the persistent storage
     cp -v "${HERE}/machines/${MACHINE}"/* /boot/.bin/
     echo ""
   fi
@@ -62,13 +65,13 @@ mkdir -p /boot/.bin
     fi
   fi
 
+  # pre-set variables for non-interactive execution of $PREP_SCRIPT
   export GITBRANCH='master'
   export IMAGE_CREATOR='Mausy5043'
   export PREIMAGE_INFO='re_install'
   export HW_MODEL=0
   export WIFI_REQUIRED=0
   export DISTRO_TARGET=6
-
   echo ""
   echo "Running script..."
   bash "${PREP_SCRIPT}"
@@ -86,6 +89,8 @@ mkdir -p /boot/.bin
   systemctl disable dietpi-fs_partition_resize
 } | tee /boot/.log/mod-dietpi.log
 
+# sync the disks and let things settle down.
 sync; sync
 sleep 60
+# start a fresh install
 reboot
