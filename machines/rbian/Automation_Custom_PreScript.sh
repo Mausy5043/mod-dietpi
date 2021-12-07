@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# create a persistent directory for storing logs
+# make sure a persistent directory for storing logs and binaries exists
 mkdir -p /boot/.log
 mkdir -p /boot/.bin
 
@@ -16,11 +16,9 @@ mkdir -p /boot/.bin
   # DEBUG: find out more about the state of the machine at this point
   pstree -a
   echo
-  systemctl --no-pager --plain list-units-files
+  systemctl --no-pager --plain list-unit-files
   echo
   systemctl status
-  # network up?
-  ip address
 
   echo ""
   echo "***************************************"
