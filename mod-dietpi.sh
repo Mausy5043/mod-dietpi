@@ -92,4 +92,4 @@ rm /boot/.log/*
 # sync the disks and let things settle down.
 sync; sync
 # start a fresh install
-shutdown -r +1
+sleep 60; reboot
