@@ -27,7 +27,8 @@
   find / -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
   find / -user 1000 -exec chown -h dietpi {} \; 2>/dev/null
   # add user:group pi
-  useradd -m -s /bin/bash -p "raspberry" -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
+  useradd -m -s /bin/bash -p -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
+  echo -n "pi:raspberry" | /usr/sbin/chpasswd
   echo ""
   echo "Setting up account for user pi..."
   mkdir -m 0700 -p "/home/pi/.ssh"
