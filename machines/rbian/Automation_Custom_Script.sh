@@ -89,7 +89,7 @@
   echo "*   AUTOMATION CUSTOM POSTSCRIPT END   *"
   echo "****************************************"
   echo ""
-} 2>&1 | tee /boot/.log/postscript.log
+} 2>&1 | tee /boot/.log/install_2_script.log
 
 # sync the disks and let things settle down.
 sync; sync

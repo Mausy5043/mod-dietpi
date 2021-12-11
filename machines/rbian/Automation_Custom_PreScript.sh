@@ -20,6 +20,6 @@ mkdir -p /boot/.bin
   echo "***************************************"
   echo ""
   echo
-} 2>&1 | tee /boot/.log/prescript.log
+} 2>&1 | tee /boot/.log/install_1_script.log
 
 sync; sync
