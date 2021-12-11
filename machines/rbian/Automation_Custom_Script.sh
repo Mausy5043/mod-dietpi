@@ -32,7 +32,7 @@
   echo "Setting up account for user pi..."
   mkdir -m 0700 -p "/home/pi/.ssh"
   touch /home/pi/.bin
-  ln -s "${HOME}/.bin" "${HOME}/bin"
+  ln -s "/home/pi/.bin" "/home/pi/bin"
   mkdir -p /home/pi/.config
   touch /home/pi/.dircolors
   touch /home/pi/.rsync
