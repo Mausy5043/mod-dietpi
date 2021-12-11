@@ -67,14 +67,10 @@
   # TODO: evaluate installation of raspboot or implement it here.
   # TODO: evaluate if DNSSEC needs to be switched off.
 
-  # TODO: properly set-up locale as perl keeps complaining about it.
-  # TODO:   timezone=Europe/Amsterdam
-  # TODO:   locales="en_US.UTF-8"
-  # TODO:   system_default_locale="en_US.UTF-8"
-
   # TODO: check if these are missing packages and if they are needed:
   # TODO: f2fs-tools nfs-common curl psmisc
   packages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
+  apt-get -yqV "${packages}"
 
   # TODO: link python to python3 executable
 
