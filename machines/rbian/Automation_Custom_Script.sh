@@ -8,7 +8,7 @@
   echo "****************************************"
   date  +"%Y.%m.%d %H:%M:%S"
   echo ""
-
+  source /boot/dietpi.txt
   echo "Repairing locale..."
   # repair the locale to suppress errors during SSH-sessions like these:
   # perl: warning: Setting locale failed.
@@ -18,7 +18,7 @@
   /usr/sbin/update-locale LANGUAGE="en_US:en"
 
   echo ""
-  echo "Replacing user dietpi by user pi..."
+  echo "Adding user pi..."
   # TODO: add user `pi` with sudo-rights and groups: "adm,users,video,dialout"
   # add new user `pi`
   # move user and group dietpi to UID=1010 & GID=1010
@@ -27,11 +27,25 @@
   find / -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
   find / -user 1000 -exec chown -h dietpi {} \; 2>/dev/null
   # add user:group pi
-  useradd -m -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
+  useradd -m -s /bin/bash -p "$AUTO_SETUP_GLOBAL_PASSWORD" -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
+  echo ""
+  echo "Setting up account for user pi..."
+  mkdir -m 0700 -p "/home/pi/.ssh"
+  touch /home/pi/.bin
+  ln -s "${HOME}/.bin" "${HOME}/bin"
+  mkdir -p /home/pi/.config
+  touch /home/pi/.dircolors
+  touch /home/pi/.rsync
+  touch /home/pi/.screenrc
+
+  git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
+  chmod -R 0755 "/home/pi/dotfiles"
 
   # add new user `pi` to sudoers
   echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_pi-nopasswd
 
+  # let user pi take ownership of all files
+  chown -R pi:pi /home/pi
   # TODO: revoke root-access via SSH
   echo ""
   echo "Revoking root's SSH-access for security reasons..."
@@ -51,6 +65,13 @@
   }>> /etc/hosts
 
   echo ""
+  echo "Creating extra mountpoints..."
+  echo ""
+  mkdir -p /rootfs/srv/config
+  mkdir -p /rootfs/srv/databases
+  mkdir -p /rootfs/srv/files
+  # TODO: adjust /etc/fstab
+
 
   # TODO: review these cmdline settings:
   # TODO: cmdline="dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 noatime loglevel=6 cgroup_enable=memory elevator=noop fsck.repair=yes"
@@ -79,6 +100,7 @@
   # TODO: pytz skyfield
 
   # DEBUG: find out more about the state of the machine at this point
+  echo
   pstree -a
   echo
   systemctl --no-pager --plain list-unit-files
