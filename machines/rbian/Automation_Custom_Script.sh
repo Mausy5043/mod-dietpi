@@ -23,9 +23,9 @@
   # add new user `pi`
   # move user and group dietpi to UID=1010 & GID=1010
   usermod -u 1010 dietpi
-  groupmod -u 1010 dietpi
-  find / -group 1000 -exec chgrp -h dietpi {} \;
-  find / -user 1000 -exec chown -h dietpi {} \;
+  groupmod -g 1010 dietpi
+  find / -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
+  find / -user 1000 -exec chown -h dietpi {} \; 2>/dev/null
   # add user pi
   useradd -m -u 1000 -g 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
 
@@ -70,7 +70,7 @@
   # TODO: check if these are missing packages and if they are needed:
   # TODO: f2fs-tools nfs-common curl psmisc
   packages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
-  apt-get -yqV "${packages}"
+  apt-get -yq "${packages}"
 
   # TODO: link python to python3 executable
 
@@ -90,3 +90,8 @@
   echo "****************************************"
   echo ""
 } 2>&1 | tee /boot/.log/postscript.log
+
+# sync the disks and let things settle down.
+sync; sync
+# reboot to close the root console
+shutdown -r +1
