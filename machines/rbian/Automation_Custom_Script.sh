@@ -26,8 +26,8 @@
   groupmod -g 1010 dietpi
   find / -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
   find / -user 1000 -exec chown -h dietpi {} \; 2>/dev/null
-  # add user pi
-  useradd -m -u 1000 -g 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
+  # add user:group pi
+  useradd -m -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
 
   # add new user `pi` to sudoers
   echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_pi-nopasswd
@@ -89,9 +89,9 @@
   echo "*   AUTOMATION CUSTOM POSTSCRIPT END   *"
   echo "****************************************"
   echo ""
+  # reboot to close the root console
+  shutdown -r +2
 } 2>&1 | tee /boot/.log/install_2_script.log
 
 # sync the disks and let things settle down.
 sync; sync
-# reboot to close the root console
-shutdown -r +1
