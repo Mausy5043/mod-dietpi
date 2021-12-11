@@ -38,9 +38,10 @@
   touch /home/pi/.dircolors
   touch /home/pi/.rsync
   touch /home/pi/.screenrc
-
+  # install dotfiles
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   chmod -R 0755 "/home/pi/dotfiles"
+  su -c '/home/pi/dotfiles/install_pi.sh' pi
 
   # add new user `pi` to sudoers
   echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_pi-nopasswd
@@ -67,12 +68,16 @@
 
   echo ""
   echo "Creating extra mountpoints..."
-  echo ""
   mkdir -p /rootfs/srv/config
   mkdir -p /rootfs/srv/databases
   mkdir -p /rootfs/srv/files
-  # TODO: adjust /etc/fstab
-
+  echo "...and adding them to /etc/fstab..."
+  {
+    echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+    echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+    echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+  } >> /etc/fstab
+  echo ""
 
   # TODO: review these cmdline settings:
   # TODO: cmdline="dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 noatime loglevel=6 cgroup_enable=memory elevator=noop fsck.repair=yes"
