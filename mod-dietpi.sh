@@ -92,4 +92,5 @@ rm /boot/.log/*
 # sync the disks and let things settle down.
 sync; sync
 # start a fresh install
+# NOTE: shutdown doesn't work here because dbus is crippled at this point!
 sleep 60; reboot
