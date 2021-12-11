@@ -42,6 +42,7 @@
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   chmod -R 0755 "/home/pi/dotfiles"
   su -c '/home/pi/dotfiles/install_pi.sh' pi
+  rm /home/pi/.*bak
 
   # add new user `pi` to sudoers
   echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_pi-nopasswd
@@ -68,9 +69,9 @@
 
   echo ""
   echo "Creating extra mountpoints..."
-  mkdir -p /rootfs/srv/config
-  mkdir -p /rootfs/srv/databases
-  mkdir -p /rootfs/srv/files
+  mkdir -p /srv/config
+  mkdir -p /srv/databases
+  mkdir -p /srv/files
   echo "...and adding them to /etc/fstab..."
   {
     echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
