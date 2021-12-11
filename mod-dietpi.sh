@@ -87,10 +87,9 @@ rm /boot/.log/*
   echo "Rebooting in 60 seconds."
   # prevent booting into a coma
   systemctl disable dietpi-fs_partition_resize
-} | tee /boot/.log/mod-dietpi.log
+} 2>&1 | tee /boot/.log/mod-dietpi.log
 
 # sync the disks and let things settle down.
 sync; sync
-sleep 60
 # start a fresh install
-reboot
+shutdown -r +1
