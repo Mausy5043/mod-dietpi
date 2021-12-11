@@ -89,4 +89,4 @@
   echo "*   AUTOMATION CUSTOM POSTSCRIPT END   *"
   echo "****************************************"
   echo ""
-} | tee /boot/.log/postscript.log
+} 2>&1 | tee /boot/.log/postscript.log
