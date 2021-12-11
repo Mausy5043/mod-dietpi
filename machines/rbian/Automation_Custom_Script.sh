@@ -19,7 +19,6 @@
 
   echo ""
   echo "Adding user pi..."
-  # TODO: add user `pi` with sudo-rights and groups: "adm,users,video,dialout"
   # add new user `pi`
   # move user and group dietpi to UID=1010 & GID=1010
   usermod -u 1010 dietpi
@@ -29,31 +28,30 @@
   # add user:group pi
   useradd -m -s /bin/bash -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
   echo -n "pi:raspberry" | /usr/sbin/chpasswd
+  # add new user `pi` to sudoers
+  echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_pi-nopasswd
+
   echo ""
   echo "Setting up account for user pi..."
   mkdir -m 0700 -p "/home/pi/.ssh"
+  # install dotfiles
+  git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   touch /home/pi/.bin
   ln -s "/home/pi/.bin" "/home/pi/bin"
   mkdir -p /home/pi/.config
   touch /home/pi/.dircolors
   touch /home/pi/.rsync
   touch /home/pi/.screenrc
-  # install dotfiles
-  git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
+  # let user pi take ownership of all files
+  chown -R pi:pi /home/pi
   chmod -R 0755 "/home/pi/dotfiles"
   su -c '/home/pi/dotfiles/install_pi.sh' pi
   rm /home/pi/.*bak
 
-  # add new user `pi` to sudoers
-  echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_pi-nopasswd
-
-  # let user pi take ownership of all files
-  chown -R pi:pi /home/pi
-  # TODO: revoke root-access via SSH
   echo ""
   echo "Revoking root's SSH-access for security reasons..."
-  # FIXME: replace space by #
-  sed -i "s/^PermitRootLogin/ &/" /etc/ssh/sshd_config
+  sed -i "s/^PermitRootLogin/#&/" /etc/ssh/sshd_config
+
 
   echo ""
   echo "Updating /etc/hosts file..."
@@ -91,12 +89,10 @@
   # TODO: disable ipv6
 
   # TODO: check post-install.txt
-  # TODO: install dotfiles
   # TODO: evaluate installation of raspboot or implement it here.
   # TODO: evaluate if DNSSEC needs to be switched off.
 
-  # TODO: check if these are missing packages and if they are needed:
-  # TODO: f2fs-tools nfs-common curl psmisc
+  # not yet installing f2fs-tools
   packages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
   # shellcheck disable=SC2086
   apt-get -yq install ${packages}
@@ -106,7 +102,13 @@
   # TODO: install these missing python3 packages (will install all others)
   # TODO: pytz skyfield
 
-  # DEBUG: find out more about the state of the machine at this point
+
+  # Install additional git repos here
+  #
+  #
+  #
+
+  # log the state of the machine at this point
   echo
   pstree -a
   echo
