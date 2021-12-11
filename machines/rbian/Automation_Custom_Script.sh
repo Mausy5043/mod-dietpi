@@ -21,8 +21,12 @@
   echo "Replacing user dietpi by user pi..."
   # TODO: add user `pi` with sudo-rights and groups: "adm,users,video,dialout"
   # add new user `pi`
-  # rename user
-  userdel -Z -r dietpi
+  # move user and group dietpi to UID=1010 & GID=1010
+  usermod -u 1010 dietpi
+  groupmod -u 1010 dietpi
+  find / -group 1000 -exec chgrp -h dietpi {} \;
+  find / -user 1000 -exec chown -h dietpi {} \;
+  # add user pi
   useradd -m -u 1000 -g 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
 
   # add new user `pi` to sudoers
