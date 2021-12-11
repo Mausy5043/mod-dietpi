@@ -31,7 +31,8 @@
   # TODO: revoke root-access via SSH
   echo ""
   echo "Revoking root's SSH-access for security reasons..."
-  #sed -i "s/^PermitRootLogin/#&/" /etc/ssh/sshd_config
+  # FIXME: replace space by #
+  sed -i "s/^PermitRootLogin/ &/" /etc/ssh/sshd_config
 
   echo ""
   echo "Updating /etc/hosts file..."
@@ -45,6 +46,7 @@
     echo "###### Added by Automation_Custom_PreScript.sh"
   }>> /etc/hosts
 
+  echo ""
 
   # TODO: review these cmdline settings:
   # TODO: cmdline="dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 noatime loglevel=6 cgroup_enable=memory elevator=noop fsck.repair=yes"
