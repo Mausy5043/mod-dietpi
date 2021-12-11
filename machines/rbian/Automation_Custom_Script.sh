@@ -70,7 +70,7 @@
   # TODO: check if these are missing packages and if they are needed:
   # TODO: f2fs-tools nfs-common curl psmisc
   packages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
-  apt-get -yq "${packages}"
+  apt-get -yq install "${packages}"
 
   # TODO: link python to python3 executable
 
