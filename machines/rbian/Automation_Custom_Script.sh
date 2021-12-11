@@ -6,8 +6,7 @@
   echo "****************************************"
   echo "*  DIETPI AUTOMATION CUSTOM POSTSCRIPT *"
   echo "****************************************"
-  echo ""
-  echo "$SHELL"
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
 
   # TODO: review these cmdline settings:
@@ -16,10 +15,7 @@
   # TODO: `loglevel=6` to increase logging during boot
   # TODO: `cgroup_enable=memory` added to enable notification of upcoming OOM events
 
-  # TODO: why are systemd dervices complaining about the bus not being there?
-
-  # TODO: revoke root-access via SSH
-  # TODO: add user `pi` with sudo-rights and groups: "adm,users,video,dialout"
+  # TODO: why are systemd devices complaining about the bus not being there?
 
   # TODO: disable ipv6
 
@@ -46,8 +42,6 @@
   pstree -a
   echo
   systemctl --no-pager --plain list-unit-files
-  echo
-  systemctl status
   echo
   ip address
 
