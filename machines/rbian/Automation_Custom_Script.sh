@@ -2,6 +2,12 @@
 
 
 {
+
+  # not yet installing f2fs-tools
+  APTpackages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
+  # python packages to be installed
+  PYpackages="pytz skyfield"
+
   echo ""
   echo "****************************************"
   echo "*  DIETPI AUTOMATION CUSTOM POSTSCRIPT *"
@@ -39,9 +45,6 @@
     echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
   } >> /etc/fstab
-  echo ""
-  echo "Mounting /srv/config"
-  mount /srv/config
 
   echo ""
   echo "Adding user pi..."
@@ -49,7 +52,7 @@
   usermod -u 1010 dietpi
   groupmod -g 1010 dietpi
   find / -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
-  find / -user 1000 -exec chown -h dietpi {} \; 2>/dev/null
+  find / -user  1000 -exec chown -h dietpi {} \; 2>/dev/null
   # add user:group pi
   useradd -m -s /bin/bash -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
   # set default passwd
@@ -79,9 +82,13 @@
   echo "Setting up account for user pi..."
   # shellcheck disable=SC2174
   mkdir -m 0700 -p "/home/pi/.ssh"
-  # Fetch .mailrc
+  # Fetch stuff from the file-server's config mount
+  mount /srv/config
   cp -v /srv/config/.mailrc /home/pi/
   chmod 0600 /home/pi/.mailrc
+  cp -v /srv/config/.netrc /home/pi/
+  chmod 0600 /home/pi/.netrc
+  umount /srv/config
   # install dotfiles
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   touch /home/pi/.bin
@@ -95,19 +102,18 @@
   chmod -R 0755 "/home/pi/dotfiles"
   su -c '/home/pi/dotfiles/install_pi.sh' pi
   rm /home/pi/.*bak
-  echo ""
 
-  # not yet installing f2fs-tools
-  packages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
+  echo ""
+  echo "Installing additional packages..."
   # shellcheck disable=SC2086
-  apt-get -yq install ${packages}
+  apt-get -yq install ${APTpackages}
   echo ""
   # link python to python3 executable
   sudo ln -s /usr/bin/python3 /usr/bin/python
 
-  # install some python3 packages for user pi
-  pypackages="pytz skyfield"
-  su -c "python3 -m pip install ${pypackages}" pi
+  echo ""
+  echo "Installing additional Python packages..."
+  su -c "python3 -m pip install ${PYpackages}" pi
 
   # Install additional git repos here
   #
@@ -118,15 +124,13 @@
   mkdir -p /var/lib/dietpi/dietpi-autostart/
   cat << 'EOF' >> /var/lib/dietpi/dietpi-autostart/custom.sh
 #!/bin/bash
-echo "custom autostart test"
-# TODO: do something useful here
+
 su -c 'python3 /home/pi/bin/pymail.py --subject "$(hostname) was booted on $(date)"' pi
-ip address
+
 exit 0
 EOF
 
 
-  umount /srv/config
   # log the state of the machine at this point
   echo
   pstree -a
