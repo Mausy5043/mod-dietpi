@@ -95,11 +95,13 @@
   chmod -R 0755 "/home/pi/dotfiles"
   su -c '/home/pi/dotfiles/install_pi.sh' pi
   rm /home/pi/.*bak
+  echo ""
 
   # not yet installing f2fs-tools
   packages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
   # shellcheck disable=SC2086
   apt-get -yq install ${packages}
+  echo ""
   # link python to python3 executable
   sudo ln -s /usr/bin/python3 /usr/bin/python
 
@@ -113,6 +115,7 @@
   #
 
   # Install a custom script for reboot actions
+  mkdir -p /var/lib/dietpi/dietpi-autostart/
   cat << 'EOF' >> /var/lib/dietpi/dietpi-autostart/custom.sh
 #!/bin/bash
 echo "custom autostart test"
