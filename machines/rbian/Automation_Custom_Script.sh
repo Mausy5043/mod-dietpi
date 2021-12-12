@@ -90,7 +90,7 @@
   chmod 0600 /home/pi/.netrc
   umount /srv/config
 
-  git config --global pull.rebase false
+  su -c "git config --global pull.rebase false" pi
   # install dotfiles
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   touch /home/pi/.bin
@@ -99,9 +99,11 @@
   touch /home/pi/.dircolors
   touch /home/pi/.rsync
   touch /home/pi/.screenrc
+
   # let user pi take ownership of all files
   chown -R pi:pi /home/pi
   chmod -R 0755 "/home/pi/dotfiles"
+
   su -c '/home/pi/dotfiles/install_pi.sh' pi
   rm /home/pi/.*bak
 
