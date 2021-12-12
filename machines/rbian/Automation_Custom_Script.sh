@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 {
 
   # not yet installing f2fs-tools
