@@ -89,6 +89,8 @@
   cp -v /srv/config/.netrc /home/pi/
   chmod 0600 /home/pi/.netrc
   umount /srv/config
+
+  git config --global pull.rebase false
   # install dotfiles
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   touch /home/pi/.bin
