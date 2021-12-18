@@ -1,1 +1,1 @@
-echo 'Welcome to HendrixNet $(hostname)'
+echo "Welcome to HendrixNet $(hostname)"
