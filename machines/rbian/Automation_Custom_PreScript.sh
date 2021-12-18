@@ -14,6 +14,9 @@ mkdir -p /boot/.bin
   # DEBUG: find out more about the state of the machine at this point
   dmesg -HkuPxe
 
+  # Only include actions here that cannot wait until the Automation_Custom_script.sh is executed.
+  # Some changes may be overridden by the DietPi scripts!
+
   echo ""
   echo "***************************************"
   echo "*  AUTOMATION CUSTOM PRESCRIPT ENDS   *"

@@ -133,6 +133,9 @@ su -c 'python3 /home/pi/bin/pymail.py --subject "$(hostname) was booted on $(dat
 exit 0
 EOF
 
+  # install my own banner
+  cp -v /boot/.bin/dietpi-banner /boot/dietpi/.dietpi-banner
+  cp -v /boot/.bin/dietpi-banner_custom /boot/dietpi/.dietpi-banner_custom
 
   # log the state of the machine at this point
   echo
