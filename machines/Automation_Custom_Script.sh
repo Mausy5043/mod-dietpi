@@ -1,5 +1,22 @@
 #!/bin/bash
 
+# See if packages are installed and install them.
+install_package()
+{
+  package=${1}
+  echo "*********************************************************"
+  echo "* Requesting ${package}"
+  status=$(dpkg-query -W -f='${Status} ${Version}\n' "${package}" 2>/dev/null | wc -l)
+  if [ "${status}" -eq 0 ]; then
+    echo "* Installing ${package}"
+    echo "*********************************************************"
+    sudo apt-get -yq install "${package}"
+  else
+    echo "* Already installed !!!"
+    echo "*********************************************************"
+  fi
+}
+
 {
   # not yet installing f2fs-tools
   # Install these packages by default
@@ -61,7 +78,14 @@
   groupmod -g 1010 dietpi
   find / -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
   find / -user  1000 -exec chown -h dietpi {} \; 2>/dev/null
-  # add user:group pi
+
+  # Check if user exists
+  if id -u pi > /dev/null 2>&1; then
+    deluser pi
+    delgroup pi
+  fi
+
+  # (re-)add user:group pi
   useradd -m -s /bin/bash -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
   # set default passwd
   echo -n "pi:raspberry" | /usr/sbin/chpasswd

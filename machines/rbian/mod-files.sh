@@ -1,3 +1,4 @@
+#!/bin/bash
 
 echo ""
 echo -n "Modify /boot/config.txt "
