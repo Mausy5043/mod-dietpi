@@ -10,7 +10,7 @@ install_package()
   if [ "${status}" -eq 0 ]; then
     echo "* Installing ${package}"
     echo "*********************************************************"
-    sudo apt-get -yq install "${package}"
+    apt-get -yq install "${package}"
   else
     echo "* Already installed !!!"
     echo "*********************************************************"
@@ -65,6 +65,8 @@ install_package()
 
   # install my own banner
   if [ -f /boot/.bin/dietpi-banner ]; then
+    echo ""
+    echo "Install custom banner..."
     cp -v /boot/.bin/dietpi-banner /boot/dietpi/.dietpi-banner
   fi
   if [ -f /boot/.bin/dietpi-banner_custom ]; then
@@ -76,8 +78,8 @@ install_package()
   # move user:group dietpi to UID=1010 & GID=1010
   usermod -u 1010 dietpi
   groupmod -g 1010 dietpi
-  find / -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
-  find / -user  1000 -exec chown -h dietpi {} \; 2>/dev/null
+  find / ! -path "/home/pi*" ! -path "/srv/*" ! -path "/proc/*" ! -path "/dev/*" -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
+  find / ! -path "/home/pi*" ! -path "/srv/*" ! -path "/proc/*" ! -path "/dev/*" -user  1000 -exec chown -h dietpi {} \; 2>/dev/null
 
   # Check if user exists
   if id -u pi > /dev/null 2>&1; then
@@ -105,8 +107,6 @@ install_package()
   # TODO: why are systemd devices complaining about the bus not being there?
 
   # TODO: disable ipv6
-
-  # TODO: evaluate installation of raspboot or implement it here.
   # TODO: evaluate if DNSSEC needs to be switched off.
 
   echo ""
@@ -147,7 +147,9 @@ install_package()
   apt-get -yq install ${APTpackages}
   echo ""
   # link python to python3 executable
-  sudo ln -s /usr/bin/python3 /usr/bin/python
+  if [ ! -e /usr/bin/python ]; then
+    ln -s /usr/bin/python3 /usr/bin/python
+  fi
 
   echo ""
   echo "Installing default Python packages..."
@@ -177,9 +179,8 @@ EOF
   echo "Copy configuration files for server-specific duties..."
   for f in /boot/.bin/config/*; do
     g=$(basename "${f}" | sed 's/@/\//g')
-    echo "${f} --> ${g}"
     # path must already exist for this to work:
-    sudo cp "${f}" "/${g}"
+    cp -v "${f}" "/${g}"
   done
 
   # Modify existing server specific configuration files
