@@ -7,9 +7,9 @@ fi
 
 # create persistent directories for storing stuff while the prep-script wipes stuff
 mkdir -p /boot/.bin
-rm /boot/.bin/*
+rm /boot/.bin/* 2>/dev/null
 mkdir -p /boot/.log
-rm /boot/.log/*
+rm /boot/.log/* 2>/dev/null
 
 {
   # set defaults
@@ -42,8 +42,9 @@ rm /boot/.log/*
   if [ -d "${HERE}/machines/${MACHINE}" ]; then
     echo "Preparing configuration..."
     # the repo may not have been cloned in a safe location
-    # we copy the scripts to the persistent storage
-    cp -v "${HERE}/machines/${MACHINE}"/* /boot/.bin/
+    # we copy the scripts and other files to the persistent storage
+    cp -v "${HERE}/machines"/*.sh /boot/.bin/
+    cp -rv "${HERE}/machines/${MACHINE}"/* /boot/.bin/  || exit 1
     echo ""
   fi
 

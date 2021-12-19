@@ -1,10 +1,10 @@
 #!/bin/bash
 
 {
-
   # not yet installing f2fs-tools
+  # Install these packages by default
   APTpackages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
-  # python packages to be installed
+  # Install these python packages by default
   PYpackages="pytz skyfield"
 
   echo ""
@@ -12,6 +12,7 @@
   echo "*  DIETPI AUTOMATION CUSTOM POSTSCRIPT *"
   echo "****************************************"
   date  +"%Y.%m.%d %H:%M:%S"
+
   echo ""
   echo "Repairing locale..."
   # repair the locale to suppress errors during SSH-sessions like these:
@@ -24,13 +25,13 @@
   echo ""
   echo "Updating /etc/hosts file..."
   {
-    echo "###### Added by Automation_Custom_PreScript.sh"
+    echo "###### Added by Automation_Custom_Script.sh"
     echo "::1             localhost ip6-localhost ip6-loopback"
     echo "fe00::0         ip6-localnet"
     echo "ff00::0         ip6-mcastprefix"
     echo "ff02::1         ip6-allnodes"
     echo "ff02::2         ip6-allrouters"
-    echo "###### Added by Automation_Custom_PreScript.sh"
+    echo "###### Added by Automation_Custom_Script.sh"
   }>> /etc/hosts
 
   echo ""
@@ -44,6 +45,14 @@
     echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
   } >> /etc/fstab
+
+  # install my own banner
+  if [ -f /boot/.bin/dietpi-banner ]; then
+    cp -v /boot/.bin/dietpi-banner /boot/dietpi/.dietpi-banner
+  fi
+  if [ -f /boot/.bin/dietpi-banner_custom ]; then
+    cp -v /boot/.bin/dietpi-banner_custom /boot/dietpi/.dietpi-banner_custom
+  fi
 
   echo ""
   echo "Adding user pi..."
@@ -73,7 +82,6 @@
 
   # TODO: disable ipv6
 
-  # TODO: check post-install.txt
   # TODO: evaluate installation of raspboot or implement it here.
   # TODO: evaluate if DNSSEC needs to be switched off.
 
@@ -89,9 +97,11 @@
   chmod 0600 /home/pi/.netrc
   umount /srv/config
 
+  # set git globals
   su -c "git config --global pull.rebase false" pi
+  su -c "git config --global core.fileMode false" pi
+
   # install dotfiles
-  git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   touch /home/pi/.bin
   ln -s "/home/pi/.bin" "/home/pi/bin"
   mkdir -p /home/pi/.config
@@ -99,15 +109,16 @@
   touch /home/pi/.rsync
   touch /home/pi/.screenrc
 
-  # let user pi take ownership of all files
-  chown -R pi:pi /home/pi
+  git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
   chmod -R 0755 "/home/pi/dotfiles"
-
   su -c '/home/pi/dotfiles/install_pi.sh' pi
   rm /home/pi/.*bak
 
+  # let user pi take ownership of all files
+  chown -R pi:pi /home/pi
+
   echo ""
-  echo "Installing additional packages..."
+  echo "Installing default packages..."
   # shellcheck disable=SC2086
   apt-get -yq install ${APTpackages}
   echo ""
@@ -115,13 +126,8 @@
   sudo ln -s /usr/bin/python3 /usr/bin/python
 
   echo ""
-  echo "Installing additional Python packages..."
+  echo "Installing default Python packages..."
   su -c "python3 -m pip install ${PYpackages}" pi
-
-  # Install additional git repos here
-  #
-  #
-  #
 
   # Install a custom script for reboot actions
   mkdir -p /var/lib/dietpi/dietpi-autostart/
@@ -133,9 +139,31 @@ su -c 'python3 /home/pi/bin/pymail.py --subject "$(hostname) was booted on $(dat
 exit 0
 EOF
 
-  # install my own banner
-  cp -v /boot/.bin/dietpi-banner /boot/dietpi/.dietpi-banner
-  cp -v /boot/.bin/dietpi-banner_custom /boot/dietpi/.dietpi-banner_custom
+
+  # server-specific modifications
+  echo ""
+  echo "Post-post-install options..."
+  echo "Additional packages for server-specific duties..."
+  if [ -e "/boot/.bin/add-packages.sh" ]; then
+    source "/boot/.bin/add-packages.sh"
+  fi
+
+  # Install server specific configuration files
+  echo
+  echo "Copy configuration files for server-specific duties..."
+  for f in /boot/.bin/config/*; do
+    g=$(basename "${f}" | sed 's/@/\//g')
+    echo "${f} --> ${g}"
+    # path must already exist for this to work:
+    sudo cp "${f}" "/${g}"
+  done
+
+  # Modify existing server specific configuration files
+  echo
+  echo "Modify installation for server-specific duties..."
+  if [ -e "/boot/.bin/mod-files.sh" ]; then
+    source "/boot/.bin/mod-files.sh"
+  fi
 
   # log the state of the machine at this point
   echo
