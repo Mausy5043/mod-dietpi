@@ -1,5 +1,7 @@
 #!/bin/bash
 
+USER=pi
+
 # See if packages are installed and install them.
 install_package()
 {
@@ -16,6 +18,18 @@ install_package()
     echo "*********************************************************"
   fi
 }
+
+# See if packages are installed and install them.
+install_pypackage()
+{
+  package=${1}
+  echo "*********************************************************"
+  echo "* Requesting ${package}"
+  echo ""
+  su -c "python3 -m pip install ${package}" "${USER}"
+  echo ""
+}
+
 
 {
   # not yet installing f2fs-tools
@@ -74,7 +88,7 @@ install_package()
   fi
 
   echo ""
-  echo "Adding user pi..."
+  echo "Adding user ${USER}..."
   # move user:group dietpi to UID=1010 & GID=1010
   usermod -u 1010 dietpi
   groupmod -g 1010 dietpi
@@ -82,17 +96,17 @@ install_package()
   find / ! -path "/home/pi*" ! -path "/srv/*" ! -path "/proc/*" ! -path "/dev/*" -user  1000 -exec chown -h dietpi {} \; 2>/dev/null
 
   # Check if user exists
-  if id -u pi > /dev/null 2>&1; then
-    deluser pi
-    delgroup pi
+  if id -u "${USER}" > /dev/null 2>&1; then
+    deluser "${USER}"
+    delgroup "${USER}"
   fi
 
-  # (re-)add user:group pi
-  useradd -m -s /bin/bash -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video pi
+  # (re-)add user:group "${USER}"
+  useradd -m -s /bin/bash -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video "${USER}"
   # set default passwd
-  echo -n "pi:raspberry" | /usr/sbin/chpasswd
-  # add new user `pi` to sudoers
-  echo "pi ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_pi-nopasswd
+  echo -n "${USER}:raspberry" | /usr/sbin/chpasswd
+  # add new user `${USER}` to sudoers
+  echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_${USER}-nopasswd
 
   echo ""
   echo "Revoking root's SSH-access for security reasons..."
@@ -110,36 +124,36 @@ install_package()
   # TODO: evaluate if DNSSEC needs to be switched off.
 
   echo ""
-  echo "Setting up account for user pi..."
+  echo "Setting up account for user ${USER}..."
   # shellcheck disable=SC2174
-  mkdir -m 0700 -p "/home/pi/.ssh"
+  mkdir -m 0700 -p "/home/${USER}/.ssh"
   # Fetch stuff from the file-server's config mount
   mount /srv/config
-  cp -v /srv/config/.mailrc /home/pi/
-  chmod 0600 /home/pi/.mailrc
-  cp -v /srv/config/.netrc /home/pi/
-  chmod 0600 /home/pi/.netrc
+  cp -v /srv/config/.mailrc /home/${USER}/
+  chmod 0600 /home/${USER}/.mailrc
+  cp -v /srv/config/.netrc /home/${USER}/
+  chmod 0600 /home/${USER}/.netrc
   umount /srv/config
 
   # set git globals
-  su -c "git config --global pull.rebase false" pi
-  su -c "git config --global core.fileMode false" pi
+  su -c "git config --global pull.rebase false" ${USER}
+  su -c "git config --global core.fileMode false" ${USER}
 
   # install dotfiles
-  touch /home/pi/.bin
-  ln -s "/home/pi/.bin" "/home/pi/bin"
-  mkdir -p /home/pi/.config
-  touch /home/pi/.dircolors
-  touch /home/pi/.rsync
-  touch /home/pi/.screenrc
+  touch /home/${USER}/.bin
+  ln -s "/home/${USER}/.bin" "/home/${USER}/bin"
+  mkdir -p /home/${USER}/.config
+  touch /home/${USER}/.dircolors
+  touch /home/${USER}/.rsync
+  touch /home/${USER}/.screenrc
 
-  git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/pi/dotfiles"
-  chmod -R 0755 "/home/pi/dotfiles"
-  su -c '/home/pi/dotfiles/install_pi.sh' pi
-  rm /home/pi/.*bak
+  git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/${USER}/dotfiles"
+  chmod -R 0755 "/home/${USER}/dotfiles"
+  su -c "/home/${USER}/dotfiles/install_pi.sh" ${USER}
+  rm /home/${USER}/.*bak
 
-  # let user pi take ownership of all files
-  chown -R pi:pi /home/pi
+  # let user ${USER} take ownership of all files
+  chown -R ${USER}:${USER} /home/${USER}
 
   echo ""
   echo "Installing default packages..."
@@ -153,14 +167,14 @@ install_package()
 
   echo ""
   echo "Installing default Python packages..."
-  su -c "python3 -m pip install ${PYpackages}" pi
+  su -c "python3 -m pip install ${PYpackages}" ${USER}
 
   # Install a custom script for reboot actions
   mkdir -p /var/lib/dietpi/dietpi-autostart/
   cat << 'EOF' >> /var/lib/dietpi/dietpi-autostart/custom.sh
 #!/bin/bash
 
-su -c 'python3 /home/pi/bin/pymail.py --subject "$(hostname) was booted on $(date)"' pi
+su -c 'python3 /home/${USER}/bin/pymail.py --subject "$(hostname) was booted on $(date)"' ${USER}
 
 exit 0
 EOF
