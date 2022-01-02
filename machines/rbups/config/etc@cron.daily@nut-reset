@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# This script resets the communication with the UPS
+# because in `jessie` -- after a couple of hours or days -- `nut` starts to
+# generate these errors every couple of seconds:
+#
+#     Mar 03 19:14:04 rbups upsmon[429]: Poll UPS [ups@localhost] failed - Data stale
+#
+
+systemctl restart nut-driver.service
