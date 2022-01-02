@@ -48,7 +48,7 @@ rm /boot/.log/* 2>/dev/null
     echo ""
   fi
 
-  cd /tmp
+  cd /tmp || exit 1
   if [ -f "${PREP_SCRIPT}" ]; then
     echo "Not downloading script as it already exists."
   else
