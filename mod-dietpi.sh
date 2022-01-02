@@ -71,7 +71,7 @@ rm /boot/.log/* 2>/dev/null
   export IMAGE_CREATOR='Mausy5043'
   export PREIMAGE_INFO='re_install'
   export HW_MODEL=0
-  export WIFI_REQUIRED=0
+  export WIFI_REQUIRED=1
   export DISTRO_TARGET=6
   echo ""
   echo "Running script..."
