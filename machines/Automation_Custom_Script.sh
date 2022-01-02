@@ -174,7 +174,7 @@ install_pypackage()
   cat << 'EOF' >> /var/lib/dietpi/dietpi-autostart/custom.sh
 #!/bin/bash
 
-su -c 'python3 /home/${USER}/bin/pymail.py --subject "$(hostname) was booted on $(date)"' ${USER}
+su -c 'python3 /home/pi/bin/pymail.py --subject "$(hostname) was booted on $(date)"' pi
 
 exit 0
 EOF
