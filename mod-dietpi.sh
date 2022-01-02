@@ -82,12 +82,14 @@ rm /boot/.log/* 2>/dev/null
   if [ -f /boot/.bin/dietpi.txt ]; then
     echo "Injecting custom configuration."
     # recover files from persistent storage
-    cp -v /boot/.bin/* /boot/
+    # not using `-r` will cause an error so we'll divert that
+    cp -v /boot/.bin/* /boot/ 2>/dev/null
   fi
 
   echo "Rebooting in 60 seconds."
   # prevent booting into a coma
   systemctl disable dietpi-fs_partition_resize
+  echo ""; echo ""
 } 2>&1 | tee /boot/.log/mod-dietpi.log
 
 # sync the disks and let things settle down.
