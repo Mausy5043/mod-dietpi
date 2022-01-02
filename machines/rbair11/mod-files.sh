@@ -11,6 +11,7 @@ echo -n "Modify /boot/config.txt "
   echo "#<<< Added by Automation_Custom_Script.sh"
   echo ""
 }>> /boot/config.txt
+
 #
 ## Bluetooth enable
 #sudo sed -i 's/dtoverlay=disable-bt/\#dtoverlay=disable-bt/g' /boot/config.txt
