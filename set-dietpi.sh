@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # set defaults
-DEVICE="SD-card"
+DEVICE="set-dietpi Destination"
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
 MACHINE="$(hostname | awk -F. '{print $1}')"
 
