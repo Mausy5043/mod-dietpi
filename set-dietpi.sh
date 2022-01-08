@@ -9,7 +9,7 @@ echo ""
 echo "**************************************************"
 # parse CLI parameters
 CLOPT=("$@")
-echo "Arguments passed to mod-dietpi.sh: ${CLOPT[@]}"
+echo "Arguments passed to set-dietpi.sh: ${CLOPT[@]}"
 echo ""
 while true; do
   case "$1" in
