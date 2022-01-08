@@ -20,7 +20,7 @@ rm /boot/.log/* 2>/dev/null
 
   echo ""
   echo "**************************************************"
-  echo "Arguments passed to mod-ua.sh: ${CLOPT[@]}"
+  echo "Arguments passed to mod-dietpi.sh: ${CLOPT[@]}"
   echo ""
   # parse CLI parameters
   CLOPT=("$@")
