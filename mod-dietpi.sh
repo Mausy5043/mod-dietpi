@@ -6,8 +6,6 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 # create persistent directories for storing stuff while the prep-script wipes stuff
-mkdir -p /boot/.bin
-rm /boot/.bin/* 2>/dev/null
 mkdir -p /boot/.log
 rm /boot/.log/* 2>/dev/null
 
@@ -17,17 +15,19 @@ rm /boot/.log/* 2>/dev/null
   HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
   MACHINE="$(hostname | awk -F. '{print $1}')"
   PREP_SCRIPT=/tmp/prep_dietpi.sh
+  SERVICE_DIR=/opt/mod-dietpi
 
   echo ""
   echo "**************************************************"
-  echo "Arguments passed to mod-dietpi.sh: ${CLOPT[@]}"
-  echo ""
   # parse CLI parameters
   CLOPT=("$@")
+  echo "Arguments passed to mod-dietpi.sh: ${CLOPT[@]}"
+  echo ""
   while true; do
     case "$1" in
-      -b | --branch ) BRANCH=$2; shift; shift ;;
+      -b | --branch )  BRANCH=$2; shift; shift ;;
       -m | --machine ) MACHINE="$2"; shift; shift ;;
+      -s | --service ) SERVICE_DIR="2"; shift; shift ;;
       -- ) shift; break ;;
       "" ) break ;;
       * ) echo "Ignoring unknown option: $1"; shift ;;
@@ -37,14 +37,24 @@ rm /boot/.log/* 2>/dev/null
   echo "Installing on ${MACHINE} using the ${BRANCH} branch."
   echo "**************************************************"
   echo ""
+  echo "Intermediate storage will be set-up in ${SERVICE_DIR}"
   sleep 10
+
+  # set-up a persistent storage if it doesn't exist yet.
+  if [ ! -d "${SERVICE_DIR}" ]; then
+    sudo mkdir -p "${SERVICE_DIR}/mod-dietpi"
+  fi
 
   if [ -d "${HERE}/machines/${MACHINE}" ]; then
     echo "Preparing configuration..."
     # the repo may not have been cloned in a safe location
     # we copy the scripts and other files to the persistent storage
-    cp -v "${HERE}/machines"/*.sh /boot/.bin/
-    cp -rv "${HERE}/machines/${MACHINE}"/* /boot/.bin/  || exit 1
+    cp -v "${HERE}/machines/Automation_Custom_PreScript.sh" "${SERVICE_DIR}"
+    cp -v "${HERE}/machines/Automation_Custom_Script.sh" "${SERVICE_DIR}"
+    cp -v "${HERE}/machines/${MACHINE}"/diet* "${SERVICE_DIR}"
+    cp -v "${HERE}/machines/${MACHINE}/add-packages.sh" "${SERVICE_DIR}/mod-dietpi/"
+    cp -v "${HERE}/machines/${MACHINE}/mod-files.sh" "${SERVICE_DIR}/mod-dietpi/"
+    cp -rv "${HERE}/machines/${MACHINE}/config" "${SERVICE_DIR}/mod-dietpi/"
     echo ""
   fi
 
@@ -79,11 +89,10 @@ rm /boot/.log/* 2>/dev/null
 
   echo ""
   echo "Post-script actions..."
-  if [ -f /boot/.bin/dietpi.txt ]; then
+  if [ -f "${SERVICE_DIR}/dietpi.txt" ]; then
     echo "Injecting custom configuration."
     # recover files from persistent storage
-    # not using `-r` will cause an error so we'll divert that
-    cp -v /boot/.bin/* /boot/ 2>/dev/null
+    cp -rv "${SERVICE_DIR}"/* /boot/ 2>/dev/null
   fi
 
   echo "Rebooting in 60 seconds."

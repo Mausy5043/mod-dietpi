@@ -1,6 +1,7 @@
 #!/bin/bash
 
 USER=pi
+SERVICE_DIR=/boot/mod-dietpi
 
 # See if packages are installed and install them.
 install_package()
@@ -78,13 +79,13 @@ install_pypackage()
   } >> /etc/fstab
 
   # install my own banner
-  if [ -f /boot/.bin/dietpi-banner ]; then
+  if [ -f /boot/dietpi-banner ]; then
     echo ""
     echo "Install custom banner..."
-    cp -v /boot/.bin/dietpi-banner /boot/dietpi/.dietpi-banner
+    mv -v /boot/dietpi-banner /boot/dietpi/.dietpi-banner
   fi
-  if [ -f /boot/.bin/dietpi-banner_custom ]; then
-    cp -v /boot/.bin/dietpi-banner_custom /boot/dietpi/.dietpi-banner_custom
+  if [ -f /boot/dietpi-banner_custom ]; then
+    mv -v /boot/dietpi-banner_custom /boot/dietpi/.dietpi-banner_custom
   fi
 
   echo ""
@@ -184,14 +185,14 @@ EOF
   echo ""
   echo "Post-post-install options..."
   echo "Additional packages for server-specific duties..."
-  if [ -e "/boot/.bin/add-packages.sh" ]; then
-    source "/boot/.bin/add-packages.sh"
+  if [ -e "${SERVICE_DIR}/add-packages.sh" ]; then
+    source "${SERVICE_DIR}/add-packages.sh"
   fi
 
   # Install server specific configuration files
   echo
   echo "Copy configuration files for server-specific duties..."
-  for f in /boot/.bin/config/*; do
+  for f in "${SERVICE_DIR}"/config/*; do
     g=$(basename "${f}" | sed 's/@/\//g')
     # path must already exist for this to work:
     cp -v "${f}" "/${g}"
@@ -200,8 +201,8 @@ EOF
   # Modify existing server specific configuration files
   echo
   echo "Modify installation for server-specific duties..."
-  if [ -e "/boot/.bin/mod-files.sh" ]; then
-    source "/boot/.bin/mod-files.sh"
+  if [ -e "${SERVICE_DIR}/mod-files.sh" ]; then
+    source "${SERVICE_DIR}/mod-files.sh"
   fi
 
   # log the state of the machine at this point
