@@ -27,7 +27,7 @@ rm /boot/.log/* 2>/dev/null
     case "$1" in
       -b | --branch )  BRANCH=$2; shift; shift ;;
       -m | --machine ) MACHINE="$2"; shift; shift ;;
-      -s | --service ) SERVICE_DIR="2"; shift; shift ;;
+      -s | --service ) SERVICE_DIR="$2"; shift; shift ;;
       -- ) shift; break ;;
       "" ) break ;;
       * ) echo "Ignoring unknown option: $1"; shift ;;
