@@ -35,7 +35,7 @@ install_pypackage()
 {
   # not yet installing f2fs-tools
   # Install these packages by default
-  APTpackages="apt-utils bash-completion bc file gettext less lsb-release lsof screen tree zip"
+  APTpackages="apt-utils bash-completion build-essential bc file gettext less lsb-release lsof screen tree zip python3-dev python3-pip"
   # Install these python packages by default
   PYpackages="pytz skyfield"
 

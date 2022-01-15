@@ -142,7 +142,7 @@ AUTO_SETUP_INSTALL_SOFTWARE_ID=16   # build-essentials
 AUTO_SETUP_INSTALL_SOFTWARE_ID=17   # git
 AUTO_SETUP_INSTALL_SOFTWARE_ID=87   # sqlite
 AUTO_SETUP_INSTALL_SOFTWARE_ID=110  # nfs client
-AUTO_SETUP_INSTALL_SOFTWARE_ID=130  # python3 pip
+# AUTO_SETUP_INSTALL_SOFTWARE_ID=130  # python3 pip
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
