@@ -35,7 +35,7 @@ install_pypackage()
 {
   # not yet installing f2fs-tools
   # Install these packages by default
-  APTpackages="apt-utils bash-completion build-essential bc file gettext less lsb-release lsof screen tree zip python3-dev python3-pip"
+  APTpackages="apt-utils bash-completion build-essential bc file gettext less lsb-release lsof man python3 python3-dev python3-pip screen tree zip"
   # Install these python packages by default
   PYpackages="pytz skyfield"
 
@@ -160,6 +160,7 @@ install_pypackage()
   echo "Installing default packages..."
   # shellcheck disable=SC2086
   apt-get -yq install ${APTpackages}
+
   echo ""
   # link python to python3 executable
   if [ ! -e /usr/bin/python ]; then
