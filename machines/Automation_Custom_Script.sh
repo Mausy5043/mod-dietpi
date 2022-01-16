@@ -24,7 +24,7 @@ install_package()
 install_pypackage()
 {
   package=${1}
-  echo "*********************************************************"
+  echo "********************************************************PIP*"
   echo "* Requesting ${package}"
   echo ""
   su -c "python3 -m pip install ${package}" "${USER}"
