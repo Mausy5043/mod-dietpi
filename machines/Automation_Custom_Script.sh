@@ -167,11 +167,14 @@ install_pypackage()
   install_package build-essential
   install_package bc
   install_package file
+  install_package git
   install_package gettext
   install_package less
   install_package lsb-release
   install_package lsof
   install_package man
+  install_package netbase
+  install_package nfs-common
   install_package systemd-journal-remote
   install_package python3
   install_package python3-pip
