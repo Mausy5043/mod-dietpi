@@ -154,9 +154,6 @@ install_pypackage()
 
   # TODO: why are systemd devices complaining about the bus not being there?
 
-  # TODO: disable ipv6
-  # TODO: evaluate if DNSSEC needs to be switched off.
-
   echo ""
   echo "Setting up account for user ${USER}..."
   # shellcheck disable=SC2174
