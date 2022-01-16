@@ -14,3 +14,6 @@ echo -n "Modify /boot/config.txt "
 
 echo "Set permissions... [nut]"
 sudo chmod 0640 /etc/nut/*
+
+sudo systemctl enable systemd-journal-upload.service
+sudo systemctl start systemd-journal-upload.service

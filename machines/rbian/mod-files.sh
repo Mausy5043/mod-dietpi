@@ -11,3 +11,6 @@ echo -n "Modify /boot/config.txt "
   echo "#<<< Added by Automation_Custom_Script.sh"
   echo ""
 }>> /boot/config.txt
+
+sudo systemctl enable systemd-journal-upload.service
+sudo systemctl start systemd-journal-upload.service

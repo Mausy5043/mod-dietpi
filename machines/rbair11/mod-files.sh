@@ -26,3 +26,6 @@ echo -n "Modify /boot/config.txt "
 #echo "@reboot           root    sleep 120; systemctl stop ifup@eth0.service" | sudo tee -a /etc/cron.d/98no-eth0
 #
 #echo "[OK]"
+
+sudo systemctl enable systemd-journal-upload.service
+sudo systemctl start systemd-journal-upload.service
