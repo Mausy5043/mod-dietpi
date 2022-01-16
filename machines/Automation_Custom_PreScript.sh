@@ -10,6 +10,8 @@ mkdir -p /boot/.bin
   echo "*  DIETPI AUTOMATION CUSTOM PRESCRIPT *"
   echo "***************************************"
   echo ""
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
 
   # DEBUG: find out more about the state of the machine at this point
   dmesg -HkuPxe
@@ -22,6 +24,8 @@ mkdir -p /boot/.bin
   echo "*  AUTOMATION CUSTOM PRESCRIPT ENDS   *"
   echo "***************************************"
   echo ""
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   echo
 } 2>&1 | tee /boot/.log/install_1_script.log
 
