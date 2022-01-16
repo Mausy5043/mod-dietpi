@@ -1,11 +1,11 @@
 #!/bin/bash
 
-echo
-echo "Installing missing default packages"
-install_package man
+#echo
+#echo "Installing missing default packages"
+#install_package man
 
-# echo "Installing WIFI support..."
-# install_package "wavemon"
+echo "Installing WIFI support..."
+install_package "wavemon"
 # install_package "usbutils"
 
 # echo "Installing Bluetooth support..."
