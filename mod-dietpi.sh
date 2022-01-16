@@ -58,6 +58,11 @@ rm /boot/.log/* 2>/dev/null
     echo ""
   fi
 
+  if [ -f "${HERE}/machines/${MACHINE}/uninstall.sh" ]; then
+    echo "Removing post-installed stuff..."
+    source "${HERE}/machines/${MACHINE}/uninstall.sh"
+  fi
+
   cd /tmp || exit 1
   if [ -f "${PREP_SCRIPT}" ]; then
     echo "Not downloading script as it already exists."
