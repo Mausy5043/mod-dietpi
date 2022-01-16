@@ -13,7 +13,7 @@ install_package()
   if [ "${status}" -eq 0 ]; then
     echo "* Installing ${package}"
     echo "*********************************************************"
-    apt-get -yq install "${package}"
+    apt-get -yqV install "${package}"
   else
     echo "* Already installed !!!"
     echo "*********************************************************"
