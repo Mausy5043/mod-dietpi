@@ -2,8 +2,7 @@
 
 # make sure a persistent directory for storing logs and binaries exists
 mkdir -p /boot/.log
-mkdir -p /boot/.bin
-
+SERVICE_DIR=/boot/mod-dietpi
 {
   echo ""
   echo "***************************************"
@@ -27,6 +26,6 @@ mkdir -p /boot/.bin
   echo
   date  +"%Y.%m.%d %H:%M:%S"
   echo
-} 2>&1 | tee /boot/.log/install_1_script.log
+} 2>&1 | tee "${SERVICE_DIR}/install_1_script.log"
 
 sync; sync

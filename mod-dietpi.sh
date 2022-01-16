@@ -104,7 +104,7 @@ rm /boot/.log/* 2>/dev/null
   # prevent booting into a coma
   systemctl disable dietpi-fs_partition_resize
   echo ""; echo ""
-} 2>&1 | tee /boot/.log/mod-dietpi.log
+} 2>&1 | tee "/boot/mod-dietpi/mod-dietpi.log"
 
 # sync the disks and let things settle down.
 sync; sync

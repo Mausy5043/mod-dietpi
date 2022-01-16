@@ -245,7 +245,7 @@ EOF
   date  +"%Y.%m.%d %H:%M:%S"
   # reboot to close the root console
   shutdown -r +20
-} 2>&1 | tee /boot/.log/install_2_script.log
+} 2>&1 | tee "${SERVICE_DIR}/install_2_script.log"
 
 # sync the disks and let things settle down.
 sync; sync
