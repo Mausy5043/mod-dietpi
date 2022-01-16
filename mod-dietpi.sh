@@ -35,9 +35,9 @@ rm /boot/.log/* 2>/dev/null
   done
 
   echo "Installing on ${MACHINE} using the ${BRANCH} branch."
+  echo "Intermediate storage will be set-up in ${SERVICE_DIR}"
   echo "**************************************************"
   echo ""
-  echo "Intermediate storage will be set-up in ${SERVICE_DIR}"
   sleep 10
 
   # set-up a persistent storage if it doesn't exist yet.
