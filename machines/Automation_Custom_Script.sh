@@ -75,6 +75,40 @@ install_pypackage()
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
   } >> /etc/fstab
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
+  echo ""
+  echo "Installing default packages..."
+  # not yet installing f2fs-tools
+  install_package apt-utils
+  install_package bash-completion
+  install_package build-essential
+  install_package bc
+  install_package file
+  install_package git
+  install_package gettext
+  install_package less
+  install_package lsb-release
+  install_package lsof
+  install_package man
+  install_package netbase
+  install_package nfs-common
+  install_package systemd-journal-remote
+  install_package python3
+  install_package python3-pip
+  install_package python3-dev
+  install_package screen
+  install_package tree
+  install_package zip
+
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
+  echo ""
+  # link python to python3 executable
+  if [ ! -e /usr/bin/python ]; then
+    ln -s /usr/bin/python3 /usr/bin/python
+  fi
+
   # install my own banner
   if [ -f /boot/dietpi-banner ]; then
     echo ""
@@ -139,6 +173,10 @@ install_pypackage()
   su -c "git config --global pull.rebase false" ${USER}
   su -c "git config --global core.fileMode false" ${USER}
 
+  echo ""
+  echo "Installing default Python packages..."
+  su -c "python3 -m pip install ${PYpackages}" ${USER}
+
   echo
   date  +"%Y.%m.%d %H:%M:%S"
   # install dotfiles
@@ -156,44 +194,6 @@ install_pypackage()
 
   # let user ${USER} take ownership of all files
   chown -R ${USER}:${USER} /home/${USER}
-
-  echo
-  date  +"%Y.%m.%d %H:%M:%S"
-  echo ""
-  echo "Installing default packages..."
-  # not yet installing f2fs-tools
-  install_package apt-utils
-  install_package bash-completion
-  install_package build-essential
-  install_package bc
-  install_package file
-  install_package git
-  install_package gettext
-  install_package less
-  install_package lsb-release
-  install_package lsof
-  install_package man
-  install_package netbase
-  install_package nfs-common
-  install_package systemd-journal-remote
-  install_package python3
-  install_package python3-pip
-  install_package python3-dev
-  install_package screen
-  install_package tree
-  install_package zip
-
-  echo
-  date  +"%Y.%m.%d %H:%M:%S"
-  echo ""
-  # link python to python3 executable
-  if [ ! -e /usr/bin/python ]; then
-    ln -s /usr/bin/python3 /usr/bin/python
-  fi
-
-  echo ""
-  echo "Installing default Python packages..."
-  su -c "python3 -m pip install ${PYpackages}" ${USER}
 
   # Install a custom script for reboot actions
   mkdir -p /var/lib/dietpi/dietpi-autostart/
