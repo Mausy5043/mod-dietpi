@@ -60,6 +60,7 @@ rm /boot/.log/* 2>/dev/null
 
   if [ -f "${HERE}/machines/${MACHINE}/uninstall.sh" ]; then
     echo "Removing post-installed stuff..."
+    # shellcheck disable=SC1090
     source "${HERE}/machines/${MACHINE}/uninstall.sh"
   fi
 
