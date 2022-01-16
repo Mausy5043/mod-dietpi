@@ -138,7 +138,7 @@ AUTO_SETUP_GLOBAL_PASSWORD=raspberry
 # - Add as many entries as you wish, one each line.
 # - DietPi will automatically install all pre-reqs (e.g. ALSA/X11 for desktops etc)
 # - E.g. the following (without the leading "#") will install the LXDE desktop automatically on first boot:
-AUTO_SETUP_INSTALL_SOFTWARE_ID=16   # build-essentials
+# AUTO_SETUP_INSTALL_SOFTWARE_ID=16   # build-essentials
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
