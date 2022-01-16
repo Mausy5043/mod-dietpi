@@ -9,7 +9,7 @@ install_package()
   package=${1}
   echo "*********************************************************"
   echo "* Requesting ${package}"
-  status=$(dpkg -l | grep -c "${package}")
+  status=$(dpkg -l | awk '{print $2}' | grep -c -e "^${package}$")
   if [ "${status}" -eq 0 ]; then
     echo "* Installing ${package}"
     echo "*********************************************************"
