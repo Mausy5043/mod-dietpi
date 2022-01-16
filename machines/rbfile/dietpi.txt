@@ -1,4 +1,4 @@
-### MHE ### rbair11
+### MHE ### rbfile
 # git clone https://github.com/Mausy5043/mod-dietpi.git
 # exit 0
 
@@ -29,7 +29,7 @@ AUTO_SETUP_TIMEZONE=Europe/Amsterdam
 # - If both Ethernet and WiFi are enabled, WiFi will take priority and Ethernet will be disabled.
 # - If using WiFi, please edit dietpi-wifi.txt to pre-enter credentials.
 AUTO_SETUP_NET_ETHERNET_ENABLED=1
-AUTO_SETUP_NET_WIFI_ENABLED=1
+AUTO_SETUP_NET_WIFI_ENABLED=0
 
 # Force Ethernet speeds: 0=automatic speed | 10 = 10Mbit | 100 = 100Mbit etc
 # - This is mainly aimed at PINE A64 which may have an HW issue that causes unstable 1Gbit link.
@@ -49,7 +49,7 @@ AUTO_SETUP_NET_STATIC_DNS=192.168.2.2 9.9.9.9 149.112.112.112
 AUTO_SETUP_DHCP_TO_STATIC=0
 
 # Hostname
-AUTO_SETUP_NET_HOSTNAME=rbair11
+AUTO_SETUP_NET_HOSTNAME=rbfile
 
 # Delay service starts at boot until network is established: 0=disabled | 1=enabled
 AUTO_SETUP_BOOT_WAIT_FOR_NETWORK=2
@@ -293,4 +293,4 @@ DEV_GITOWNER=MichaIng
 #------------------------------------------------------------------------------------------------------
 ##### Settings, automatically added by dietpi-update #####
 #------------------------------------------------------------------------------------------------------
-### MHE ### rbair11
+### MHE ### rbfile
