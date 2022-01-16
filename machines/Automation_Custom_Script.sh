@@ -33,10 +33,7 @@ install_pypackage()
 
 
 {
-  # not yet installing f2fs-tools
-  # Install these packages by default
-  APTpackages="apt-utils bash-completion build-essential bc file gettext less lsb-release lsof man python3 python3-dev python3-pip screen tree zip"
-  # Install these python packages by default
+   # Install these python packages by default
   PYpackages="pytz skyfield"
 
   echo ""
@@ -88,6 +85,8 @@ install_pypackage()
     mv -v /boot/dietpi-banner_custom /boot/dietpi/.dietpi-banner_custom
   fi
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   echo "Adding user ${USER}..."
   # move user:group dietpi to UID=1010 & GID=1010
@@ -140,6 +139,8 @@ install_pypackage()
   su -c "git config --global pull.rebase false" ${USER}
   su -c "git config --global core.fileMode false" ${USER}
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   # install dotfiles
   touch /home/${USER}/.bin
   ln -s "/home/${USER}/.bin" "/home/${USER}/bin"
@@ -156,11 +157,31 @@ install_pypackage()
   # let user ${USER} take ownership of all files
   chown -R ${USER}:${USER} /home/${USER}
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   echo "Installing default packages..."
-  # shellcheck disable=SC2086
-  apt-get -yq install ${APTpackages}
+  # not yet installing f2fs-tools
+  install_package apt-utils
+  install_package bash-completion
+  install_package build-essential
+  install_package bc
+  install_package file
+  install_package gettext
+  install_package less
+  install_package lsb-release
+  install_package lsof
+  install_package man
+  install_package systemd-journal-remote
+  install_package python3
+  install_package python3-pip
+  install_package python3-dev
+  install_package screen
+  install_package tree
+  install_package zip
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   # link python to python3 executable
   if [ ! -e /usr/bin/python ]; then
@@ -181,7 +202,8 @@ su -c 'python3 /home/pi/bin/pymail.py --subject "$(hostname) was booted on $(dat
 exit 0
 EOF
 
-
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   # server-specific modifications
   echo ""
   echo "Post-post-install options..."
@@ -219,6 +241,8 @@ EOF
   echo "*   AUTOMATION CUSTOM POSTSCRIPT END   *"
   echo "****************************************"
   echo ""
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   # reboot to close the root console
   shutdown -r +2
 } 2>&1 | tee /boot/.log/install_2_script.log
