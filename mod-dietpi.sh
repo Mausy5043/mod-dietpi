@@ -17,6 +17,8 @@ rm /boot/.log/* 2>/dev/null
   PREP_SCRIPT=/tmp/prep_dietpi.sh
   SERVICE_DIR=/opt/mod-dietpi
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   echo "**************************************************"
   # parse CLI parameters
@@ -89,10 +91,14 @@ rm /boot/.log/* 2>/dev/null
   export HW_MODEL=0
   export WIFI_REQUIRED=1
   export DISTRO_TARGET=6
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   echo "Running script..."
   bash "${PREP_SCRIPT}"
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   echo "Post-script actions..."
   if [ -f "${SERVICE_DIR}/dietpi.txt" ]; then
@@ -101,6 +107,9 @@ rm /boot/.log/* 2>/dev/null
     cp -rv "${SERVICE_DIR}"/* /boot/ 2>/dev/null
   fi
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
+  echo
   echo "Rebooting in 60 seconds."
   # prevent booting into a coma
   systemctl disable dietpi-fs_partition_resize
