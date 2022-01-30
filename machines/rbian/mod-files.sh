@@ -12,5 +12,5 @@ echo -n "Modify /boot/config.txt "
   echo ""
 }>> /boot/config.txt
 
-sudo systemctl enable systemd-journal-upload.service
-sudo systemctl start systemd-journal-upload.service
+#sudo systemctl enable systemd-journal-upload.service
+#sudo systemctl start systemd-journal-upload.service

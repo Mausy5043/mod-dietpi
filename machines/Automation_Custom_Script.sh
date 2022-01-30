@@ -93,7 +93,7 @@ install_pypackage()
   install_package man
   install_package netbase
   install_package nfs-common
-  install_package systemd-journal-remote
+  # install_package systemd-journal-remote
   install_package python3
   install_package python3-pip
   install_package python3-dev

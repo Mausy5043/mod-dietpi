@@ -12,5 +12,5 @@ echo -n "Modify /boot/config.txt "
   echo ""
 }>> /boot/config.txt
 
-sudo systemctl enable systemd-journal-remote.socket
-sudo systemctl start systemd-journal-remote.socket
+#sudo systemctl enable systemd-journal-remote.socket
+#sudo systemctl start systemd-journal-remote.socket
