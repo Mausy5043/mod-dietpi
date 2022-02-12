@@ -28,7 +28,7 @@ AUTO_SETUP_TIMEZONE=Europe/Amsterdam
 # Enable Ethernet or WiFi adapter: 1=enable | 0=disable
 # - If both Ethernet and WiFi are enabled, WiFi will take priority and Ethernet will be disabled.
 # - If using WiFi, please edit dietpi-wifi.txt to pre-enter credentials.
-AUTO_SETUP_NET_ETHERNET_ENABLED=1
+AUTO_SETUP_NET_ETHERNET_ENABLED=0
 AUTO_SETUP_NET_WIFI_ENABLED=1
 
 # Force Ethernet speeds: 0=automatic speed | 10 = 10Mbit | 100 = 100Mbit etc
@@ -52,7 +52,7 @@ AUTO_SETUP_DHCP_TO_STATIC=0
 AUTO_SETUP_NET_HOSTNAME=rbair01
 
 # Delay service starts at boot until network is established: 0=disabled | 1=enabled
-AUTO_SETUP_BOOT_WAIT_FOR_NETWORK=2
+AUTO_SETUP_BOOT_WAIT_FOR_NETWORK=1
 
 ##### Misc Options #####
 # Swap space size to generate: 0 => disable | 1 => auto | 2 and up => size in MiB
