@@ -12,18 +12,21 @@ echo -n "Modify /boot/config.txt "
   echo ""
 }>> /boot/config.txt
 
-#
-## Bluetooth enable
-#sudo sed -i 's/dtoverlay=disable-bt/\#dtoverlay=disable-bt/g' /boot/config.txt
-#
-#echo "[OK]"
-#
+# Bluetooth enable
+# sed -i 's/dtoverlay=disable-bt/\#dtoverlay=disable-bt/g' /boot/config.txt
+# I2C enable
+sed -i 's/\#dtparam=i2c_arm=o.*$/dtparam=i2c_arm=on/g' /boot/config.txt
+# SPI enable
+sed -i 's/\#dtparam=spi=o.*$/dtparam=spi=on/g' /boot/config.txt
+
+echo "[OK]"
+
 echo -n "Change LED control after boot"
 echo "@reboot           root    echo cpu >  /sys/class/leds/led0/trigger" | sudo tee -a /etc/cron.d/99leds
 echo "@reboot           root    echo mmc1 > /sys/class/leds/led1/trigger" | sudo tee -a /etc/cron.d/99leds
 #
 ## switch off annoying eth0
-#echo "@reboot           root    sleep 120; systemctl stop ifup@eth0.service" | sudo tee -a /etc/cron.d/98no-eth0
+echo "@reboot           root    sleep 120; systemctl stop ifup@eth0.service" | sudo tee -a /etc/cron.d/98no-eth0
 #
 #echo "[OK]"
 
