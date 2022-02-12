@@ -16,6 +16,7 @@ echo -n "Modify /boot/config.txt "
 # sed -i 's/dtoverlay=disable-bt/\#dtoverlay=disable-bt/g' /boot/config.txt
 # I2C enable
 sed -i 's/\#dtparam=i2c_arm=o.*$/dtparam=i2c_arm=on/g' /boot/config.txt
+sed -i 's/\#dtparam=i2c_arm_baud.*$/dtparam=i2c_arm_baudrate=10000/g' /boot/config.txt
 # SPI enable
 sed -i 's/\#dtparam=spi=o.*$/dtparam=spi=on/g' /boot/config.txt
 
