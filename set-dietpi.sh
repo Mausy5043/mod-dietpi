@@ -23,7 +23,8 @@ done
 
 if [ ! -d "${DEVICE}" ]; then
   echo "${DEVICE} not defined."
-  echo "Use: --device <device>"
+  echo "Usage:"
+  echo "set-dietpi.sh --machine <name> --device <dir name of mountpoint>"
   exit 1
 fi
 
