@@ -1,4 +1,4 @@
-### MHE ### rbenvir
+### MHE ### rbair
 # git clone https://github.com/Mausy5043/mod-dietpi.git
 # exit 0
 
@@ -49,7 +49,7 @@ AUTO_SETUP_NET_STATIC_DNS=192.168.2.2 9.9.9.9 149.112.112.112
 AUTO_SETUP_DHCP_TO_STATIC=0
 
 # Hostname
-AUTO_SETUP_NET_HOSTNAME=rbenvir
+AUTO_SETUP_NET_HOSTNAME=rbair
 
 # Delay service starts at boot until network is established: 0=disabled | 1=enabled
 AUTO_SETUP_BOOT_WAIT_FOR_NETWORK=1
@@ -290,4 +290,4 @@ DEV_GITOWNER=MichaIng
 #------------------------------------------------------------------------------------------------------
 ##### Settings, automatically added by dietpi-update #####
 #------------------------------------------------------------------------------------------------------
-### MHE ### rbenvir
+### MHE ### rbair
