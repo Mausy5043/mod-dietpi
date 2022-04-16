@@ -13,7 +13,8 @@ rm /boot/.log/* 2>/dev/null
   # set defaults
   BRANCH="dev"
   HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
-  MACHINE="$(hostname | awk -F. '{print $1}')"
+  HOST="$(hostname | awk -F. '{print $1}')"
+  MACHINE="${HOST}"
   PREP_SCRIPT=/tmp/prep_dietpi.sh
   SERVICE_DIR=/opt/mod-dietpi
 
@@ -60,10 +61,10 @@ rm /boot/.log/* 2>/dev/null
     echo ""
   fi
 
-  if [ -f "${HERE}/machines/${MACHINE}/uninstall.sh" ]; then
+  if [ -f "${HERE}/machines/${HOST}/uninstall.sh" ]; then
     echo "Removing post-installed stuff..."
     # shellcheck disable=SC1090
-    source "${HERE}/machines/${MACHINE}/uninstall.sh"
+    source "${HERE}/machines/${HOST}/uninstall.sh"
   fi
 
   cd /tmp || exit 1
