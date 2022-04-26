@@ -13,7 +13,7 @@ install_package libpng16-16
 install_package libtiff5
 install_package libxcb1
 install_package man
-install_package nut
+# install_package nut
 install_package picocom
 install_package python3
 install_package python3-dev
