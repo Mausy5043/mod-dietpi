@@ -6,8 +6,16 @@ unstall(){
   fi
 }
 
+unstal2(){
+  if [ -d "/home/pi/${1}" ]; then
+    . "/home/pi/${1}/${1} --uninstall"
+  fi
+}
+
 unstall /home/pi/kimnaty
 unstall /home/pi/kamstrup
 unstall /home/pi/kamstrupd
 unstall /home/pi/upsdiagd
 unstall /home/pi/aircon
+
+unstal2 lektrix
