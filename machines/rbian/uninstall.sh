@@ -8,7 +8,7 @@ unstall(){
 
 unstal2(){
   if [ -d "/home/pi/${1}" ]; then
-    . "/home/pi/${1}/${1} --uninstall"
+    . "/home/pi/${1}/${1}" --uninstall
   fi
 }
 
