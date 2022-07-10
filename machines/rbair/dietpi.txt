@@ -94,7 +94,7 @@ AUTO_SETUP_RAMLOG_MAXSIZE=50
 # Webserver preference: 0=Apache2 | -1=Nginx | -2=Lighttpd
 # - This defines the webserver to install (only) when another selected software requires one.
 # - It won't be installed if no other software requires a webserver and a manual webserver stack selection will override it.
-AUTO_SETUP_WEB_SERVER_INDEX=-2
+AUTO_SETUP_WEB_SERVER_INDEX=-1
 
 # Desktop preference: 0=LXDE | -1=Xfce | -2=MATE | -3=LXQt | -4=GNUstep
 # - This defines the desktop to install (only) when another selected software requires one.
@@ -136,7 +136,7 @@ AUTO_SETUP_GLOBAL_PASSWORD=raspberry
 # - Add as many entries as you wish, one each line.
 # - DietPi will automatically install all dependencies, like ALSA/X11 for desktops etc.
 # - E.g. the following (without the leading "#") will install the LXDE desktop automatically on first boot:
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=23
+AUTO_SETUP_INSTALL_SOFTWARE_ID=78
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
