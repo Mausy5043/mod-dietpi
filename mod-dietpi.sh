@@ -72,7 +72,6 @@ rm /boot/.log/* 2>/dev/null
     echo "Not downloading script as it already exists."
   else
     echo "Downloading script..."
-    # curl -sSfL "https://raw.githubusercontent.com/MichaIng/DietPi/${BRANCH}/PREP_SYSTEM_FOR_DIETPI.sh" > "${PREP_SCRIPT}"
     curl -sSfL "https://raw.githubusercontent.com/MichaIng/DietPi/${BRANCH}/.build/images/dietpi-installer" > "${PREP_SCRIPT}"
     echo
     # modify the newly downloaded script
