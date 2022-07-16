@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# this script copies the custom files required for `machine` to an SD-card mounted on `device`
+
 # set defaults
 DEVICE="set-dietpi Destination"
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)
