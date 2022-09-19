@@ -6,6 +6,6 @@ install_package graphviz
 
 echo
 echo "KAMSTRUP Electricity monitor installation..."
-su -c "git clone -b zappi https://gitlab.com/mausy5043-diagnostics/kamstrupd.git /home/pi/kamstrupd" pi
-chmod -R 0755 "/home/pi/kamstrupd"
-su -c "/home/pi/kamstrupd/install.sh" pi
+su -c "git clone -b master https://github.com/Mausy5043/lektrix.git /home/pi/lektrix" pi
+chmod -R 0755 "/home/pi/lektrix"
+su -c "/home/pi/lektrix/lektrix --install" pi
