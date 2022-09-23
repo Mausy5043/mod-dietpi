@@ -3,8 +3,30 @@
 USER=pi
 SERVICE_DIR=/boot/mod-dietpi
 
+declare -a apt_packages=(
+  "apt-utils"
+  "bash-completion"
+  "build-essential"
+  "bc"
+  "file"
+  "git"
+  "gettext"
+  "less"
+  "lsb-release"
+  "lsof"
+  "man"
+  "netbase"
+  "nfs-common"
+  "python3"
+  "python3-pip"
+  "python3-dev"
+  "screen"
+  "tree"
+  "zip")
+  # "systemd-journal-remote"
+  # "f2fs-tools"
 # See if packages are installed and install them.
-install_package()
+install_apt_package()
 {
   package=${1}
   echo "*********************************************************"
@@ -20,8 +42,10 @@ install_package()
   fi
 }
 
+# Install these python packages by default
+declare -a py_packages=("pytz" "skyfield")
 # See if packages are installed and install them.
-install_pypackage()
+install_py_package()
 {
   package=${1}
   echo "********************************************************PIP*"
@@ -33,9 +57,6 @@ install_pypackage()
 
 
 {
-   # Install these python packages by default
-  PYpackages="pytz skyfield"
-
   echo ""
   echo "****************************************"
   echo "*  DIETPI AUTOMATION CUSTOM POSTSCRIPT *"
@@ -79,27 +100,9 @@ install_pypackage()
   date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   echo "Installing default packages..."
-  # not yet installing f2fs-tools
-  install_package apt-utils
-  install_package bash-completion
-  install_package build-essential
-  install_package bc
-  install_package file
-  install_package git
-  install_package gettext
-  install_package less
-  install_package lsb-release
-  install_package lsof
-  install_package man
-  install_package netbase
-  install_package nfs-common
-  # install_package systemd-journal-remote
-  install_package python3
-  install_package python3-pip
-  install_package python3-dev
-  install_package screen
-  install_package tree
-  install_package zip
+  for PKG in "${apt_packages[@]}"; do
+    install_apt_package "${PKG}"
+  done
 
   echo
   date  +"%Y.%m.%d %H:%M:%S"
@@ -172,7 +175,10 @@ install_pypackage()
 
   echo ""
   echo "Installing default Python packages..."
-  su -c "python3 -m pip install ${PYpackages}" ${USER}
+  # su -c "python3 -m pip install ${PYpackages}" ${USER}
+  for PKG in "${py_packages[@]}"; do
+    install_py_package "${PKG}"
+  done
 
   echo
   date  +"%Y.%m.%d %H:%M:%S"
