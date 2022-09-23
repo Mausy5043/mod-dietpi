@@ -140,8 +140,10 @@ install_py_package()
 
   # (re-)add user:group "${USER}"
   useradd -m -s /bin/bash -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video "${USER}"
-  # set default passwd
-  echo -n "${USER}:raspberry" | /usr/sbin/chpasswd
+  # set user's passwd
+  USRPASSWD=$(<"/srv/config/.${USER}.passwd")
+  # echo -n "${USER}:raspberry" | /usr/sbin/chpasswd
+  echo -n "${USER}:${USRPASSWD}" | /usr/sbin/chpasswd
   # add new user `${USER}` to sudoers
   echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_${USER}-nopasswd
 
