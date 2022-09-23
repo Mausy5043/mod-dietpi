@@ -206,7 +206,8 @@ install_py_package()
 tmpfile=$(mktemp /tmp/route.XXXXXX)
 ip -f inet route > ${tmpfile}
 ip -f inet6 route >> ${tmpfile}
-su -c 'python3 /home/pi/bin/pymail.py --file "${tmpfile}" --subject "$(hostname) was booted on $(date)"' pi
+chmod +r ${tmpfile}
+su -c "python3 /home/pi/bin/pymail.py -f ${tmpfile} -s '$(hostname) was booted on $(date)'" pi
 rm ${tmpfile}
 
 exit 0
