@@ -12,7 +12,7 @@ unstal2(){
   fi
 }
 
-unstall /home/pi/kimnaty
+unstall2 kimnaty
 unstall /home/pi/kamstrup
 unstall /home/pi/kamstrupd
 unstall /home/pi/upsdiagd

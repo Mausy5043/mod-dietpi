@@ -2,4 +2,4 @@
 
 #echo
 #echo "Installing missing default packages"
-#install_package man
+#install_apt_package man

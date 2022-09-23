@@ -2,11 +2,11 @@
 
 #echo
 #echo "Installing missing default packages"
-#install_package man
+#install_apt_package man
 
 echo
 echo "Installing additional packages..."
-install_package "graphviz"
+install_apt_package "graphviz"
 
 echo
 echo "Installing KIMNATY package..."

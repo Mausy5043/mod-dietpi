@@ -2,18 +2,18 @@
 
 #echo
 #echo "Installing missing default packages"
-#install_package man
+#install_apt_package man
 
 echo "Installing WIFI support..."
-install_package "wavemon"
-# install_package "usbutils"
+install_apt_package "wavemon"
+# install_apt_package "usbutils"
 
 # echo "Installing Bluetooth support..."
-# install_package "pi-bluetooth"
+# install_apt_package "pi-bluetooth"
 
 echo
 echo "Installing additional packages..."
-install_package "graphviz"
+install_apt_package "graphviz"
 
 #su -c "python3 -m pip install adafruit-circuitpython-bmp280" pi
 #su -c "python3 -m pip install adafruit-circuitpython-ccs811" pi
