@@ -103,7 +103,6 @@ AUTO_SETUP_RAMLOG_MAXSIZE=50
 # - With below settings you can define your preference for non-interactive installs. However, it will only installed if any other selected software requires it, and an explicit webserver/desktop/browser selection overrides those settings:
 # - Webserver preference: 0=Apache | -1=Nginx | -2=Lighttpd
 AUTO_SETUP_WEB_SERVER_INDEX=-1
-AUTO_SETUP_WEB_SERVER_INDEX=-1
 # - Desktop preference: 0=LXDE | -1=Xfce | -2=MATE | -3=LXQt | -4=GNUstep
 AUTO_SETUP_DESKTOP_INDEX=0
 # - Browser preference: 0=None | -1=Firefox | -2=Chromium
