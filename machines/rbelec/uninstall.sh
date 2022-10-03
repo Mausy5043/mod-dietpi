@@ -1,6 +1,6 @@
 #!/bin/bash
 
 # stop kimnaty and remove services etc.
-pushd "/home/pi/kimnaty" || exit 0
-  ./kimnaty --uninstall
+pushd "/home/pi/lektrix" || exit 0
+  ./lektrix --uninstall
 popd || exit 0
