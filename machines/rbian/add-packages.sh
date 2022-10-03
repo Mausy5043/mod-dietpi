@@ -4,7 +4,6 @@ echo
 echo "Installing additional packages..."
 install_apt_package build-essential
 install_apt_package graphviz
-install_apt_package lftp
 install_apt_package libatlas-base-dev
 install_apt_package libglib2.0-dev
 install_apt_package libjpeg62
