@@ -96,6 +96,10 @@ install_py_package()
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
   } >> /etc/fstab
 
+  mount /srv/config
+  mount /srv/databases
+  mount /srv/files
+
   echo
   date  +"%Y.%m.%d %H:%M:%S"
   echo ""
@@ -166,12 +170,10 @@ install_py_package()
   # shellcheck disable=SC2174
   mkdir -m 0700 -p "/home/${USER}/.ssh"
   # Fetch stuff from the file-server's config mount
-  mount /srv/config
   cp -v /srv/config/.mailrc /home/${USER}/
   chmod 0600 /home/${USER}/.mailrc
   cp -v /srv/config/.netrc /home/${USER}/
   chmod 0600 /home/${USER}/.netrc
-  umount /srv/config
 
   # set git globals
   su -c "git config --global pull.rebase false" ${USER}
@@ -250,6 +252,11 @@ EOF
   systemctl --no-pager --plain list-unit-files
   echo
   ip address
+
+  sync;sync
+  umount /srv/config
+  umount /srv/databases
+  umount /srv/files
 
   echo ""
   echo "****************************************"
