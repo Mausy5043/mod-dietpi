@@ -96,10 +96,6 @@ install_py_package()
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
   } >> /etc/fstab
 
-  mount /srv/config
-  mount /srv/databases
-  mount /srv/files
-
   echo
   date  +"%Y.%m.%d %H:%M:%S"
   echo ""
@@ -107,6 +103,10 @@ install_py_package()
   for PKG in "${apt_packages[@]}"; do
     install_apt_package "${PKG}"
   done
+
+  mount /srv/config
+  mount /srv/databases
+  mount /srv/files
 
   echo
   date  +"%Y.%m.%d %H:%M:%S"
