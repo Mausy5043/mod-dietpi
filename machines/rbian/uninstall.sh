@@ -11,11 +11,12 @@ unstal2(){
     . "/home/pi/${1}/${1}" --uninstall
   fi
 }
-
-unstal2 kimnaty
+# legacy
 unstall /home/pi/kamstrup
 unstall /home/pi/kamstrupd
 unstall /home/pi/upsdiagd
 unstall /home/pi/aircon
 
+unstal2 kimnaty
 unstal2 lektrix
+unstal2 bups
