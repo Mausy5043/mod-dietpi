@@ -221,6 +221,13 @@ EOF
 
   echo
   date  +"%Y.%m.%d %H:%M:%S"
+
+  # mountpoint for rclone
+  if command -v rclone; then
+    mkdir -p /srv/rmt
+    chown pi:users
+  fi
+
   # server-specific modifications
   echo ""
   echo "Post-post-install options..."
