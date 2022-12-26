@@ -192,6 +192,11 @@ install_py_package()
   cp -v /srv/config/.netrc /home/${USER}/
   chmod 0600 /home/${USER}/.netrc
 
+  # Fetch stuff from the USB-drive
+  if [ -d "${USB_DIR}" ]; then
+    cp -vR ${USB_DIR}/_config/rclone /home/${USER}/.config/
+  fi
+
   # set git globals
   su -c "git config --global pull.rebase false" ${USER}
   su -c "git config --global core.fileMode false" ${USER}
