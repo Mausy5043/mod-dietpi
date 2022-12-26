@@ -9,6 +9,14 @@ if command -v rclone; then
   REMOTE_DIR="/srv/rmt"
 fi
 
+# is USB-drive attached?
+USB_DEV=""
+USB_DIR=""
+if [ -e /dev/sda1 ]; then
+  USB_DEV="/dev/sda1"
+  USB_DIR="/srv/usb"
+fi
+
 declare -a apt_packages=(
   "apt-utils"
   "bash-completion"
@@ -95,11 +103,13 @@ install_py_package()
   mkdir -p /srv/config
   mkdir -p /srv/databases
   mkdir -p /srv/files
+  mkdir -p /srv/usb
   echo "...and adding them to /etc/fstab..."
   {
     echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+    echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
   } >> /etc/fstab
 
   echo
@@ -113,6 +123,7 @@ install_py_package()
   mount /srv/config
   mount /srv/databases
   mount /srv/files
+  mount "${USB_DIR}"
 
   echo
   date  +"%Y.%m.%d %H:%M:%S"
@@ -230,7 +241,7 @@ EOF
 
   # create mountpoint for rclone
   if [ ${REMOTE_DIR} != "" ]; then
-    mkdir -p /srv/rmt
+    mkdir -p "${REMOTE_DIR}"
     chown pi:users
   fi
 
@@ -270,6 +281,7 @@ EOF
   umount /srv/config
   umount /srv/databases
   umount /srv/files
+  umount "${USB_DIR}"
 
   echo ""
   echo "****************************************"
