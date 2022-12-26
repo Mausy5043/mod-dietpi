@@ -3,6 +3,12 @@
 USER=pi
 SERVICE_DIR=/boot/mod-dietpi
 
+# is rclone available?
+REMOTE_DIR=""
+if command -v rclone; then
+  REMOTE_DIR="/srv/rmt"
+fi
+
 declare -a apt_packages=(
   "apt-utils"
   "bash-completion"
@@ -222,8 +228,8 @@ EOF
   echo
   date  +"%Y.%m.%d %H:%M:%S"
 
-  # mountpoint for rclone
-  if command -v rclone; then
+  # create mountpoint for rclone
+  if [ ${REMOTE_DIR} != "" ]; then
     mkdir -p /srv/rmt
     chown pi:users
   fi
