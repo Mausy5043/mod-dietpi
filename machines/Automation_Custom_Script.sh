@@ -151,7 +151,7 @@ claim_path()
   for PKG in "${apt_packages[@]}"; do
     install_apt_package "${PKG}"
   done
-  
+
   # need to have nfs-common installed before doing these mounts:
   echo ""
   echo "Mounting /srv/config..."
@@ -307,7 +307,7 @@ EOF
   fi
   echo
   echo "Fetching databases..."
-  rclone -v copy remote:raspi/_databases /srv/rmt/_databases
+  su -c "rclone -v copy remote:raspi/_databases /srv/rmt/_databases" "${USER}"
   # servers update regularly using:
   # rclone sync /srv/rmt/_databases remote:raspi/_databases
 
