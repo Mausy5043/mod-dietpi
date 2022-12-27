@@ -65,7 +65,7 @@ rm /boot/.log/* 2>/dev/null
     echo "Removing post-installed stuff..."
     # shellcheck disable=SC1090
     source "${HERE}/machines/${HOST}/uninstall.sh"
-    rm -r /srv/rmt
+    # rm -r /srv/rmt
   fi
 
   cd /tmp || exit 1
