@@ -138,13 +138,7 @@ claim_path()
     echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
   } >> /etc/fstab
 
-  echo ""
-  echo "Mounting /srv/config..."
-  mount /srv/config
-  echo "Mounting /srv/databases..."
-  mount /srv/databases
-  echo "Mounting /srv/files..."
-  mount /srv/files
+
   if [ -e "${USB_DEV}" ]; then
     echo "Mounting USB-drive..."
     mount "${USB_DIR}"
@@ -157,6 +151,15 @@ claim_path()
   for PKG in "${apt_packages[@]}"; do
     install_apt_package "${PKG}"
   done
+  
+  # need to have nfs-common installed before doing these mounts:
+  echo ""
+  echo "Mounting /srv/config..."
+  mount /srv/config
+  echo "Mounting /srv/databases..."
+  mount /srv/databases
+  echo "Mounting /srv/files..."
+  mount /srv/files
 
   echo ""
   date  +"%Y.%m.%d %H:%M:%S"
