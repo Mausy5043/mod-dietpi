@@ -290,6 +290,8 @@ EOF
   echo
   echo "Fetching databases..."
   rclone -v copy remote:raspi/_databases /srv/rmt/_databases
+  # servers update regularly using:
+  # rclone sync /srv/rmt/_databases remote:raspi/_databases
 
   # log the state of the machine at this point
   echo
