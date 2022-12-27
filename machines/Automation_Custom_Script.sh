@@ -113,6 +113,8 @@ claim_path()
     USB_DEV="/dev/sda1"
     USB_DIR="/srv/usb"
     if [ ! -d "${USB_DIR}" ]; then
+      # DietPi will have detected it too. Remove the entry in /etc/fstab
+      sed -i '/ \/srv\/usb /d' /etc/fstab
       claim_path "${USB_DIR}"
     fi
   fi
@@ -138,10 +140,14 @@ claim_path()
     install_apt_package "${PKG}"
   done
 
+  echo "Mounting /srv/config..."
   mount /srv/config
+  echo "Mounting /srv/databases..."
   mount /srv/databases
+  echo "Mounting /srv/files..."
   mount /srv/files
   if [ -e "${USB_DEV}" ]; then
+    echo "Mounting USB-drive..."
     mount "${USB_DIR}"
   fi
 
@@ -212,10 +218,6 @@ claim_path()
   cp -v /srv/config/.netrc /home/${USER}/
   chmod 0600 /home/${USER}/.netrc
 
-  # Fetch stuff from the USB-drive
-  if [ -d "${USB_DIR}" ]; then
-    cp -vR ${USB_DIR}/_config/rclone /home/${USER}/.config/rclone
-  fi
 
   # set git globals
   su -c "git config --global pull.rebase false" ${USER}
@@ -233,10 +235,16 @@ claim_path()
   # install dotfiles
   touch /home/${USER}/.bin
   ln -s "/home/${USER}/.bin" "/home/${USER}/bin"
-  mkdir -p /home/${USER}/.config
+  claim_path "/home/${USER}/.config"
   touch /home/${USER}/.dircolors
   touch /home/${USER}/.rsync
   touch /home/${USER}/.screenrc
+
+  # Fetch stuff from the USB-drive
+  if [ -d "${USB_DIR}" ]; then
+    claim_path "/home/${USER}/.config/rclone"
+    cp -vR ${USB_DIR}/_config/rclone /home/${USER}/.config/
+  fi
 
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/${USER}/dotfiles"
   chmod -R 0755 "/home/${USER}/dotfiles"
