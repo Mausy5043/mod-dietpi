@@ -2,20 +2,9 @@
 
 USER=pi
 SERVICE_DIR=/boot/mod-dietpi
-
-# is rclone available?
 REMOTE_DIR=""
-if command -v rclone; then
-  REMOTE_DIR="/srv/rmt"
-fi
-
-# is USB-drive attached?
 USB_DEV=""
 USB_DIR=""
-if [ -e /dev/sda1 ]; then
-  USB_DEV="/dev/sda1"
-  USB_DIR="/srv/usb"
-fi
 
 declare -a apt_packages=(
   "apt-utils"
@@ -69,6 +58,17 @@ install_py_package()
   echo ""
 }
 
+claim_path()
+{
+  path_to_claim="${1}"
+  if [ ! -e "${path_to_claim}" ]; then
+    mkdir -p "${path_to_claim}"
+    chown -R "${USER}:users" "${path_to_claim}"
+    echo "${path_to_claim} created."
+  else
+    echo "${path_to_claim} already exists. No action taken!"
+  fi
+}
 
 {
   echo ""
@@ -98,12 +98,30 @@ install_py_package()
     echo "###### Added by Automation_Custom_Script.sh"
   }>> /etc/hosts
 
+  # is rclone available?
+  if command -v rclone; then
+    echo "Detected rclone command..."
+    REMOTE_DIR="/srv/rmt"
+    if [ ! -d "${REMOTE_DIR}" ]; then
+      claim_path "${REMOTE_DIR}"
+    fi
+  fi
+
+  # is USB-drive attached?
+  if [ -e /dev/sda1 ]; then
+    echo "Detected USB-drive..."
+    USB_DEV="/dev/sda1"
+    USB_DIR="/srv/usb"
+    if [ ! -d "${USB_DIR}" ]; then
+      claim_path "${USB_DIR}"
+    fi
+  fi
+
   echo ""
   echo "Creating extra mountpoints..."
-  mkdir -p /srv/config
-  mkdir -p /srv/databases
-  mkdir -p /srv/files
-  mkdir -p /srv/usb
+  claim_path /srv/config
+  claim_path /srv/databases
+  claim_path /srv/files
   echo "...and adding them to /etc/fstab..."
   {
     echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
@@ -123,7 +141,9 @@ install_py_package()
   mount /srv/config
   mount /srv/databases
   mount /srv/files
-  mount "${USB_DIR}"
+  if [ -e "${USB_DEV}" ]; then
+    mount "${USB_DIR}"
+  fi
 
   echo
   date  +"%Y.%m.%d %H:%M:%S"
@@ -244,12 +264,6 @@ EOF
   echo
   date  +"%Y.%m.%d %H:%M:%S"
 
-  # create mountpoint for rclone
-  if [ ${REMOTE_DIR} != "" ]; then
-    mkdir -p "${REMOTE_DIR}"
-    chown pi:users
-  fi
-
   # server-specific modifications
   echo ""
   echo "Post-post-install options..."
@@ -273,6 +287,9 @@ EOF
   if [ -e "${SERVICE_DIR}/mod-files.sh" ]; then
     source "${SERVICE_DIR}/mod-files.sh"
   fi
+  echo
+  echo "Fetching databases..."
+  rclone -v copy remote:raspi/_databases /srv/rmt/_databases
 
   # log the state of the machine at this point
   echo
@@ -286,7 +303,9 @@ EOF
   umount /srv/config
   umount /srv/databases
   umount /srv/files
-  umount "${USB_DIR}"
+  if [ -e "${USB_DEV}" ]; then
+    umount "${USB_DIR}"
+  fi
 
   echo ""
   echo "****************************************"
