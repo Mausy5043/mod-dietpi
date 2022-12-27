@@ -214,7 +214,7 @@ claim_path()
 
   # Fetch stuff from the USB-drive
   if [ -d "${USB_DIR}" ]; then
-    cp -vR ${USB_DIR}/_config/rclone /home/${USER}/.config/
+    cp -vR ${USB_DIR}/_config/rclone /home/${USER}/.config/rclone
   fi
 
   # set git globals
