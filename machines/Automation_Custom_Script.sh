@@ -1,6 +1,9 @@
 #!/bin/bash
 
 USER=pi
+USER_ID=1000
+DIETPI_ID=1010
+
 SERVICE_DIR=/boot/mod-dietpi
 REMOTE_DIR=""
 USB_DEV=""
@@ -63,7 +66,7 @@ claim_path()
   path_to_claim="${1}"
   if [ ! -e "${path_to_claim}" ]; then
     mkdir -p "${path_to_claim}"
-    chown -R "${USER}:users" "${path_to_claim}"
+    chown -R "${USER_ID}:users" "${path_to_claim}"
     echo "${path_to_claim} created."
   else
     echo "${path_to_claim} already exists. No action taken!"
@@ -107,6 +110,12 @@ claim_path()
     fi
   fi
 
+  echo ""
+  echo "Creating extra mountpoints..."
+  claim_path /srv/config
+  claim_path /srv/databases
+  claim_path /srv/files
+
   # is USB-drive attached?
   if [ -e /dev/sda1 ]; then
     echo "Detected USB-drive..."
@@ -116,14 +125,11 @@ claim_path()
       # DietPi will have detected it too. Remove the entry in /etc/fstab
       sed -i '/ \/srv\/usb /d' /etc/fstab
       claim_path "${USB_DIR}"
+    else
+      echo "Mountpoint for USB already exists."
     fi
   fi
 
-  echo ""
-  echo "Creating extra mountpoints..."
-  claim_path /srv/config
-  claim_path /srv/databases
-  claim_path /srv/files
   echo "...and adding them to /etc/fstab..."
   {
     echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
@@ -132,14 +138,7 @@ claim_path()
     echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
   } >> /etc/fstab
 
-  echo
-  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
-  echo "Installing default packages..."
-  for PKG in "${apt_packages[@]}"; do
-    install_apt_package "${PKG}"
-  done
-
   echo "Mounting /srv/config..."
   mount /srv/config
   echo "Mounting /srv/databases..."
@@ -151,7 +150,15 @@ claim_path()
     mount "${USB_DIR}"
   fi
 
-  echo
+  echo ""
+  date  +"%Y.%m.%d %H:%M:%S"
+  echo ""
+  echo "Installing default packages..."
+  for PKG in "${apt_packages[@]}"; do
+    install_apt_package "${PKG}"
+  done
+
+  echo ""
   date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   # link python to python3 executable
@@ -169,15 +176,13 @@ claim_path()
     mv -v /boot/dietpi-banner_custom /boot/dietpi/.dietpi-banner_custom
   fi
 
-  echo
-  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   echo "Adding user ${USER}..."
   # move user:group dietpi to UID=1010 & GID=1010
-  usermod -u 1010 dietpi
-  groupmod -g 1010 dietpi
-  find / ! -path "/home/pi*" ! -path "/srv/*" ! -path "/proc/*" ! -path "/dev/*" -group 1000 -exec chgrp -h dietpi {} \; 2>/dev/null
-  find / ! -path "/home/pi*" ! -path "/srv/*" ! -path "/proc/*" ! -path "/dev/*" -user  1000 -exec chown -h dietpi {} \; 2>/dev/null
+  usermod -u "${DIETPI_ID}" dietpi
+  groupmod -g "${DIETPI_ID}" dietpi
+  find / ! -path "/home/pi*" ! -path "/srv/*" ! -path "/proc/*" ! -path "/dev/*" -group "${USER_ID}" -exec chgrp -h dietpi {} \; 2>/dev/null
+  find / ! -path "/home/pi*" ! -path "/srv/*" ! -path "/proc/*" ! -path "/dev/*" -user  "${USER_ID}" -exec chown -h dietpi {} \; 2>/dev/null
 
   # Check if user exists
   if id -u "${USER}" > /dev/null 2>&1; then
@@ -186,7 +191,7 @@ claim_path()
   fi
 
   # (re-)add user:group "${USER}"
-  useradd -m -s /bin/bash -u 1000 -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video "${USER}"
+  useradd -m -s /bin/bash -u "${USER_ID}" -G adm,audio,dialout,sudo,gpio,systemd-journal,users,video "${USER}"
   # first set the default passwd...
   echo -n "${USER}:raspberry" | /usr/sbin/chpasswd
   # ...then re-set the password in case it is defined
@@ -244,6 +249,8 @@ claim_path()
   if [ -d "${USB_DIR}" ]; then
     claim_path "/home/${USER}/.config/rclone"
     cp -vR ${USB_DIR}/_config/rclone /home/${USER}/.config/
+  else
+    echo "USB-drive not mounted!"
   fi
 
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/${USER}/dotfiles"
