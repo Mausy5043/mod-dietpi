@@ -199,7 +199,8 @@ claim_path()
   echo -n "${USER}:raspberry" | /usr/sbin/chpasswd
   # ...then re-set the password in case it is defined
   source "/srv/config/.${USER}.passwd"
-  # TODO: echo -n "${USER}:${USRPASSWD}" | /usr/sbin/chpasswd
+  # FIXME:  /srv/config/.pi.passwd: line 1: raspberry: command not found
+  # TODO:   echo -n "${USER}:${USRPASSWD}" | /usr/sbin/chpasswd
 
   # add new user `${USER}` to sudoers
   echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_${USER}-nopasswd
