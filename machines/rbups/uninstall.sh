@@ -9,5 +9,7 @@ fi
 if [ -d /home/pi/bups ]; then
   pushd "/home/pi/bups" || exit 0
     ./bups --uninstall
+    # remove rclone's local mountpoint
+    sudo rm -rv /srv/rmt
   popd || exit 0
 fi

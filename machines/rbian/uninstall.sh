@@ -20,3 +20,6 @@ unstall /home/pi/aircon
 unstal2 kimnaty
 unstal2 lektrix
 unstal2 bups
+
+# remove rclone's local mountpoint
+sudo rm -rv /srv/rmt
