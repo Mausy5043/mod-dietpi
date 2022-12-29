@@ -1,9 +1,5 @@
 #!/bin/bash
 
-#echo
-#echo "Installing missing default packages"
-#install_apt_package man
-
 echo
 echo "Installing additional packages..."
 install_apt_package "graphviz"
