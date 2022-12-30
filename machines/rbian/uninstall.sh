@@ -2,13 +2,13 @@
 
 unstall(){
   if [ -d "${1}" ]; then
-    . "${1}/uninstall.sh"
+    su -c "${1}/uninstall.sh" pi
   fi
 }
 
 unstal2(){
   if [ -d "/home/pi/${1}" ]; then
-    . "/home/pi/${1}/${1}" --uninstall
+    su -c "/home/pi/${1}/${1} --uninstall" pi
   fi
 }
 # legacy

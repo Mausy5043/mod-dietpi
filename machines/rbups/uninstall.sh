@@ -2,7 +2,7 @@
 
 # stop upsdiagd and remove services etc.
 if [ -d /home/pi/upsdiagd ]; then
-  /home/pi/upsdiagd/uninstall.sh
+  su -c "/home/pi/upsdiagd/uninstall.sh" pi
 fi
 
 # stop bups and remove services etc.
