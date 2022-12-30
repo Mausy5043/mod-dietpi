@@ -8,7 +8,7 @@ fi
 # stop bups and remove services etc.
 if [ -d /home/pi/bups ]; then
   pushd "/home/pi/bups" || exit 0
-    ./bups --uninstall
+    su -c "/home/pi/bups/bups --uninstall" pi
     # remove rclone's local mountpoint
     sudo rm -rv /srv/rmt
   popd || exit 0
