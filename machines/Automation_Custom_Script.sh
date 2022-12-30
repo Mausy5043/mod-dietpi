@@ -144,7 +144,7 @@ claim_path()
     echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-    echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
+    echo "${USB_DEV}                            ${USB_DIR}        ext4     relatime,lazytime,rw                                               0   2"
   } >> /etc/fstab
 
 
@@ -231,7 +231,7 @@ claim_path()
 
   # Link stuff from the config mount
   ln -sv ${USB_DIR}/_config/.mailrc /home/${USER}/.mailrc
-  # ln -sv ${USB_DIR}/_config/.netrc /home/${USER}/.config/.netrc
+  # ln -sv ${USB_DIR}/_config/.netrc /home/${USER}/.netrc
   ln -sv ${USB_DIR}/_config/.gitconfig /home/${USER}/.gitconfig
 
   # set git globals
