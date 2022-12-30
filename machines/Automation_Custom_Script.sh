@@ -229,10 +229,10 @@ claim_path()
     echo "USB-drive not mounted! Expect a broken system..."
   fi
 
-  # Fetch stuff from the config mount
-  ln -sv ${USB_DIR}/_config/.mailrc /home/${USER}/.config/.mailrc
+  # Link stuff from the config mount
+  ln -sv ${USB_DIR}/_config/.mailrc /home/${USER}/.mailrc
   # ln -sv ${USB_DIR}/_config/.netrc /home/${USER}/.config/.netrc
-  ln -sv ${USB_DIR}/_config/.gitconfig /home/${USER}/.config/.gitconfig
+  ln -sv ${USB_DIR}/_config/.gitconfig /home/${USER}/.gitconfig
 
   # set git globals
   # su -c "git config --global pull.rebase false" ${USER}
