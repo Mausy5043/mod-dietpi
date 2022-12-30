@@ -1,5 +1,14 @@
 #!/bin/bash
 
+
+# TODO: review these cmdline settings:
+# TODO: cmdline="dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 noatime loglevel=6 cgroup_enable=memory elevator=noop fsck.repair=yes"
+# TODO: noatime` added to reduce wear on SD-card
+# TODO: `loglevel=6` to increase logging during boot
+# TODO: `cgroup_enable=memory` added to enable notification of upcoming OOM events
+
+# TODO: why are systemd devices complaining about the bus not being there?
+
 USER=pi
 USER_ID=1000
 DIETPI_ID=1010
@@ -154,8 +163,8 @@ claim_path()
 
   # need to have nfs-common installed before doing these mounts:
   echo ""
-  echo "Mounting /srv/config..."
-  mount /srv/config
+  # echo "Mounting /srv/config..."
+  # mount /srv/config
   echo "Mounting /srv/databases..."
   mount /srv/databases
   echo "Mounting /srv/files..."
@@ -198,43 +207,39 @@ claim_path()
   # first set the default passwd...
   echo -n "${USER}:raspberry" | /usr/sbin/chpasswd
   # ...then re-set the password in case it is defined
-  source "/srv/config/.${USER}.passwd"
+  # source "/srv/config/.${USER}.passwd"
   # FIXME:  /srv/config/.pi.passwd: line 1: raspberry: command not found
   # TODO:   echo -n "${USER}:${USRPASSWD}" | /usr/sbin/chpasswd
 
-  # add new user `${USER}` to sudoers
+  # add new user `${USER}` to sudoers and remove root from SSH
   echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_${USER}-nopasswd
-
   echo ""
   echo "Revoking root's SSH-access for security reasons..."
   sed -i "s/^PermitRootLogin/#&/" /etc/ssh/sshd_config
-
-  # TODO: review these cmdline settings:
-  # TODO: cmdline="dwc_otg.lpm_enable=0 console=serial0,115200 console=tty1 noatime loglevel=6 cgroup_enable=memory elevator=noop fsck.repair=yes"
-  # TODO: noatime` added to reduce wear on SD-card
-  # TODO: `loglevel=6` to increase logging during boot
-  # TODO: `cgroup_enable=memory` added to enable notification of upcoming OOM events
-
-  # TODO: why are systemd devices complaining about the bus not being there?
 
   echo ""
   echo "Setting up account for user ${USER}..."
   # shellcheck disable=SC2174
   mkdir -m 0700 -p "/home/${USER}/.ssh"
-  # Fetch stuff from the file-server's config mount
-  cp -v /srv/config/.mailrc /home/${USER}/
-  chmod 0600 /home/${USER}/.mailrc
-  cp -v /srv/config/.netrc /home/${USER}/
-  chmod 0600 /home/${USER}/.netrc
 
+  # Fetch stuff from the USB-drive
+  if [ -d "${USB_DIR}" ]; then
+    ln -sv ${USB_DIR}/_config /home/${USER}/.config
+  else
+    echo "USB-drive not mounted! Expect a broken system..."
+  fi
+
+  # Fetch stuff from the config mount
+  ln -sv ${USB_DIR}/_config/.mailrc /home/${USER}/.config/.mailrc
+  # ln -sv ${USB_DIR}/_config/.netrc /home/${USER}/.config/.netrc
+  ln -sv ${USB_DIR}/_config/.gitconfig /home/${USER}/.config/.gitconfig
 
   # set git globals
-  su -c "git config --global pull.rebase false" ${USER}
-  su -c "git config --global core.fileMode false" ${USER}
+  # su -c "git config --global pull.rebase false" ${USER}
+  # su -c "git config --global core.fileMode false" ${USER}
 
   echo ""
   echo "Installing default Python packages..."
-  # su -c "python3 -m pip install ${PYpackages}" ${USER}
   for PKG in "${py_packages[@]}"; do
     install_py_package "${PKG}"
   done
@@ -244,19 +249,10 @@ claim_path()
   # install dotfiles
   touch /home/${USER}/.bin
   ln -s "/home/${USER}/.bin" "/home/${USER}/bin"
-  claim_path "/home/${USER}/.config"
   touch /home/${USER}/.dircolors
   touch /home/${USER}/.rsync
   touch /home/${USER}/.screenrc
-
-  # Fetch stuff from the USB-drive
-  if [ -d "${USB_DIR}" ]; then
-    claim_path "/home/${USER}/.config/rclone"
-    cp -vR ${USB_DIR}/_config/rclone /home/${USER}/.config/
-  else
-    echo "USB-drive not mounted!"
-  fi
-
+  #
   git clone -b main https://gitlab.com/mausy5043/dotfiles.git "/home/${USER}/dotfiles"
   chmod -R 0755 "/home/${USER}/dotfiles"
   su -c "/home/${USER}/dotfiles/install_pi.sh" ${USER}
@@ -321,7 +317,7 @@ EOF
   ip address
 
   sync;sync
-  umount /srv/config
+  # umount /srv/config
   umount /srv/databases
   umount /srv/files
   if [ -e "${USB_DEV}" ]; then
