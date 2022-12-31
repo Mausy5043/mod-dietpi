@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo ""
-echo -n "Modify /boot/config.txt "
+echo "Modify /boot/config.txt "
 {
   echo ""
   echo "#>>> Added by Automation_Custom_Script.sh"
@@ -12,5 +12,8 @@ echo -n "Modify /boot/config.txt "
   echo ""
 }>> /boot/config.txt
 
-#sudo systemctl enable systemd-journal-upload.service
-#sudo systemctl start systemd-journal-upload.service
+echo "Change LED control after boot"
+{
+  echo "@reboot           root    echo cpu >  /sys/class/leds/led0/trigger"
+  echo "@reboot           root    echo mmc1 > /sys/class/leds/led1/trigger"
+}>> /etc/cron.d/99leds
