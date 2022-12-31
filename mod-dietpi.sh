@@ -71,7 +71,6 @@ rm /boot/.log/* 2>/dev/null
   findmnt -rno TARGET "/srv/usb" | sudo xargs -rL1 umount
   sed -i '/ \/srv\/usb /d' /etc/fstab
   rmdir -v /srv/usb
-  rm -r /srv/rmt
 
   cd /tmp || exit 1
   if [ -f "${PREP_SCRIPT}" ]; then
