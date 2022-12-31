@@ -9,6 +9,13 @@
 
 # TODO: why are systemd devices complaining about the bus not being there?
 
+# NOTE: to foormat a USB-drive use:
+# fdisk /dev/sdX
+# > g   GPT disktype
+# > n   partition #1; full disk
+# > w   write changes
+# mkfs.ext4 -I 256 /dev/sdX1
+
 USER=pi
 USER_ID=1000
 DIETPI_ID=1010
@@ -16,6 +23,7 @@ DIETPI_ID=1010
 SERVICE_DIR=/boot/mod-dietpi
 REMOTE_DIR=""
 USB_DEV=""
+# USB_DEV="$(lsblk -o NAME,FSTYPE,UUID |grep ext4 |grep -v mmc |awk '{print $3}')"
 USB_DIR=""
 
 declare -a apt_packages=(
@@ -144,7 +152,7 @@ claim_path()
     echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-    echo "${USB_DEV}                            ${USB_DIR}        ext4     relatime,lazytime,rw                                               0   2"
+    echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
   } >> /etc/fstab
 
 
@@ -230,9 +238,9 @@ claim_path()
   fi
 
   # Link stuff from the config mount
-  ln -sv ${USB_DIR}/_config/.mailrc /home/${USER}/.mailrc
+  ln -sv ${USB_DIR}/.config/.mailrc /home/${USER}/.mailrc
   # ln -sv ${USB_DIR}/_config/.netrc /home/${USER}/.netrc
-  ln -sv ${USB_DIR}/_config/.gitconfig /home/${USER}/.gitconfig
+  ln -sv ${USB_DIR}/.config/.gitconfig /home/${USER}/.gitconfig
 
   # set git globals
   # su -c "git config --global pull.rebase false" ${USER}
