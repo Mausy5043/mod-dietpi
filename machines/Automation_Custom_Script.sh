@@ -238,9 +238,9 @@ claim_path()
   fi
 
   # Link stuff from the config mount
-  ln -sv ${USB_DIR}/.config/.mailrc /home/${USER}/.mailrc
+  ln -sv "/home/${USER}/.config/.mailrc" "/home/${USER}/.mailrc"
   # ln -sv ${USB_DIR}/_config/.netrc /home/${USER}/.netrc
-  ln -sv ${USB_DIR}/.config/.gitconfig /home/${USER}/.gitconfig
+  ln -sv "/home/${USER}/.config/.gitconfig" "/home/${USER}/.gitconfig"
 
   # set git globals
   # su -c "git config --global pull.rebase false" ${USER}
