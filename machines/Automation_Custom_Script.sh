@@ -340,7 +340,7 @@ EOF
   echo
   date  +"%Y.%m.%d %H:%M:%S"
   # reboot to close the root console
-  shutdown -r +5
+  shutdown -r +1
 } 2>&1 | tee "${SERVICE_DIR}/install_2_script.log"
 
 # sync the disks and let things settle down.
