@@ -129,9 +129,9 @@ claim_path()
 
   echo ""
   echo "Creating extra mountpoints..."
-  claim_path /srv/config
-  claim_path /srv/databases
-  claim_path /srv/files
+  # claim_path /srv/config
+  # claim_path /srv/databases
+  # claim_path /srv/files
 
   # is USB-drive attached?
   if [ -e /dev/sda1 ]; then
@@ -149,9 +149,9 @@ claim_path()
 
   echo "...and adding them to /etc/fstab..."
   {
-    echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-    echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-    echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+    # echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+    # echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+    # echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
     echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
   } >> /etc/fstab
 
@@ -173,10 +173,10 @@ claim_path()
   echo ""
   # echo "Mounting /srv/config..."
   # mount /srv/config
-  echo "Mounting /srv/databases..."
-  mount /srv/databases
-  echo "Mounting /srv/files..."
-  mount /srv/files
+  #  echo "Mounting /srv/databases..."
+  #  mount /srv/databases
+  #  echo "Mounting /srv/files..."
+  #  mount /srv/files
 
   echo ""
   date  +"%Y.%m.%d %H:%M:%S"
@@ -326,8 +326,8 @@ EOF
 
   sync;sync
   # umount /srv/config
-  umount /srv/databases
-  umount /srv/files
+  # umount /srv/databases
+  # umount /srv/files
   if [ -e "${USB_DEV}" ]; then
     umount "${USB_DIR}"
   fi
