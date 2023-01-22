@@ -222,8 +222,8 @@ claim_path()
   # add new user `${USER}` to sudoers and remove root from SSH
   echo "${USER} ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/012_${USER}-nopasswd
   echo ""
-  echo "Revoking root's SSH-access for security reasons..."
-  sed -i "s/^PermitRootLogin/#&/" /etc/ssh/sshd_config
+  #  echo "Revoking root's SSH-access for security reasons..."
+  #  sed -i "s/^PermitRootLogin/#&/" /etc/ssh/sshd_config
 
   echo ""
   echo "Setting up account for user ${USER}..."
