@@ -237,7 +237,7 @@ CONFIG_NTP_MIRROR=nl.pool.ntp.org
 #	0=Allow password logins for all users, including root
 #	root=Disable password login for root user only
 #	1=Disable password logins for all users, assure that you have a valid SSH key applied!
-SOFTWARE_DISABLE_SSH_PASSWORD_LOGINS=0
+SOFTWARE_DISABLE_SSH_PASSWORD_LOGINS=root
 
 # VNC Server
 SOFTWARE_VNCSERVER_WIDTH=1280
