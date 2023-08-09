@@ -5,7 +5,7 @@
 ## JetBrains
 
 # User-specific stuff
-.idea/*
+.idea/
 
 ## Visual Studio / VSCodium
 
@@ -19,3 +19,4 @@
 
 # Local History for Visual Studio Code
 .history/
+ venv/
