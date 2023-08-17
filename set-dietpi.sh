@@ -48,6 +48,7 @@ if [ -d "${HERE}/machines/${MACHINE}" ]; then
   cp -v "${HERE}/machines/${MACHINE}/add-packages.sh" "${DEVICE}/mod-dietpi/"
   cp -v "${HERE}/machines/${MACHINE}/mod-files.sh" "${DEVICE}/mod-dietpi/"
   cp -rv "${HERE}/machines/${MACHINE}/config" "${DEVICE}/mod-dietpi/"
+  cp -rv "${HERE}/machines/${MACHINE}/config.txt" "${DEVICE}/mod-dietpi/"
   echo ""
 fi
 
