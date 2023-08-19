@@ -5,9 +5,9 @@ mkdir -p /boot/.log
 SERVICE_DIR=/boot/mod-dietpi
 {
   echo ""
-  echo "***************************************"
-  echo "*  DIETPI AUTOMATION CUSTOM PRESCRIPT *"
-  echo "***************************************"
+  echo "**************************************"
+  echo "*  START AUTOMATION_CUSTOM_PRESCRIPT *"
+  echo "**************************************"
   echo ""
   echo
   date  +"%Y.%m.%d %H:%M:%S"
@@ -18,14 +18,13 @@ SERVICE_DIR=/boot/mod-dietpi
   # Only include actions here that cannot wait until the Automation_Custom_script.sh is executed.
   # Some changes may be overridden by the DietPi scripts!
 
-  echo ""
-  echo "***************************************"
-  echo "*  AUTOMATION CUSTOM PRESCRIPT ENDS   *"
-  echo "***************************************"
-  echo ""
   echo
   date  +"%Y.%m.%d %H:%M:%S"
-  echo
+  echo ""
+  echo "***************************************"
+  echo "*  AUTOMATION_CUSTOM_PRESCRIPT ENDS   *"
+  echo "***************************************"
+  echo ""
 } 2>&1 | tee "${SERVICE_DIR}/install_1_script.log"
 
 sync; sync
