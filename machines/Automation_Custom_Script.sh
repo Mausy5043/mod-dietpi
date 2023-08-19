@@ -52,17 +52,17 @@ declare -a apt_packages=(
 install_apt_package()
 {
   package=${1}
-  echo "*******************************************************APT*"
+  echo "*****************************************************APT*"
   echo "* Requesting ${package}"
   status=$(dpkg -l | awk '{print $2}' | grep -c -e "^${package}$")
   if [ "${status}" -eq 0 ]; then
     echo "* Installing ${package}"
-    echo "*********************************************************"
     apt-get -yqV install "${package}"
   else
     echo "* Already installed !!!"
-    echo "*********************************************************"
   fi
+  echo "*********************************************************"
+  echo ""
 }
 
 # Install these python packages by default
@@ -71,10 +71,11 @@ declare -a py_packages=("pytz" "skyfield")
 install_py_package()
 {
   package=${1}
-  echo "********************************************************PIP*"
+  echo "*****************************************************PIP*"
   echo "* Requesting ${package}"
   echo ""
   su -c "python3 -m pip install ${package}" ${USER}
+  echo "*********************************************************"
   echo ""
 }
 
