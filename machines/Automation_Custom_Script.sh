@@ -52,7 +52,7 @@ declare -a apt_packages=(
 install_apt_package()
 {
   package=${1}
-  echo "*********************************************************"
+  echo "*******************************************************APT*"
   echo "* Requesting ${package}"
   status=$(dpkg -l | awk '{print $2}' | grep -c -e "^${package}$")
   if [ "${status}" -eq 0 ]; then
