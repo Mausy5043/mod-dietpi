@@ -74,7 +74,7 @@ install_py_package()
   echo "********************************************************PIP*"
   echo "* Requesting ${package}"
   echo ""
-  su -c "python3 -m pip install ${package}"
+  su -c "python3 -m pip install ${package}" ${USER}
   echo ""
 }
 
