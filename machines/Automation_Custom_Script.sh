@@ -9,7 +9,7 @@
 
 # TODO: why are systemd devices complaining about the bus not being there?
 
-# NOTE: to foormat a USB-drive use:
+# NOTE: to format a USB-drive use:
 # fdisk /dev/sdX
 # > g   GPT disktype
 # > n   partition #1; full disk
@@ -92,9 +92,9 @@ claim_path()
 
 {
   echo ""
-  echo "****************************************"
-  echo "*  DIETPI AUTOMATION CUSTOM POSTSCRIPT *"
-  echo "****************************************"
+  echo "***********************************"
+  echo "*  START AUTOMATION_CUSTOM_SCRIPT *"
+  echo "***********************************"
   date  +"%Y.%m.%d %H:%M:%S"
 
   echo ""
@@ -332,15 +332,15 @@ EOF
     umount "${USB_DIR}"
   fi
 
-  echo ""
-  echo "****************************************"
-  echo "*   AUTOMATION CUSTOM POSTSCRIPT END   *"
-  echo "****************************************"
-  echo ""
-  echo
-  date  +"%Y.%m.%d %H:%M:%S"
   # reboot to close the root console
   shutdown -r +1
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
+  echo ""
+  echo "************************************"
+  echo "*   AUTOMATION_CUSTOM_SCRIPT END   *"
+  echo "************************************"
+  echo ""
 } 2>&1 | tee "${SERVICE_DIR}/install_2_script.log"
 
 # sync the disks and let things settle down.
