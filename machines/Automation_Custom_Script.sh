@@ -43,6 +43,7 @@ declare -a apt_packages=(
   "python3"
   "python3-pip"
   "python3-dev"
+  "pipx"
   "screen"
   "tree"
   "zip")
@@ -74,7 +75,9 @@ install_py_package()
   echo "********************************************************PIP*"
   echo "* Requesting ${package}"
   echo ""
-  su -c "python3 -m pip install ${package}" "${USER}"
+  # `... pip install` will fail on PEP668-compliant systems
+  # try using `apt install...` first and if that fails try `pipx install...`
+  su -c "python3 -m pip install ${package} || apt install python3-${package} || pipx install ${package}" "${USER}"
   echo ""
 }
 
@@ -247,6 +250,11 @@ claim_path()
   # su -c "git config --global core.fileMode false" ${USER}
 
   echo ""
+  echo ""
+  echo "Creating virtualenv for user..."
+  su -c "python3 -m venv " ${USER}
+  # display reminder:
+  su -c "pipx completions" ${USER}
   echo "Installing default Python packages..."
   for PKG in "${py_packages[@]}"; do
     install_py_package "${PKG}"
