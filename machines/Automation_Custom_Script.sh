@@ -43,7 +43,6 @@ declare -a apt_packages=(
   "python3"
   "python3-pip"
   "python3-dev"
-  "pipx"
   "screen"
   "tree"
   "zip")
@@ -75,9 +74,7 @@ install_py_package()
   echo "********************************************************PIP*"
   echo "* Requesting ${package}"
   echo ""
-  # `... pip install` will fail on PEP668-compliant systems
-  # try using `apt install...` first and if that fails try `pipx install...`
-  su -c "python3 -m pip install ${package} || apt install python3-${package} || pipx install ${package}" "${USER}"
+  su -c "python3 -m pip install ${package}"
   echo ""
 }
 
