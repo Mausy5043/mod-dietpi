@@ -39,7 +39,6 @@ declare -a apt_packages=(
   "lsof"
   "man"
   "netbase"
-  "nfs-common"
   "python3"
   "python3-pip"
   "python3-dev"
@@ -48,6 +47,8 @@ declare -a apt_packages=(
   "zip")
   # "systemd-journal-remote"
   # "f2fs-tools"
+  # "nfs-common"
+
 # See if packages are installed and install them.
 install_apt_package()
 {
