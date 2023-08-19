@@ -248,10 +248,10 @@ claim_path()
 
   echo ""
   echo ""
-  echo "Creating virtualenv for user..."
-  su -c "python3 -m venv " ${USER}
+  # echo "Creating virtualenv for user..."
+  # su -c "python3 -m venv " ${USER}
   # display reminder:
-  su -c "pipx completions" ${USER}
+  # su -c "pipx completions" ${USER}
   echo "Installing default Python packages..."
   for PKG in "${py_packages[@]}"; do
     install_py_package "${PKG}"
