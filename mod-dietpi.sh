@@ -97,7 +97,7 @@ rm /boot/.log/* 2>/dev/null
   export PREIMAGE_INFO='re_install'
   export HW_MODEL=0
   export WIFI_REQUIRED=1
-  export DISTRO_TARGET=6
+  export DISTRO_TARGET=7
   echo
   date  +"%Y.%m.%d %H:%M:%S"
   echo ""
