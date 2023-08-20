@@ -62,7 +62,6 @@ install_apt_package()
   else
     echo "* Already installed !!!"
   fi
-  echo "*********************************************************"
   echo ""
 }
 
@@ -76,7 +75,6 @@ install_py_package()
   echo "* Requesting ${package}"
   echo ""
   su -c "python3 -m pip install ${package}" ${USER}
-  echo "*********************************************************"
   echo ""
 }
 
@@ -161,10 +159,10 @@ claim_path()
   fi
 
   echo ""
-  date  +"%Y.%m.%d %H:%M:%S"
-  echo ""
   echo "Installing default packages..."
   for PKG in "${apt_packages[@]}"; do
+    echo ""
+    date  +"%Y.%m.%d %H:%M:%S"
     install_apt_package "${PKG}"
   done
 
@@ -247,13 +245,14 @@ claim_path()
   # su -c "git config --global core.fileMode false" ${USER}
 
   echo ""
-  echo ""
   # echo "Creating virtualenv for user..."
   # su -c "python3 -m venv " ${USER}
   # display reminder:
   # su -c "pipx completions" ${USER}
   echo "Installing default Python packages..."
   for PKG in "${py_packages[@]}"; do
+    echo ""
+    date  +"%Y.%m.%d %H:%M:%S"
     install_py_package "${PKG}"
   done
 
