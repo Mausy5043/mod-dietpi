@@ -136,9 +136,9 @@ claim_path()
   # claim_path /srv/files
 
   # is USB-drive attached?
-  if [ -e /dev/sda1 ]; then
+  USB_DEV="/dev/sda1"
+  if [ -e "${USB_DEV}" ]; then
     echo "Detected USB-drive..."
-    USB_DEV="/dev/sda1"
     USB_DIR="/srv/usb"
     if [ ! -d "${USB_DIR}" ]; then
       # DietPi will have detected it too. Remove the entry in /etc/fstab
@@ -147,18 +147,15 @@ claim_path()
     else
       echo "Mountpoint for USB already exists."
     fi
-  fi
 
-  echo "...and adding them to /etc/fstab..."
-  {
-    # echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-    # echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-    # echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-    echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
-  } >> /etc/fstab
+    echo "Adding USB-drive to /etc/fstab..."
+    {
+      # echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+      # echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+      # echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
+      echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
+    } >> /etc/fstab
 
-
-  if [ -e "${USB_DEV}" ]; then
     echo "Mounting USB-drive..."
     mount "${USB_DIR}"
   fi
@@ -172,7 +169,7 @@ claim_path()
   done
 
   # need to have nfs-common installed before doing these mounts:
-  echo ""
+  # echo ""
   # echo "Mounting /srv/config..."
   # mount /srv/config
   #  echo "Mounting /srv/databases..."
@@ -231,6 +228,7 @@ claim_path()
   echo "Setting up account for user ${USER}..."
   # shellcheck disable=SC2174
   mkdir -m 0700 -p "/home/${USER}/.ssh"
+  claim_path "/home/${USER}/.config"
 
   # Fetch stuff from the USB-drive
   if [ -d "${USB_DIR}" ]; then
