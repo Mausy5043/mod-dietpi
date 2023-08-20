@@ -281,11 +281,12 @@ claim_path()
   cat << 'EOF' >> /var/lib/dietpi/dietpi-autostart/custom.sh
 #!/bin/bash
 
+me=$(whoami)
 tmpfile=$(mktemp /tmp/route.XXXXXX)
 ip -f inet route > ${tmpfile}
 ip -f inet6 route >> ${tmpfile}
 chmod +r ${tmpfile}
-su -c "python3 /home/pi/bin/pymail.py -f ${tmpfile} -s '$(hostname) was booted on $(date)'" pi
+su -c "python3 /home/pi/bin/pymail.py -f ${tmpfile} -s '$(hostname) was booted on $(date)'" ${me}
 rm ${tmpfile}
 
 exit 0
