@@ -226,13 +226,13 @@ claim_path()
   echo "Setting up account for user ${USER}..."
   # shellcheck disable=SC2174
   mkdir -m 0700 -p "/home/${USER}/.ssh"
-  claim_path "/home/${USER}/.config"
 
   # Fetch stuff from the USB-drive
   if [ -d "${USB_DIR}" ]; then
     ln -sv ${USB_DIR}/_config /home/${USER}/.config
   else
     echo "USB-drive not mounted! Expect a broken system..."
+    claim_path "/home/${USER}/.config"
   fi
 
   # Link stuff from the config mount
