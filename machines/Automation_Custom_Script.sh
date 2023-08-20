@@ -49,11 +49,23 @@ declare -a apt_packages=(
   # "f2fs-tools"
   # "nfs-common"
 
+# $1 = three letters to indicate function
+# print a 60 chars wide leader
+print_leader()
+{
+  TLA="${1}"
+  echo -n "***"                                   #  3
+  echo -n "$(date  +'%Y.%m.%d %H:%M:%S')"         # 19
+  echo -n "**********************************"    # 34
+  echo -n "${TLA}"                                #  3
+  echo "*"                                        #  1
+}
+
 # See if packages are installed and install them.
 install_apt_package()
 {
   package=${1}
-  echo "*****************************************************APT*"
+  print_leader "APT"
   echo "* Requesting ${package}"
   status=$(dpkg -l | awk '{print $2}' | grep -c -e "^${package}$")
   if [ "${status}" -eq 0 ]; then
@@ -71,7 +83,7 @@ declare -a py_packages=("pytz" "skyfield")
 install_py_package()
 {
   package=${1}
-  echo "*****************************************************PIP*"
+  print_leader "PIP"
   echo "* Requesting ${package}"
   echo ""
   su -c "python3 -m pip install ${package}" ${USER}
@@ -92,10 +104,9 @@ claim_path()
 
 {
   echo ""
-  echo "***********************************"
-  echo "*  START AUTOMATION_CUSTOM_SCRIPT *"
-  echo "***********************************"
-  date  +"%Y.%m.%d %H:%M:%S"
+  print_leader "***"
+  echo "*  START AUTOMATION_CUSTOM_SCRIPT"
+  echo "*****************************************************************"
 
   echo ""
   echo "Repairing locale..."
@@ -161,8 +172,6 @@ claim_path()
   echo ""
   echo "Installing default packages..."
   for PKG in "${apt_packages[@]}"; do
-    echo ""
-    date  +"%Y.%m.%d %H:%M:%S"
     install_apt_package "${PKG}"
   done
 
@@ -259,8 +268,6 @@ claim_path()
   fi
   echo "Installing default Python packages..."
   for PKG in "${py_packages[@]}"; do
-    echo ""
-    date  +"%Y.%m.%d %H:%M:%S"
     install_py_package "${PKG}"
   done
 
@@ -347,12 +354,10 @@ EOF
 
   # reboot to close the root console
   shutdown -r +1
-  echo
-  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
-  echo "************************************"
-  echo "*   AUTOMATION_CUSTOM_SCRIPT END   *"
-  echo "************************************"
+  echo "*****************************************************************"
+  echo "*   AUTOMATION_CUSTOM_SCRIPT END "
+  print_leader "***"
   echo ""
 } 2>&1 | tee "${SERVICE_DIR}/install_2_script.log"
 
