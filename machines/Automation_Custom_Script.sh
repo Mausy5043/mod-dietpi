@@ -293,7 +293,7 @@ claim_path()
   cat << 'EOF' >> /var/lib/dietpi/dietpi-autostart/custom.sh
 #!/bin/bash
 
-me=$(whoami)
+me="pi" # $(whoami)
 tmpfile=$(mktemp /tmp/route.XXXXXX)
 ip -f inet route > ${tmpfile}
 ip -f inet6 route >> ${tmpfile}
