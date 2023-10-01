@@ -336,6 +336,10 @@ EOF
   # servers update regularly using:
   # rclone sync /srv/rmt/_databases remote:raspi/_databases
 
+  # activate NTP in case it should be switched off somehow
+  timedatectl set-ntp true
+  timedatectl status
+
   # log the state of the machine at this point
   echo
   pstree -a
