@@ -50,6 +50,8 @@ if [ -d "${HERE}/machines/${MACHINE}" ]; then
   cp -rv "${HERE}/machines/${MACHINE}/config" "${DEVICE}/mod-dietpi/"
   cp -rv "${HERE}/machines/${MACHINE}/config.txt" "${DEVICE}/mod-dietpi/"
   echo ""
+else
+  echo "Machine ${MACHINE} not defined."
 fi
 
 echo "Ready"
