@@ -23,6 +23,10 @@ install_apt_package python3-serial
 install_apt_package sqlite3
 install_apt_package wavemon
 
+# required for HDD-support
+install_apt exfat-fuse
+install_apt exfat-utils
+install_apt ntfs-3g
 
 # required for hardware support (Bluetooth)
 install_apt_package pi-bluetooth
