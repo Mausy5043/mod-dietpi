@@ -138,11 +138,11 @@ AUTO_SETUP_GLOBAL_PASSWORD=raspberry
 # - Add as many entries as you wish, one each line.
 # - DietPi will automatically install all dependencies, like ALSA/X11 for desktops etc.
 # LXDE desktop:
-AUTO_SETUP_INSTALL_SOFTWARE_ID=23
+#AUTO_SETUP_INSTALL_SOFTWARE_ID=23
 # TigerVNC
-AUTO_SETUP_INSTALL_SOFTWARE_ID=28
+#AUTO_SETUP_INSTALL_SOFTWARE_ID=28
 # Deluge
-AUTO_SETUP_INSTALL_SOFTWARE_ID=45
+#AUTO_SETUP_INSTALL_SOFTWARE_ID=45
 # qBitTorrent
 AUTO_SETUP_INSTALL_SOFTWARE_ID=46
 # nginx, sqlite, php:
