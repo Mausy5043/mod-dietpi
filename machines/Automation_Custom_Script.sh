@@ -34,6 +34,7 @@ declare -a apt_packages=(
   "file"
   "git"
   "gettext"
+  "graphviz"
   "less"
   "lsb-release"
   "lsof"
@@ -43,6 +44,7 @@ declare -a apt_packages=(
   "python3-pip"
   "python3-dev"
   "screen"
+  "tmux"
   "tree"
   "zip")
   # "systemd-journal-remote"
