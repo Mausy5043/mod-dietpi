@@ -6,9 +6,7 @@
 
 echo
 echo "Installing UPS monitor packages..."
-install_apt_package "graphviz"
 install_apt_package "nut"
-install_apt_package "tmux"
 
 echo
 echo "Installing BUPS package..."

@@ -3,8 +3,6 @@
 echo
 echo "Installing additional packages..."
 # install_apt_package build-essential
-install_apt_package graphviz
-install_apt_package tmux
 #install_apt_package libatlas-base-dev
 #install_apt_package libglib2.0-dev
 #install_apt_package libjpeg62
@@ -12,7 +10,6 @@ install_apt_package tmux
 #install_apt_package libpng16-16
 #install_apt_package libtiff5
 #install_apt_package libxcb1
-install_apt_package man
 # install_apt_package nut
 # install_apt_package picocom
 # install_apt_package python3

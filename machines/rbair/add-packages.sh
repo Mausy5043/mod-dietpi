@@ -2,8 +2,6 @@
 
 echo
 echo "Installing additional packages..."
-install_apt_package "graphviz"
-install_apt_package "tmux"
 
 echo
 echo "Installing KIMNATY package..."
