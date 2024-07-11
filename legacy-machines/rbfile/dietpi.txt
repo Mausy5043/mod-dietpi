@@ -137,8 +137,20 @@ AUTO_SETUP_GLOBAL_PASSWORD=raspberry
 # - List of available software IDs: https://github.com/MichaIng/DietPi/wiki/DietPi-Software-list
 # - Add as many entries as you wish, one each line.
 # - DietPi will automatically install all dependencies, like ALSA/X11 for desktops etc.
-# - E.g. the following (without the leading "#") will install the LXDE desktop automatically on first boot:
+# LXDE desktop:
+AUTO_SETUP_INSTALL_SOFTWARE_ID=23
+# TigerVNC
+AUTO_SETUP_INSTALL_SOFTWARE_ID=28
+# Deluge
+AUTO_SETUP_INSTALL_SOFTWARE_ID=45
+# nginx, sqlite, php:
 AUTO_SETUP_INSTALL_SOFTWARE_ID=78
+# SAMBA
+AUTO_SETUP_INSTALL_SOFTWARE_ID=96
+# NFS
+AUTO_SETUP_INSTALL_SOFTWARE_ID=109
+# rclone:
+AUTO_SETUP_INSTALL_SOFTWARE_ID=202
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
