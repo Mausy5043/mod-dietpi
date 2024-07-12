@@ -1,13 +1,9 @@
 #!/bin/bash
 
 echo
-echo "Installing missing default packages"
-
+echo "Installing additional packages"
 # required for HDD-support
-# install_apt exfat-fuse
-# install_apt exfat-utils
-# install_apt ntfs-3g
-install_apt smartmontools
+install_apt_package "smartmontools"
 
 # Mountpoint for external HDD
 # /dev/sdb1        /mnt/icybox    ext4    defaults    0    2

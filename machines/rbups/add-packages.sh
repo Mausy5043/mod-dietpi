@@ -6,7 +6,7 @@
 
 echo
 echo "Installing UPS monitor packages..."
-install_apt_package "nut"
+apt-get -yqV install "nut"
 
 echo
 echo "Installing BUPS package..."

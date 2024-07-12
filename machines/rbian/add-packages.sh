@@ -21,9 +21,9 @@ echo "Installing additional packages..."
 # install_apt_package wavemon
 
 # required for HDD-support
-install_apt exfat-fuse
-install_apt exfat-utils
-install_apt ntfs-3g
+# install_apt_package exfat-fuse
+# install_apt_package exfat-utils
+# install_apt_package ntfs-3g
 
 # required for hardware support (Bluetooth)
 # install_apt_package pi-bluetooth
