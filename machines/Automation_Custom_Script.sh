@@ -142,9 +142,6 @@ claim_path()
 
   echo ""
   echo "Creating extra mountpoints..."
-  # claim_path /srv/config
-  # claim_path /srv/databases
-  # claim_path /srv/files
 
   # is USB-drive attached?
   USB_DEV="/dev/sda1"
@@ -161,13 +158,33 @@ claim_path()
 
     echo "Adding USB-drive to /etc/fstab..."
     {
-      # echo "rbfile.fritz.box:/srv/nfs/config     /srv/config     nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-      # echo "rbfile.fritz.box:/srv/nfs/databases  /srv/databases  nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-      # echo "rbfile.fritz.box:/srv/nfs/files      /srv/files      nfs4     nouser,atime,rw,dev,exec,suid,_netdev,x-systemd.automount,noauto  0   0"
-      echo "${USB_DEV}                            ${USB_DIR}        ext4     noatime,lazytime,rw                                               0   2"
+      echo "${USB_DEV}        ${USB_DIR}        ext4        noatime,lazytime,rw        0   2"
     } >> /etc/fstab
 
     echo "Mounting USB-drive..."
+    mount "${USB_DIR}"
+  fi
+
+
+  # is external HDD attached?
+  USB_DEV="/dev/sdb1"
+  if [ -e "${USB_DEV}" ]; then
+    echo "Detected HDD-drive..."
+    USB_DIR="/srv/hdd"
+    if [ ! -d "${USB_DIR}" ]; then
+      # DietPi will have detected it too. Remove the entry in /etc/fstab
+      sed -i '/ \/srv\/hdd /d' /etc/fstab
+      claim_path "${USB_DIR}"
+    else
+      echo "Mountpoint for HDD already exists."
+    fi
+
+    echo "Adding HDD-drive to /etc/fstab..."
+    {
+      echo "${USB_DEV}        ${USB_DIR}        ext4        defaults        0   2"
+    } >> /etc/fstab
+
+    echo "Mounting HDD-drive..."
     mount "${USB_DIR}"
   fi
 
@@ -176,15 +193,6 @@ claim_path()
   for PKG in "${apt_packages[@]}"; do
     install_apt_package "${PKG}"
   done
-
-  # need to have nfs-common installed before doing these mounts:
-  # echo ""
-  # echo "Mounting /srv/config..."
-  # mount /srv/config
-  #  echo "Mounting /srv/databases..."
-  #  mount /srv/databases
-  #  echo "Mounting /srv/files..."
-  #  mount /srv/files
 
   echo ""
   date  +"%Y.%m.%d %H:%M:%S"
