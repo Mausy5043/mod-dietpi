@@ -144,13 +144,14 @@ claim_path()
   echo "Creating extra mountpoints..."
 
   # is USB-drive attached?
-  USB_DEV="/dev/sda1"
+  USB_ID="$(lsblk -o NAME,UUID |grep $(lsblk -o NAME,MODEL |grep Cruzer |awk '{print $1}') |awk  'NF>1 {print $2}')"
+  USB_DEV="$(lsblk -pro NAME,UUID |grep ${USB_ID} |awk '{print $1}')"
   if [ -e "${USB_DEV}" ]; then
     echo "Detected USB-drive..."
     USB_DIR="/srv/usb"
     if [ ! -d "${USB_DIR}" ]; then
       # DietPi will have detected it too. Remove the entry in /etc/fstab
-      sed -i '/ \/srv\/usb /d' /etc/fstab
+      sed -i "/${USB_ID}/d" /etc/fstab
       claim_path "${USB_DIR}"
     else
       echo "Mountpoint for USB already exists."
@@ -158,7 +159,7 @@ claim_path()
 
     echo "Adding USB-drive to /etc/fstab..."
     {
-      echo "${USB_DEV}        ${USB_DIR}        ext4        noatime,lazytime,rw        0   2"
+      echo "UUID=${USB_ID}        ${USB_DIR}        ext4        noatime,lazytime,rw        0   2"
     } >> /etc/fstab
 
     echo "Mounting USB-drive..."
@@ -167,25 +168,27 @@ claim_path()
 
 
   # is external HDD attached?
-  USB_DEV="/dev/sdb1"
-  if [ -e "${USB_DEV}" ]; then
+  HDD_ID="$(lsblk -o NAME,UUID |grep $(lsblk -o NAME,MODEL |grep WDC |awk '{print $1}') |awk  'NF>1 {print $2}')"
+  HDD_DEV="$(lsblk -pro NAME,UUID |grep ${HDD_ID} |awk '{print $1}')"
+  if [ -e "${HDD_DEV}" ]; then
     echo "Detected HDD-drive..."
-    USB_DIR="/srv/hdd"
-    if [ ! -d "${USB_DIR}" ]; then
+    HDD_DIR="/srv/hdd"
+    if [ ! -d "${HDD_DIR}" ]; then
       # DietPi will have detected it too. Remove the entry in /etc/fstab
-      sed -i '/ \/srv\/hdd /d' /etc/fstab
-      claim_path "${USB_DIR}"
+      sed -i "/${HDD_ID}/d" /etc/fstab
+      #sed -i '/ \/srv\/hdd /d' /etc/fstab
+      claim_path "${HDD_DIR}"
     else
       echo "Mountpoint for HDD already exists."
     fi
 
     echo "Adding HDD-drive to /etc/fstab..."
     {
-      echo "${USB_DEV}        ${USB_DIR}        ext4        defaults        0   2"
+      echo "UUID=${HDD_ID}        ${HDD_DIR}        ext4        defaults        0   2"
     } >> /etc/fstab
 
     echo "Mounting HDD-drive..."
-    mount "${USB_DIR}"
+    mount "${HDD_DIR}"
   fi
 
   echo ""
