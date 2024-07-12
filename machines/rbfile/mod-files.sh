@@ -18,3 +18,5 @@ echo "Change LED control after boot"
   echo "@reboot           root    echo mmc1 > /sys/class/leds/led1/trigger"
 }>> /etc/cron.d/99leds
 
+# UUID=a09a9aa2-9d56-46ed-9d0d-48ea742e4473 /srv/usb ext4 noatime,lazytime,rw,noauto,x-systemd.automount
+# UUID=3729940f-c896-49f2-b71f-33f64ae89e46 /srv/hdd ext4 noatime,lazytime,rw,noauto,x-systemd.automount
