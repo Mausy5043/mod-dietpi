@@ -167,30 +167,6 @@ claim_path()
   fi
 
 
-  # is external HDD attached?
-  HDD_ID="$(lsblk -o NAME,UUID |grep $(lsblk -o NAME,MODEL |grep WDC |awk '{print $1}') |awk  'NF>1 {print $2}')"
-  HDD_DEV="$(lsblk -pro NAME,UUID |grep ${HDD_ID} |awk '{print $1}')"
-  if [ -e "${HDD_DEV}" ]; then
-    echo "Detected HDD-drive..."
-    HDD_DIR="/srv/hdd"
-    if [ ! -d "${HDD_DIR}" ]; then
-      # DietPi will have detected it too. Remove the entry in /etc/fstab
-      sed -i "/${HDD_ID}/d" /etc/fstab
-      #sed -i '/ \/srv\/hdd /d' /etc/fstab
-      claim_path "${HDD_DIR}"
-    else
-      echo "Mountpoint for HDD already exists."
-    fi
-
-    echo "Adding HDD-drive to /etc/fstab..."
-    {
-      echo "UUID=${HDD_ID}        ${HDD_DIR}        ext4        defaults        0   2"
-    } >> /etc/fstab
-
-    echo "Mounting HDD-drive..."
-    mount "${HDD_DIR}"
-  fi
-
   echo ""
   echo "Installing default packages..."
   for PKG in "${apt_packages[@]}"; do
@@ -356,11 +332,17 @@ EOF
   # log the state of the machine at this point
   echo
   pstree -a
+
   echo
   systemctl --no-pager --plain list-unit-files
+
   echo
   ip address
 
+  echo
+  findmnt
+
+  echo
   sync;sync
   # umount /srv/config
   # umount /srv/databases
@@ -368,6 +350,7 @@ EOF
   if [ -e "${USB_DEV}" ]; then
     umount "${USB_DIR}"
   fi
+
 
   # reboot to close the root console
   shutdown -r +1
