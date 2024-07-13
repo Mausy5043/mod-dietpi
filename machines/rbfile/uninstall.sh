@@ -6,10 +6,11 @@ sleep 10
 
 # unmount the HDD bind
 if [ -d /srv/hdd ]; then
+  echo "unmounting /mnt/dietpi_userdata"
   sudo umount /mnt/dietpi_userdata
 fi
 
 # unmount USB-drive & remove mountpoint
-findmnt -rno TARGET "/srv/usb" | sudo xargs -rL1 umount
+findmnt -rno TARGET "/srv/hdd" | sudo xargs -rL1 umount
 sed -i '/ \/srv\/hdd /d' /etc/fstab
 rmdir -v /srv/hdd
