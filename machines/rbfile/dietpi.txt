@@ -147,9 +147,11 @@ AUTO_SETUP_INSTALL_SOFTWARE_ID=46
 # nginx, sqlite, php:
 AUTO_SETUP_INSTALL_SOFTWARE_ID=78
 # SAMBA
+AUTO_SETUP_INSTALL_SOFTWARE_ID=1
 AUTO_SETUP_INSTALL_SOFTWARE_ID=96
 # NFS
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=109
+AUTO_SETUP_INSTALL_SOFTWARE_ID=109
+AUTO_SETUP_INSTALL_SOFTWARE_ID=110
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
