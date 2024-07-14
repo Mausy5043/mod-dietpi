@@ -57,8 +57,12 @@ rm /boot/.log/* 2>/dev/null
     cp -v "${HERE}/machines/${MACHINE}"/diet* "${SERVICE_DIR}"
     cp -v "${HERE}/machines/${MACHINE}/add-packages.sh" "${SERVICE_DIR}/mod-dietpi/"
     cp -v "${HERE}/machines/${MACHINE}/mod-files.sh" "${SERVICE_DIR}/mod-dietpi/"
-    cp -rv "${HERE}/machines/${MACHINE}/config" "${SERVICE_DIR}/mod-dietpi/"
-    cp -v "${HERE}/machines/${MACHINE}/config.txt" "${SERVICE_DIR}"
+    if [ -e "${HERE}/machines/${MACHINE}/config" ]; then
+      cp -rv "${HERE}/machines/${MACHINE}/config" "${SERVICE_DIR}/mod-dietpi/"
+    fi
+    if [ -e "${HERE}/machines/${MACHINE}/config.txt" ]; then
+      cp -v "${HERE}/machines/${MACHINE}/config.txt" "${SERVICE_DIR}"
+    fi
     echo ""
   fi
 
