@@ -1,10 +1,15 @@
 #!/bin/bash
 
-# stop qBitTorrent
+echo "Stop qBitTorrent..."
 sudo systemctl stop qbittorent.service
 sleep 10
 
-# unmount the HDD bind
+
+# unmount the HDD binds
+echo "unmounting /home/qbittorrent/.config"
+  sudo umount /home/qbittorrent/.config
+echo "unmounting /home/qbittorrent/.local"
+  sudo umount /home/qbittorrent/.local
 if [ -d /srv/hdd ]; then
   echo "unmounting /mnt/dietpi_userdata"
   sudo umount /mnt/dietpi_userdata
