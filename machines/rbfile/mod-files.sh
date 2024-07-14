@@ -38,8 +38,10 @@ echo "Change LED control after boot"
 
     echo "Adding HDD-drive to /etc/fstab..."
     {
-      echo "UUID=${HDD_ID}        ${HDD_DIR}        ext4        defaults        0    2"
-      echo "/srv/hdd/files        /mnt/dietpi_userdata        none        bind        0    0"
+      echo "UUID=${HDD_ID}  ${HDD_DIR}                   ext4  defaults  0  2"
+      echo "/srv/hdd/files                             /mnt/dietpi_userdata       none  bind      0  0"
+      echo "/srv/hdd/_config/qbittorrent/_config       /home/qbittorrent/.config  none  bind      0  0"
+      echo "/srv/hdd/_config/qbittorrent/_local        /home/qbittorrent/.local   none  bind      0  0"
     } >> /etc/fstab
 
     echo "Mounting HDD-drive..."
