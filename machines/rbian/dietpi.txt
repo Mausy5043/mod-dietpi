@@ -141,8 +141,9 @@ AUTO_SETUP_GLOBAL_PASSWORD=raspberry
 # - DietPi will automatically install all dependencies, like ALSA/X11 for desktops etc.
 # - E.g. the following (without the leading "#") will install the LXDE desktop automatically on first boot:
 # LXDE desktop:
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=23
-
+AUTO_SETUP_INSTALL_SOFTWARE_ID=23
+# TigerVNC
+AUTO_SETUP_INSTALL_SOFTWARE_ID=28
 # KODI
 AUTO_SETUP_INSTALL_SOFTWARE_ID=31
 # nginx, sqlite, php:
