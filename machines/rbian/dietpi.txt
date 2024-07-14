@@ -142,20 +142,15 @@ AUTO_SETUP_GLOBAL_PASSWORD=raspberry
 # - E.g. the following (without the leading "#") will install the LXDE desktop automatically on first boot:
 # LXDE desktop:
 #AUTO_SETUP_INSTALL_SOFTWARE_ID=23
-# TigerVNC
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=28
-# Deluge
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=45
-# qBitTorrent
-AUTO_SETUP_INSTALL_SOFTWARE_ID=46
+
+# KODI
+AUTO_SETUP_INSTALL_SOFTWARE_ID=31
 # nginx, sqlite, php:
 AUTO_SETUP_INSTALL_SOFTWARE_ID=78
 # SAMBA
-AUTO_SETUP_INSTALL_SOFTWARE_ID=96
+AUTO_SETUP_INSTALL_SOFTWARE_ID=1
 # NFS
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=109
-# rclone:
-#AUTO_SETUP_INSTALL_SOFTWARE_ID=202
+AUTO_SETUP_INSTALL_SOFTWARE_ID=110
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
