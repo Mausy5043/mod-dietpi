@@ -154,6 +154,8 @@ AUTO_SETUP_INSTALL_SOFTWARE_ID=96
 # NFS
 AUTO_SETUP_INSTALL_SOFTWARE_ID=109
 AUTO_SETUP_INSTALL_SOFTWARE_ID=110
+# Avahi / Zeroconf
+AUTO_SETUP_INSTALL_SOFTWARE_ID=152
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
