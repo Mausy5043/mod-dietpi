@@ -24,5 +24,5 @@ su -c "curl https://pyenv.run | bash" "${USER}"
 echo "Creating Python 3.12..."
 
 eval "$(pyenv init -)"
-su -c "PATH='$HOME/.pyenv/bin:$PATH' pyenv install  3.12" "${USER}"
-su -c "PATH='$HOME/.pyenv/bin:$PATH' pyenv global   3.12" "${USER}"
+su -c "PATH='$HOME/.pyenv/bin:$PATH' $HOME/.pyenv/bin/pyenv install  3.12" "${USER}"
+su -c "PATH='$HOME/.pyenv/bin:$PATH' $HOME/.pyenv/bin/pyenv global   3.12" "${USER}"
