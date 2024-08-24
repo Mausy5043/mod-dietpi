@@ -247,6 +247,7 @@ claim_path()
   # su -c "python3 -m venv " ${USER}
   # display reminder:
   # su -c "pipx completions" ${USER}
+
   # Setting pip options to circumvent PEP 668 compliance
   if [ ! -f "/home/${USER}/.config/pip/pip.conf" ]; then
     mkdir -p "/home/${USER}/.config/pip"
