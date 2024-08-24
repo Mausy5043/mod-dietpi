@@ -13,7 +13,7 @@ install_apt_package libffi-dev
 install_apt_package libgdbm-dev
 install_apt_package libgdbm-compat-dev
 install_apt_package liblzma-dev
-install_apt_package libncurses5-dev
+# install_apt_package libncurses5-dev  # linbncursesw5-dev is considered superior
 install_apt_package libncursesw5-dev
 install_apt_package libreadline-dev
 install_apt_package libsqlite3-dev
