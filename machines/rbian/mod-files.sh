@@ -17,3 +17,7 @@ echo "Change LED control after boot"
   echo "@reboot           root    echo cpu >  /sys/class/leds/led0/trigger"
   echo "@reboot           root    echo mmc1 > /sys/class/leds/led1/trigger"
 }>> /etc/cron.d/99leds
+
+echo ""
+echo "Installing pyenv for user..."
+su -c "curl https://pyenv.run | bash"  "${USER}"
