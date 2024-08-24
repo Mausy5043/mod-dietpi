@@ -20,4 +20,7 @@ echo "Change LED control after boot"
 
 echo ""
 echo "Installing pyenv for user..."
-su -c "curl https://pyenv.run | bash"  "${USER}"
+su -c "curl https://pyenv.run | bash" "${USER}"
+echo "Creating Python 3.12..."
+su -c "pyenv install  3.12" "${USER}"
+su -c "pyenv global   3.12" "${USER}"

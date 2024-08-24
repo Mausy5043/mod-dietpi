@@ -305,6 +305,9 @@ EOF
     source "${SERVICE_DIR}/add-packages.sh"
   fi
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
+
   # Install server specific configuration files
   echo
   echo "Copy configuration files for server-specific duties..."
@@ -314,19 +317,27 @@ EOF
     cp -v "${f}" "/${g}"
   done
 
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
+
   # Modify existing server specific configuration files
   echo
   echo "Modify installation for server-specific duties..."
   if [ -e "${SERVICE_DIR}/mod-files.sh" ]; then
     source "${SERVICE_DIR}/mod-files.sh"
   fi
+
+
+  echo
+  date  +"%Y.%m.%d %H:%M:%S"
+
   echo
   echo "Not fetching databases..."
   # su -c "rclone -v copy remote:raspi/_databases /srv/rmt/_databases" "${USER}"
   # servers update regularly using:
   # rclone sync /srv/rmt/_databases remote:raspi/_databases
 
-  # activate NTP in case it should be switched off somehow
+  # activate NTP in case it should have been switched off somehow
   timedatectl set-ntp true
   timedatectl status
 
