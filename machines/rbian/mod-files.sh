@@ -23,6 +23,23 @@ echo "Installing pyenv for user..."
 su -c "curl https://pyenv.run | bash" "${USER}"
 echo "Creating Python 3.12..."
 
-eval "$(pyenv init -)"
-su -c "PATH='$HOME/.pyenv/bin:$PATH' $HOME/.pyenv/bin/pyenv install  3.12" "${USER}"
-su -c "PATH='$HOME/.pyenv/bin:$PATH' $HOME/.pyenv/bin/pyenv global   3.12" "${USER}"
+
+su -c "echo \$PATH" "${USER}"
+# su -c "PATH=/home/${USER}/.pyenv/bin:$PATH eval $(/home/${USER}/.pyenv/bin/pyenv init -)" "${USER}"
+# su -c "PATH=/home/${USER}/.pyenv/bin:$PATH; eval \"\$(pyenv init -)\"" "${USER}"
+su - "${USER}" -c <<EOF
+PATH=/home/${USER}/.pyenv/bin:\$PATH
+eval "\$(/home/${USER}/.pyenv/bin/pyenv init -)"
+EOF
+
+#su -c "PATH=/home/${USER}/.pyenv/bin:$PATH /home/${USER}/.pyenv/bin/pyenv install  3.12" "${USER}"
+su - "${USER}" -c <<EOF
+PATH=/home/${USER}/.pyenv/bin:\$PATH
+eval "\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)"
+EOF
+
+#su -c "PATH=/home${USER}/.pyenv/bin:$PATH /home/${USER}/.pyenv/bin/pyenv global   3.12" "${USER}"
+su - "${USER}" -c <<EOF
+PATH=/home/${USER}/.pyenv/bin:\$PATH
+eval "\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)"
+EOF
