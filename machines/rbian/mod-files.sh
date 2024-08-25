@@ -25,21 +25,8 @@ echo "Creating Python 3.12..."
 
 
 su -c "echo \$PATH" "${USER}"
-# su -c "PATH=/home/${USER}/.pyenv/bin:$PATH eval $(/home/${USER}/.pyenv/bin/pyenv init -)" "${USER}"
-# su -c "PATH=/home/${USER}/.pyenv/bin:$PATH; eval \"\$(pyenv init -)\"" "${USER}"
-su - "${USER}" -c <<EOF
-PATH=/home/${USER}/.pyenv/bin:\$PATH
-eval "\$(/home/${USER}/.pyenv/bin/pyenv init -)"
-EOF
+su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv init -)\"" "${USER}"
 
-#su -c "PATH=/home/${USER}/.pyenv/bin:$PATH /home/${USER}/.pyenv/bin/pyenv install  3.12" "${USER}"
-su - "${USER}" -c <<EOF
-PATH=/home/${USER}/.pyenv/bin:\$PATH
-eval "\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)"
-EOF
+su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)\"" "${USER}"
 
-#su -c "PATH=/home${USER}/.pyenv/bin:$PATH /home/${USER}/.pyenv/bin/pyenv global   3.12" "${USER}"
-su - "${USER}" -c <<EOF
-PATH=/home/${USER}/.pyenv/bin:\$PATH
-eval "\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)"
-EOF
+su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
