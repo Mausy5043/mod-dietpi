@@ -15,3 +15,12 @@ echo -n "Modify /boot/config.txt "
 echo -n "Change LED control after boot"
 echo "@reboot           root    echo cpu >  /sys/class/leds/led0/trigger" | sudo tee /etc/cron.d/99leds
 echo "@reboot           root    echo mmc1 > /sys/class/leds/led1/trigger" | sudo tee -a /etc/cron.d/99leds
+
+echo ""
+echo "Installing pyenv for user..."
+su -c "curl https://pyenv.run | bash" "${USER}"
+echo "Creating Python 3.12..."
+su -c "echo \$PATH" "${USER}"
+su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv init -)\"" "${USER}"
+su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)\"" "${USER}"
+su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"

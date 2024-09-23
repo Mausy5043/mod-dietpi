@@ -70,3 +70,6 @@ install_apt_package zlib1g-dev
 # sudo addgroup --gid 114 spi
 # sudo usermod -aG spi,i2c,plugdev pi
 # sudo chown root:spi /dev/spidev0.*
+
+
+echo "APP WOULD BE INSTALLED NOW"
