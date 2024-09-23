@@ -72,5 +72,5 @@ install_apt_package zlib1g-dev
 # sudo chown root:spi /dev/spidev0.*
 
 
-echo "APP WOULD BE INSTALLED NOW"
+echo "APP WOULD BE LOADED NOW"
 echo "${PATH}"
