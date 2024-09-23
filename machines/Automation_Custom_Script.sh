@@ -80,7 +80,7 @@ install_apt_package()
 }
 
 # Install these python packages by default
-declare -a py_packages=("pytz" "skyfield")
+# declare -a py_packages=("pytz" "skyfield")
 # See if packages are installed and install them.
 install_py_package()
 {
@@ -256,10 +256,10 @@ claim_path()
       echo "break-system-packages = true"
     } >> "/home/${USER}/.config/pip/pip.conf"
   fi
-  echo "Installing default Python packages..."
-  for PKG in "${py_packages[@]}"; do
-    install_py_package "${PKG}"
-  done
+  # echo "Installing default Python packages..."
+  # for PKG in "${py_packages[@]}"; do
+  #   install_py_package "${PKG}"
+  # done
 
   echo
   date  +"%Y.%m.%d %H:%M:%S"
