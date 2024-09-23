@@ -327,15 +327,10 @@ EOF
     source "${SERVICE_DIR}/mod-files.sh"
   fi
 
-
   echo
   date  +"%Y.%m.%d %H:%M:%S"
 
   echo
-  echo "Not fetching databases..."
-  # su -c "rclone -v copy remote:raspi/_databases /srv/rmt/_databases" "${USER}"
-  # servers update regularly using:
-  # rclone sync /srv/rmt/_databases remote:raspi/_databases
 
   # activate NTP in case it should have been switched off somehow
   timedatectl set-ntp true
