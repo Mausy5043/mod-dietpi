@@ -73,4 +73,4 @@ install_apt_package zlib1g-dev
 
 
 echo "APP WOULD BE LOADED NOW"
-echo "${PATH}"
+echo "Path: ${PATH}"

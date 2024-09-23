@@ -28,4 +28,4 @@ su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
 
 echo "PYENV ACTIVE HERE"
-echo "${PATH}"
+echo "Path: ${PATH}"
