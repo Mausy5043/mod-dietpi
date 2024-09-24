@@ -358,6 +358,12 @@ EOF
     umount "${USB_DIR}"
   fi
 
+  # execute .paths to create ~/.pyenvpaths
+  su -l -c "$HOME/.paths" pi
+  # record the result in the log
+  su -l -c "ls -al" pi
+  su -l -c "echo \"PATH=$PATH\"" pi
+  echo
 
   # reboot to close the root console
   shutdown -r +1
