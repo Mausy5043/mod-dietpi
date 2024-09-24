@@ -19,26 +19,27 @@ echo "Change LED control after boot"
 }>> /etc/cron.d/99leds
 
 echo ""
-echo "Installing pyenv for user..."
+echo "Installing pyenv for user ${USER}"
 su -c "curl https://pyenv.run | bash" "${USER}"
 echo "Creating Python 3.12..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv init -)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
 
-echo; whoami;echo
+echo "I am $(whoami)"
+echo
 echo "PYENV ACTIVE HERE"
-su -l -c "echo \"PATH=$PATH\"" "${USER}"
+su -c "echo \"$(whoami) PATH=$PATH\"" -l "${USER}"
 
 # execute .paths to create ~/.pyenvpaths
-su -l -c "/home/${USER}/.paths" "${USER}"
+su -c '. /home/pi/.paths; echo $PATH' -l "${USER}"
 # record the result in the log
-su -l -c "ls -al" "${USER}"
+su -c "ls -al" -l "${USER}"
 echo
-su -l -c "echo \"PATH=$PATH\"" "${USER}"
+su -c "echo '$(whoami) PATH=$PATH'" -l "${USER}"
 echo
 cat "/home/${USER}/.pyenvpaths"
 echo
 echo "INSTALL APP(s) HERE"
-su -l -c "python -V" "${USER}"
+su -c '. /home/pi/.paths; python -V' -l "${USER}"
 echo
