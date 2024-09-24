@@ -22,10 +22,22 @@ echo ""
 echo "Installing pyenv for user..."
 su -c "curl https://pyenv.run | bash" "${USER}"
 echo "Creating Python 3.12..."
-su -c "echo \$PATH" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv init -)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
 
 echo "PYENV ACTIVE HERE"
-echo "Path: ${PATH}"
+su -l -c "echo \"PATH=$PATH\"" "${USER}"
+
+# execute .paths to create ~/.pyenvpaths
+su -l -c "/home/${USER}/.paths" "${USER}"
+# record the result in the log
+su -l -c "ls -al" "${USER}"
+echo
+su -l -c "echo \"PATH=$PATH\"" "${USER}"
+echo
+cat "/home/${USER}/.pyenvpaths"
+echo
+echo "INSTALL APP(s) HERE"
+su -l -c "python -V" "${USER}"
+echo
