@@ -26,4 +26,4 @@ su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
 
 echo "Installing KIMNATY package..."
-su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; /home/${USER}/kimnaty/kimnaty --install" "${USER}"
+su -c ". /home/pi/.paths; /home/${USER}/kimnaty/kimnaty --install" -l "${USER}"
