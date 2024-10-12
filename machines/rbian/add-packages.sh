@@ -51,14 +51,16 @@ install_apt_package zlib1g-dev
 # install_apt_package ntfs-3g
 
 # required for hardware support (Bluetooth)
-# install_apt_package pi-bluetooth
-# install_apt_package bluetooth
-# install_apt_package bluez
+install_apt_package pi-bluetooth
+install_apt_package bluetooth
+install_apt_package bluez
+install_apt_package libbluetooth-dev
 
-# sudo addgroup --gid 112 bluetooth
-# sudo usermod -aG bluetooth pi
-# sudo rm /etc/modprobe.d/dietpi-disable_bluetooth.conf
-# sudo sed -i /^[[:blank:]]*dtoverlay=disable-bt/d /boot/config.txt
+
+sudo addgroup --gid 112 bluetooth
+sudo usermod -aG bluetooth pi
+sudo rm /etc/modprobe.d/dietpi-disable_bluetooth.conf
+sudo sed -i /^[[:blank:]]*dtoverlay=disable-bt/d /boot/config.txt
 
 
 # required for hardware support (I2C & SPI)
