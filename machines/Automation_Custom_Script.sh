@@ -332,6 +332,11 @@ EOF
 
   echo
 
+  # suppress deprecation warning for remote logins in /etc/pam.d/sshd:
+  # session required pam_env.so user_readenv=1 envfile=/etc/default/locale
+  # Removing "user_readenv=1" from that line fixes the warning.
+  sed -i 's/ user_readenv=1//' /etc/pam.d/sshd
+
   # activate NTP in case it should have been switched off somehow
   timedatectl set-ntp true
   timedatectl status
