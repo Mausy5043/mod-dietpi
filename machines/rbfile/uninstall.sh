@@ -21,4 +21,4 @@ fi
 echo "unmounting HDD"
 findmnt -rno TARGET "/srv/hdd" | sudo xargs -rL1 umount
 sed -i '/ \/srv\/hdd /d' /etc/fstab
-rmdir -v /srv/hdd
+#rmdir -v /srv/hdd
