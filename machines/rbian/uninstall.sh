@@ -21,5 +21,6 @@ unstal2 kimnaty
 unstal2 lektrix
 unstal2 bups
 
-# remove rclone's local mountpoint
+# remove rclone's local mountpoints
 sudo rm -rv /srv/rmt
+sudo rm -rv /srv/drv
