@@ -22,6 +22,7 @@ DIETPI_ID=1010
 
 SERVICE_DIR=/boot/mod-dietpi
 REMOTE_DIR=""
+REMOTE_GDIR=""
 USB_DEV=""
 # USB_DEV="$(lsblk -o NAME,FSTYPE,UUID |grep ext4 |grep -v mmc |awk '{print $3}')"
 USB_DIR=""
@@ -137,6 +138,10 @@ claim_path()
     REMOTE_DIR="/srv/rmt"
     if [ ! -d "${REMOTE_DIR}" ]; then
       claim_path "${REMOTE_DIR}"
+    fi
+    REMOTE_GDIR="/srv/drv"
+    if [ ! -d "${REMOTE_GDIR}" ]; then
+      claim_path "${REMOTE_GDIR}"
     fi
   fi
 
