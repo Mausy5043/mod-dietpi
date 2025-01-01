@@ -20,3 +20,4 @@
 # Local History for Visual Studio Code
 .history/
  venv/
+.env
