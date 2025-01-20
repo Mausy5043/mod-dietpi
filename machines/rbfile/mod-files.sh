@@ -31,8 +31,8 @@ su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/
 # UUID=3729940f-c896-49f2-b71f-33f64ae89e46 /srv/hdd ext4 noatime,lazytime,rw,noauto,x-systemd.automount
 
   # is external HDD attached?
-  HDD_ID="$(lsblk -o NAME,UUID |grep $(lsblk -o NAME,MODEL |grep WDC |awk '{print $1}') |awk  'NF>1 {print $2}')"
-  HDD_DEV="$(lsblk -pro NAME,UUID |grep ${HDD_ID} |awk '{print $1}')"
+  HDD_ID="$(lsblk -o NAME,UUID |grep "$(lsblk -o NAME,MODEL |grep WDC |awk '{print $1}')" |awk  'NF>1 {print $2}')"
+  HDD_DEV="$(lsblk -pro NAME,UUID |grep "${HDD_ID}" |awk '{print $1}')"
   if [ -e "${HDD_DEV}" ]; then
     echo "Detected HDD-drive..."
     HDD_DIR="/srv/hdd"
