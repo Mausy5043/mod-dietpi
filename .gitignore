@@ -21,3 +21,7 @@
 .history/
  venv/
 .env
+.python-version
+
+FIXME
+
