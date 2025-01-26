@@ -53,8 +53,8 @@ su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/
       echo "/srv/hdd/_config/qbittorrent/_local        /home/qbittorrent/.local   none  bind      0  0"
     } >> /etc/fstab
 
-    echo "Mounting HDD-drive..."
-    mount "${HDD_DIR}"
+    # echo "Mounting HDD-drive..."
+    # mount "${HDD_DIR}"
     # wait for the disk to get mounted properly
     sleep 60
   fi
