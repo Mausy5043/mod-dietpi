@@ -1,7 +1,11 @@
 #!/bin/bash
 
-echo "Stop qBitTorrent..."
 sudo systemctl stop qbittorent.service
+echo "qBitTorrent stopped"
+sudo systemctl stop smbd.service
+echo "Samba stopped"
+sudo systemctl stop nfs-kernel-server.service
+echo "NFS stopped"
 sleep 10
 
 
