@@ -25,8 +25,8 @@ su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/
 echo "Creating Python 3.12..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
-echo "Creating Python 3.13..."
-su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.13)\"" "${USER}"
+# echo "Creating Python 3.13..."
+# su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.13)\"" "${USER}"
 
 echo ""
 echo "Installing LEKTRIX package..."
