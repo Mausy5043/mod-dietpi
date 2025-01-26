@@ -30,11 +30,14 @@ install_apt_package xz-utils
 install_apt_package zlib1g-dev
 
 echo
+date
 echo "Electricity monitor installation..."
 su -c "git clone https://github.com/Mausy5043/lektrix.git /home/pi/lektrix" pi
 chmod -R 0755 "/home/pi/lektrix"
 
 echo
+date
 echo "Water monitor installation..."
 su -c "git clone https://github.com/Mausy5043/wizwtr.git /home/pi/wizwtr" pi
 chmod -R 0755 "/home/pi/wizwtr"
+date

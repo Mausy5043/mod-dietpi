@@ -19,18 +19,20 @@ echo "@reboot           root    echo mmc1 > /sys/class/leds/led1/trigger" | sudo
 echo ""
 echo "Installing pyenv for user..."
 su -c "curl https://pyenv.run | bash" "${USER}"
-echo "Creating Python 3.12..."
 su -c "echo \$PATH" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv init -)\"" "${USER}"
+date
 echo "Creating Python 3.12..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
 # echo "Creating Python 3.13..."
 # su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.13)\"" "${USER}"
-
 echo ""
+date
 echo "Installing LEKTRIX package..."
 su -c ". /home/pi/.paths; /home/${USER}/lektrix/lektrix --install" -l "${USER}"
-
+echo""
+date
 echo "Installing WIZWTR package..."
 su -c ". /home/pi/.paths; /home/${USER}/wizwtr/wizwtr --install" -l "${USER}"
+date
