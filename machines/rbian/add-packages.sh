@@ -77,4 +77,4 @@ sudo sed -i /^[[:blank:]]*dtoverlay=disable-bt/d /boot/config.txt
 echo "APP WOULD BE LOADED NOW"
 echo "Path: ${PATH}"
 whoami
-date
+date  +"%Y.%m.%d %H:%M:%S"

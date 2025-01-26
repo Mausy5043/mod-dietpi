@@ -22,29 +22,29 @@ echo ""
 echo "Installing pyenv for user ${USER}"
 su -c "curl https://pyenv.run | bash" "${USER}"
 echo ""
-date
+date  +"%Y.%m.%d %H:%M:%S"
 echo "Creating Python 3.12..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv init -)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.12)\"" "${USER}"
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv global 3.12)\"" "${USER}"
 echo ""
-date
+date  +"%Y.%m.%d %H:%M:%S"
 echo "Creating Python 3.13..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.13)\"" "${USER}"
 echo ""
-date
+date  +"%Y.%m.%d %H:%M:%S"
 echo "Creating Python 3.14..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.14)\"" "${USER}"
 echo ""
-date
+date  +"%Y.%m.%d %H:%M:%S"
 echo "Creating Python 3.11..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.11)\"" "${USER}"
 echo ""
-date
+date  +"%Y.%m.%d %H:%M:%S"
 echo "Creating Python 3.10..."
 su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/.pyenv/bin/pyenv install 3.10)\"" "${USER}"
 
-date
+date  +"%Y.%m.%d %H:%M:%S"
 echo "I am $(whoami)"
 echo
 echo "PYENV ACTIVE HERE"
@@ -62,4 +62,4 @@ echo
 echo "INSTALL APP(s) HERE"
 su -c '. /home/pi/.paths; python -V' -l "${USER}"
 echo
-date
+date  +"%Y.%m.%d %H:%M:%S"

@@ -70,6 +70,8 @@ install_apt_package()
   package=${1}
   print_leader "APT"
   echo "* Requesting ${package}"
+  date  +"%Y.%m.%d %H:%M:%S"
+
   status=$(dpkg -l | awk '{print $2}' | grep -c -e "^${package}$")
   if [ "${status}" -eq 0 ]; then
     echo "* Installing ${package}"
@@ -88,6 +90,7 @@ install_py_package()
   package=${1}
   print_leader "PIP"
   echo "* Requesting ${package}"
+  date  +"%Y.%m.%d %H:%M:%S"
   echo ""
   su -c "python3 -m pip install ${package}" ${USER}
   echo ""

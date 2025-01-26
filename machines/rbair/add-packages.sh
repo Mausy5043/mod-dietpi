@@ -30,8 +30,8 @@ install_apt_package xz-utils
 install_apt_package zlib1g-dev
 
 echo
-date
+date  +"%Y.%m.%d %H:%M:%S"
 echo "Loading KIMNATY package..."
 su -c "git clone https://github.com/Mausy5043/kimnaty.git /home/pi/kimnaty" pi
 chmod -R 0755 "/home/pi/kimnaty"
-date
+date  +"%Y.%m.%d %H:%M:%S"

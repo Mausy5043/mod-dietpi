@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo
+date  +"%Y.%m.%d %H:%M:%S"
 echo "Installing additional packages"
 # required for HDD-support
 install_apt_package "smartmontools"
@@ -32,3 +33,4 @@ install_apt_package xz-utils
 install_apt_package zlib1g-dev
 
 echo
+date  +"%Y.%m.%d %H:%M:%S"
