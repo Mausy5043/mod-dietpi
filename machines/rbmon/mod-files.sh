@@ -36,11 +36,11 @@ echo ""
 date  +"%Y.%m.%d %H:%M:%S"
 
 echo "Installing LEKTRIX package..."
-#su -c ". /home/pi/.paths; /home/${USER}/lektrix/lektrix --install" -l "${USER}"
+su -c ". /home/pi/.paths; /home/${USER}/lektrix/lektrix --install" -l "${USER}"
 echo""
 date  +"%Y.%m.%d %H:%M:%S"
 
 echo "Installing WIZWTR package..."
-#su -c ". /home/pi/.paths; /home/${USER}/wizwtr/wizwtr --install" -l "${USER}"
+su -c ". /home/pi/.paths; /home/${USER}/wizwtr/wizwtr --install" -l "${USER}"
 echo""
 date  +"%Y.%m.%d %H:%M:%S"
