@@ -9,10 +9,12 @@
 #------------------------------------------------------------------------------------------------------
 ##### DietPi-Automation settings, applied on first boot of DietPi only, ONCE! #####
 #------------------------------------------------------------------------------------------------------
-# By setting this to "1" you accept the DietPi GPLv2 license and skip the related interactive dialog.
-# - Full license text: /boot/dietpi-LICENSE.txt
-# - This setting is ignored (and assumed to be affirmative) if AUTO_SETUP_AUTOMATED=1
-AUTO_SETUP_ACCEPT_LICENSE=1
+# Initial user and default software installation password
+# - Sets "root" and "dietpi" user's login passwords and is used by dietpi-software as default for software installs which require a password.
+# - Once applied during first run setup, the password is removed from this file, encrypted and stored to a safer location to be used by dietpi-software only.
+# - WARN: The default SSH server Dropbear does not support passwords over 100 bytes. Certain special characters, and such with accents, take 2 bytes.
+# - WARN: We cannot guarantee that all software options can handle special characters like $"|\.
+AUTO_SETUP_GLOBAL_PASSWORD=raspberry
 
 ##### Language/Regional options #####
 # Locale e.g.: "en_GB.UTF-8" / "de_DE.UTF-8" | One entry and UTF-8 ONLY!
@@ -64,8 +66,18 @@ AUTO_SETUP_SWAPFILE_LOCATION=/var/swap
 # Set to "1" to disable HDMI/video output and framebuffers on Raspberry Pi, to reduce power consumption and memory usage: Works on RPi only!
 AUTO_SETUP_HEADLESS=0
 
+# Serial console: Set to "0" if you do not require a serial console. It will then be disabled automatically on first boot.
+# - If you leave it at "1", and first login does not happen on a serial console, a dialogue offers to disable it instead.
+CONFIG_SERIAL_CONSOLE_ENABLE=0
+
 # Unmask (enable) systemd-logind service (including dbus), which is masked by default on DietPi
 AUTO_UNMASK_LOGIND=1
+
+# Install APT packages automatically after first run setup.
+# - Add as many APT package names as you wish, separated by space.
+# - They will be installed after dietpi-software options and before the script defined via AUTO_SETUP_CUSTOM_SCRIPT_EXEC (see below) is executed.
+# - E.g. the following (without the leading "#") will install the APT packages iotop, iptables and xz-utils:
+#AUTO_SETUP_APT_INSTALLS=iotop iptables xz-utils
 
 # Custom Script (pre-networking and pre-DietPi install)
 # - Allows you to automatically execute a custom script before network is up on first boot.
@@ -121,35 +133,32 @@ AUTO_SETUP_AUTOSTART_TARGET_INDEX=14
 AUTO_SETUP_AUTOSTART_LOGIN_USER=root
 
 ##### Non-interactive first run setup #####
-# On first login, run update, initial setup and software installs without any user input
-# - Setting this to "1" is required for AUTO_SETUP_GLOBAL_PASSWORD and AUTO_SETUP_INSTALL_SOFTWARE_ID.
-# - Setting this to "1" indicates that you accept the DietPi GPLv2 license, available at /boot/dietpi-LICENSE.txt, superseding AUTO_SETUP_ACCEPT_LICENSE.
+# On first boot, run updates, initial setup, and optional software installs without any user interaction.
+# - Please change AUTO_SETUP_GLOBAL_PASSWORD when enabling this option!
+# - Setting this to "1" indicates that you accept the DietPi GPLv2 license, available at /boot/dietpi-LICENSE.txt,
+#   superseding AUTO_SETUP_ACCEPT_LICENSE.
 AUTO_SETUP_AUTOMATED=1
-
-# Global password to be applied for the system
-# - Requires AUTO_SETUP_AUTOMATED=1
-# - Affects "root" and "dietpi" users login passwords and is used by dietpi-software as default for software installs which require a password.
-# - During first run setup, the password is removed from this file and instead encrypted and saved to root filesystem.
-# - WARN: The default SSH server Dropbear does not support passwords over 100 characters.
-# - WARN: We cannot guarantee that all software options can handle special characters like \"$.
-AUTO_SETUP_GLOBAL_PASSWORD=raspberry
+# MHE: following setting kept for historical reasons.
+# By setting this to "1" you accept the DietPi GPLv2 license and skip the related interactive dialog.
+# - Full license text: /boot/dietpi-LICENSE.txt
+# - This setting is ignored (and assumed to be affirmative) if AUTO_SETUP_AUTOMATED=1
+AUTO_SETUP_ACCEPT_LICENSE=1
 
 # Software to automatically install
 # - Requires AUTO_SETUP_AUTOMATED=1
 # - List of available software IDs: https://github.com/MichaIng/DietPi/wiki/DietPi-Software-list
-# - Add as many entries as you wish, one each line.
-# - DietPi will automatically install all dependencies, like ALSA/X11 for desktops etc.
-# - E.g. the following (without the leading "#") will install the LXDE desktop automatically on first boot:
-# nginx, sqlite, php:
-AUTO_SETUP_INSTALL_SOFTWARE_ID=78
-# rclone:
-AUTO_SETUP_INSTALL_SOFTWARE_ID=202
+# - Add as many software IDs as you wish, separated by space.
+# - DietPi will automatically install all dependencies, like ALSA/X11 for desktops, a webserver for web applications etc.
+# - E.g. the following (without the leading "#") will install the LXDE desktop, the TigerVNC server and the Kodi media centre automatically on first boot:
+#AUTO_SETUP_INSTALL_SOFTWARE_ID=23 28 31
+# (nginx, sqlite, php); rclone
+AUTO_SETUP_INSTALL_SOFTWARE_ID=78 202
 
 #------------------------------------------------------------------------------------------------------
 ##### Misc DietPi program settings #####
 #------------------------------------------------------------------------------------------------------
 # DietPi-Survey: 1=opt in | 0=opt out | -1=ask on first call
-# - https://dietpi.com/docs/dietpi_tools/#miscellaneous (see tab 'DietPi Survey')
+# - https://dietpi.com/docs/dietpi_tools/system_configuration/#dietpi-survey
 SURVEY_OPTED_IN=1
 
 #------------------------------------------------------------------------------------------------------
@@ -174,7 +183,7 @@ CONFIG_CPU_MIN_FREQ=Disabled
 # Disable Intel-based turbo/boost stepping. This flag should not be required, setting <100% MAX frequency should disable Turbo on Intel CPUs.
 CONFIG_CPU_DISABLE_TURBO=0
 
-#GPU Driver | Will also be applied during 1st run if set to a value other than 'None'
+# GPU Driver | Will also be applied during 1st run if set to a value other than 'none'
 #   NB: x86_64 PC only!
 #   Adds support for GUI/video hardware acceleration, OpenGL/GLES, Vulkan and VA-API
 # - none | Default, No GPU
@@ -203,8 +212,8 @@ CONFIG_G_CHECK_URL_ATTEMPTS=10
 CONFIG_CHECK_CONNECTION_IP=9.9.9.9
 # - IPv6 address to ping when checking network connectivity. Default: 2620:fe::fe (Quad9 DNS IP)
 CONFIG_CHECK_CONNECTION_IPV6=2620:fe::fe
-# - Domain to resolve when checking DNS resolver. Default: dns9.quad9.net (Quad9 DNS domain)
-CONFIG_CHECK_DNS_DOMAIN=dns9.quad9.net
+# - Domain to resolve when checking DNS resolver. Default: dietpi.com
+CONFIG_CHECK_DNS_DOMAIN=dietpi.com
 
 # Daily check for DietPi updates: 0=disable | 1=enable
 # - Checks are done by downloading a file of only 7 bytes.
@@ -216,9 +225,6 @@ CONFIG_CHECK_APT_UPDATES=1
 
 # Network time sync: 0=disabled | 1=boot only | 2=boot + daily | 3=boot + hourly | 4=Daemon + Drift
 CONFIG_NTP_MODE=2
-
-# Serial Console: Set to 0 if you do not require serial console.
-CONFIG_SERIAL_CONSOLE_ENABLE=0
 
 # Sound card
 CONFIG_SOUNDCARD=none
@@ -232,18 +238,30 @@ CONFIG_ENABLE_IPV6=0
 
 # APT mirrors which are applied to /etc/apt/sources.list | Values here will also be applied during 1st run setup
 # - Raspbian: https://www.raspbian.org/RaspbianMirrors
-CONFIG_APT_RASPBIAN_MIRROR=http://raspbian.raspberrypi.org/raspbian
+CONFIG_APT_RASPBIAN_MIRROR=http://raspbian.raspberrypi.com/raspbian
 # - Debian: https://www.debian.org/mirror/official#list
 CONFIG_APT_DEBIAN_MIRROR=https://deb.debian.org/debian
 
-# NTP mirror, applied to /etc/ntp.conf
-# - For a full list, please see: https://www.ntppool.org/zone/@
-# - Please remove the initial integer and full stop from the value (removing "0."), eg: debian.pool.ntp.org
-CONFIG_NTP_MIRROR=nl.pool.ntp.org
+# NTP server(s) applied to /etc/systemd/timesyncd.conf
+# - "default": Use the NTP server(s) provided via DHCP, else the debian.pool.ntp.org NTP pool.
+# - "gateway": Use the router/gateway as NTP server. Recommended, if it does provide this functionality.
+# - To use another public NTP pool, see the full list at: https://www.ntppool.org/zone/@
+#   Use the pool domain without leading integer and dot (without "0."), like "debian.pool.ntp.org", "pool.ntp.org" or "uk.pool.ntp.org".
+# - You can also use a custom IP address, hostname or any combination of space-separated IP addresses, hostnames and NTP pool domains.
+CONFIG_NTP_MIRROR=default
 
 #------------------------------------------------------------------------------------------------------
 ##### DietPi-Software settings #####
 #------------------------------------------------------------------------------------------------------
+# Public domain name
+# - If you plan to make this server accessible from the Internet, you can define its (planned) public domain name here.
+# - This will be used by certain software install options as default if a public domain name is required or beneficial for it to function.
+# - Currently used by:
+#	Nextcloud Talk to configure it with Coturn
+#	Synapse as public facing server name
+#	dietpi-letsencrypt as default entry
+#SOFTWARE_PUBLIC_DOMAIN_NAME=example.com
+
 # SSH Server
 # - Disable SSH password logins, e.g. when using pubkey authentication
 #	0=Allow password logins for all users, including root
@@ -251,10 +269,16 @@ CONFIG_NTP_MIRROR=nl.pool.ntp.org
 #	1=Disable password logins for all users, assure that you have a valid SSH key applied!
 SOFTWARE_DISABLE_SSH_PASSWORD_LOGINS=root
 
+# WireGuard
+# - Whether to install WireGuard as "Server" or "Client", relevant for unattended installs only, else a menu is shown
+#SOFTWARE_WIREGUARD_MODE=Server
+# - Listening UDP port to use when installing WireGuard in server mode, relevant for unattended installs only, else an inputbox is shown
+#SOFTWARE_WIREGUARD_PORT=51820
+
 # VNC Server
 SOFTWARE_VNCSERVER_WIDTH=1280
 SOFTWARE_VNCSERVER_HEIGHT=720
-SOFTWARE_VNCSERVER_DEPTH=16
+SOFTWARE_VNCSERVER_DEPTH=32
 SOFTWARE_VNCSERVER_DISPLAY_INDEX=1
 SOFTWARE_VNCSERVER_SHARE_DESKTOP=0
 
@@ -264,6 +288,10 @@ SOFTWARE_OWNCLOUD_NEXTCLOUD_USERNAME=admin
 # - Optional data directory, default is "/mnt/dietpi_userdata/owncloud_data" respectively "/mnt/dietpi_userdata/nextcloud_data", applied during install
 SOFTWARE_OWNCLOUD_DATADIR=/mnt/dietpi_userdata/owncloud_data
 SOFTWARE_NEXTCLOUD_DATADIR=/mnt/dietpi_userdata/nextcloud_data
+
+# Synapse
+# - Initial admin username, relevant for unattended installs only, else an inputbox is shown
+#SOFTWARE_SYNAPSE_USERNAME=dietpi
 
 # WiFi Hotspot
 SOFTWARE_WIFI_HOTSPOT_SSID=DietPi-HotSpot
@@ -282,7 +310,7 @@ SOFTWARE_WIFI_HOTSPOT_5G=0
 # - A full list of supported 5 GHz WiFi channels per region can be found e.g. on Wikipedia: https://en.wikipedia.org/wiki/List_of_WLAN_channels#5_GHz_(802.11a/h/n/ac/ax)
 SOFTWARE_WIFI_HOTSPOT_5G_CHANNEL=36
 
-# X.org
+# X11
 # - DPI 96(default) 120(+25%) 144(+50%) 168(+75%) 192(+100%)
 SOFTWARE_XORG_DPI=96
 
