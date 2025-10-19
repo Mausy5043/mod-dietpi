@@ -358,6 +358,12 @@ SOFTWARE_DIETPI_DASHBOARD_BACKEND=0
 # - Backup path, optional, defaults to "/mnt/dietpi_userdata/urbackup", effective on fresh UrBackup Server installs only
 SOFTWARE_URBACKUP_BACKUPPATH=/mnt/dietpi_userdata/urbackup
 
+# Roon Server
+# - Set to "1" to install early access builds instead of regular/stable ones: https://help.roonlabs.com/portal/en/kb/articles/roon-early-access-program
+# - Relevant for automated/unattended installs only, else a dialogue is shown to choose/switch between both.
+# - NB: Early access builds have a higher chance to contain bugs, and you may need to restore a database backup when reverting from early access to stable builds.
+SOFTWARE_ROONSERVER_EARLYACCESS=0
+
 #------------------------------------------------------------------------------------------------------
 ##### Dev settings #####
 #------------------------------------------------------------------------------------------------------
