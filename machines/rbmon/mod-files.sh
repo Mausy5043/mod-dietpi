@@ -30,17 +30,23 @@ su -c "export \"PATH=/home/${USER}/.pyenv/bin:\$PATH\"; eval \"\$(/home/${USER}/
 echo ""
 date  +"%Y.%m.%d %H:%M:%S"
 
-echo "Installing KIMNATY package..."
-su -c ". /home/pi/.paths; /home/${USER}/kimnaty/kimnaty --install" -l "${USER}"
-echo ""
-date  +"%Y.%m.%d %H:%M:%S"
+#echo "Installing KIMNATY package..."
+#su -c ". /home/pi/.paths; /home/${USER}/kimnaty/kimnaty --install" -l "${USER}"
+#echo ""
+#date  +"%Y.%m.%d %H:%M:%S"
 
 echo "Installing LEKTRIX package..."
-su -c ". /home/pi/.paths; /home/${USER}/lektrix/lektrix --install" -l "${USER}"
+su -c ". /home/${USER}/.paths; /home/${USER}/lektrix/lektrix --install" -l "${USER}"
 echo""
 date  +"%Y.%m.%d %H:%M:%S"
 
-echo "Installing WIZWTR package..."
-su -c ". /home/pi/.paths; /home/${USER}/wizwtr/wizwtr --install" -l "${USER}"
-echo""
-date  +"%Y.%m.%d %H:%M:%S"
+#echo "Installing WIZWTR package..."
+#su -c ". /home/pi/.paths; /home/${USER}/wizwtr/wizwtr --install" -l "${USER}"
+#echo""
+#date  +"%Y.%m.%d %H:%M:%S"
+ct="/var/spool/cron/crontabs/${USER}"
+if [ -f "${ct}" ]; then
+  su -c chown ${USER}:crontab ${ct}
+else
+  echo "user ${USER} has no personal crontab"
+fi
